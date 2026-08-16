@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peak Season Call Readiness Check — PortRelay AI</title>
+<meta name="description" content="A free five minute self check for marine and boat businesses. See exactly where calls and jobs are slipping through before your next peak season.">
+<link rel="canonical" href="https://aimamoth.github.io/portrelay-site/readiness-check.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Peak Season Call Readiness Check — PortRelay AI">
+<meta property="og:description" content="A free five minute self check for marine and boat businesses. See exactly where calls and jobs are slipping through before your next peak season.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-title-key="meta.rc_title" data-desc-key="meta.rc_desc">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="28" cy="28" r="20" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="28" cy="28" r="2" fill="currentColor"/>
+        <path d="M28 10L31.5 26L28 28L24.5 26L28 10Z" fill="currentColor"/>
+        <path d="M28 46L24.5 30L28 28L31.5 30L28 46Z" fill="currentColor" fill-opacity="0.5"/>
+        <path d="M10 28L26 24.5L28 28L26 31.5L10 28Z" fill="currentColor" fill-opacity="0.75"/>
+        <path d="M46 28L30 31.5L28 28L30 24.5L46 28Z" fill="currentColor" fill-opacity="0.75"/>
+      </svg>
+      PortRelay<span> AI</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="index.html#how-it-works" data-i18n="nav.how">How It Works</a>
+      <a href="index.html#who-we-serve" data-i18n="nav.who">Who We Serve</a>
+      <a href="readiness-check.html" class="active" data-i18n="nav.readiness">Readiness Check</a>
+      <a href="index.html#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+      <a href="mailto:sovon@aimamoth.com?subject=Free%20Marine%20Business%20Audit" class="nav-cta-mobile" data-i18n="nav.cta">Book a Free Audit</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button data-lang="en" type="button">EN</button>
+        <button data-lang="fr" type="button">FR</button>
+      </div>
+      <a href="mailto:sovon@aimamoth.com?subject=Free%20Marine%20Business%20Audit" class="btn btn-primary nav-cta-btn" data-i18n="nav.cta">Book a Free Audit</a>
+      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </div>
+</header>
+
+<section class="rc-hero">
+  <div class="rc-hero-bg" style="background-image:url('assets/img/logbook-deck.jpg');"></div>
+  <div class="container">
+    <div class="rc-hero-inner">
+      <span class="eyebrow reveal in" data-i18n="rc.eyebrow">Free Self Check</span>
+      <h1 class="reveal in" data-i18n="rc.h1">Peak Season Call Readiness Check</h1>
+      <p class="lead reveal in" data-i18n="rc.lead">A five minute self check across six areas. See exactly where calls and jobs are slipping through before your next season hits.</p>
+
+      <p class="trust-bar reveal in" style="margin-top:26px;" data-i18n="rc.segment_label">What kind of business are you? (optional, sharpens your result)</p>
+      <div class="segment-picker reveal in">
+        <button type="button" class="segment-pill" data-seg="seg1" data-i18n="rc.seg1">Chandler / Installer</button>
+        <button type="button" class="segment-pill" data-seg="seg2" data-i18n="rc.seg2">Refit / Repair Yard</button>
+        <button type="button" class="segment-pill" data-seg="seg3" data-i18n="rc.seg3">Distributor</button>
+        <button type="button" class="segment-pill" data-seg="seg4" data-i18n="rc.seg4">Marina / Charter</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rc-progress-wrap">
+  <div class="container rc-progress-inner">
+    <div class="rc-progress-track"><div class="rc-progress-fill" id="rc-progress-fill"></div></div>
+    <span class="rc-progress-score" id="rc-progress-score"><b>0</b> / 22</span>
+  </div>
+</div>
+
+<form id="rc-form">
+
+<section class="rc-section">
+  <div class="container">
+    <div class="rc-section-head"><span class="rc-num">01</span><h3 data-i18n="rc.sec1">Call Coverage</h3></div>
+    <div class="check-grid">
+      <label class="check-row"><input type="checkbox" data-score data-section="1" id="c1_1"><span data-i18n="c1_1">Every incoming call during peak hours gets answered live or gets a same day callback</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="1" id="c1_2"><span data-i18n="c1_2">You know roughly how many calls go to voicemail in a typical peak week</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="1" id="c1_3"><span data-i18n="c1_3">Urgent calls get flagged and routed differently than routine ones</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="1" id="c1_4"><span data-i18n="c1_4">Someone reviews missed calls at least once a day during the season</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="rc-section">
+  <div class="container">
+    <div class="rc-section-head"><span class="rc-num">02</span><h3 data-i18n="rc.sec2">Parts And Compatibility Questions</h3></div>
+    <div class="check-grid">
+      <label class="check-row"><input type="checkbox" data-score data-section="2" id="c2_1"><span data-i18n="c2_1">Will this fit my engine or my boat questions get a same day answer</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="2" id="c2_2"><span data-i18n="c2_2">Make, model, and engine details are captured before the question reaches a technician</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="2" id="c2_3"><span data-i18n="c2_3">Staff aren't regularly pulled off the shop floor for routine compatibility questions</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="2" id="c2_4"><span data-i18n="c2_4">You can state your typical quote turnaround time without guessing</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="rc-section">
+  <div class="container">
+    <div class="rc-section-head"><span class="rc-num">03</span><h3 data-i18n="rc.sec3">After Hours And Emergency Handling</h3></div>
+    <div class="check-grid">
+      <label class="check-row"><input type="checkbox" data-score data-section="3" id="c3_1"><span data-i18n="c3_1">There's a defined path for a call that comes in outside business hours</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="3" id="c3_2"><span data-i18n="c3_2">A true emergency reaches someone the same day</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="3" id="c3_3"><span data-i18n="c3_3">Non urgent after hours calls get an appointment or callback, not silence</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="3" id="c3_4"><span data-i18n="c3_4">You know roughly how many after hours calls came in last month</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="rc-section">
+  <div class="container">
+    <div class="rc-section-head"><span class="rc-num">04</span><h3 data-i18n="rc.sec4">International And Multilingual Callers</h3></div>
+    <p class="rc-skip" data-i18n="rc.sec4_skip">Skip this section if not relevant to your market.</p>
+    <label class="check-row" style="margin-bottom:10px;">
+      <input type="checkbox" id="c4-na">
+      <span data-i18n="rc.sec4_na">This section doesn't apply to my business</span>
+    </label>
+    <div class="check-grid">
+      <label class="check-row"><input type="checkbox" data-score data-section="4" id="c4_1"><span data-i18n="c4_1">You know roughly what share of calls come from non native speakers</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="4" id="c4_2"><span data-i18n="c4_2">Those callers get handled comfortably in a language they understand</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="4" id="c4_3"><span data-i18n="c4_3">Nothing gets lost in translation on vessel or part details</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="rc-section">
+  <div class="container">
+    <div class="rc-section-head"><span class="rc-num">05</span><h3 data-i18n="rc.sec5">System And Follow Up</h3></div>
+    <div class="check-grid">
+      <label class="check-row"><input type="checkbox" data-score data-section="5" id="c5_1"><span data-i18n="c5_1">Every inquiry gets logged somewhere, not just remembered</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="5" id="c5_2"><span data-i18n="c5_2">Quotes and inquiries that go quiet get a structured follow up, not silence</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="5" id="c5_3"><span data-i18n="c5_3">Your inventory or shop system stays in sync with what staff tell customers</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="5" id="c5_4"><span data-i18n="c5_4">Dormant leads from the last 12 months get revisited at least once a season</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="rc-section">
+  <div class="container">
+    <div class="rc-section-head"><span class="rc-num">06</span><h3 data-i18n="rc.sec6">Seasonal Timing</h3></div>
+    <div class="check-grid">
+      <label class="check-row"><input type="checkbox" data-score data-section="6" id="c6_1"><span data-i18n="c6_1">You know your exact peak season window</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="6" id="c6_2"><span data-i18n="c6_2">Staffing and call handling are adjusted before the season starts, not during it</span></label>
+      <label class="check-row"><input type="checkbox" data-score data-section="6" id="c6_3"><span data-i18n="c6_3">You have a plan for what happens if peak volume runs ahead of last year</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="rc-section" style="border-bottom:none;">
+  <div class="container">
+    <div class="rc-result reveal in">
+      <div class="rc-result-score"><span id="rc-result-score">0</span> <span id="rc-result-total">/ 22</span></div>
+      <div class="rc-result-band" id="rc-result-band"></div>
+      <p class="rc-result-msg" id="rc-result-msg"></p>
+      <p class="rc-result-focus" id="rc-result-focus"></p>
+    </div>
+  </div>
+</section>
+
+</form>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="calc.eyebrow">What Is This Actually Costing You?</span>
+      <h2 data-i18n="calc.h2">Estimate What Missed Calls Are Costing You</h2>
+      <p class="lead" data-i18n="calc.lead">A rough, disclosed-assumption estimate, not a claim about your business specifically.</p>
+    </div>
+    <div class="calc-wrap reveal" id="rc-calc">
+      <div class="calc-in">
+        <div class="calc-fld"><label><span data-i18n="calc.f1">Inquiry calls per week</span><output id="o-calls">20</output></label><input type="range" id="r-calls" min="5" max="150" value="20"></div>
+        <div class="calc-fld"><label><span data-i18n="calc.f2">Calls missed or unanswered</span><output id="o-missedpct">25%</output></label><input type="range" id="r-missedpct" min="5" max="70" value="25"></div>
+        <div class="calc-fld"><label><span data-i18n="calc.f3">Average job or parts order value</span><output id="o-jobvalue">$450</output></label><input type="range" id="r-jobvalue" min="50" max="5000" step="50" value="450"></div>
+        <div class="calc-fld"><label><span data-i18n="calc.f4">Est. conversion rate of answered inquiries</span><output id="o-conv">40%</output></label><input type="range" id="r-conv" min="10" max="80" value="40"></div>
+      </div>
+      <div class="calc-out">
+        <div class="calc-row"><span data-i18n="calc.out1">Missed calls / month</span><b id="v-missed">0</b></div>
+        <div class="calc-row"><span data-i18n="calc.out2">Est. jobs lost / month</span><b id="v-jobslost">0</b></div>
+        <div class="calc-big">
+          <span data-i18n="calc.out_big">Left on the table every year</span>
+          <b id="v-yearly">$0</b>
+          <small data-i18n="calc.out_small">Estimate only, based on the assumptions above.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section cta-band">
+  <div class="container reveal">
+    <h2 data-i18n="rc.cta_h">Want The Real Number, Not An Estimate?</h2>
+    <p data-i18n="rc.cta_body">Book a free 30 minute audit. We'll walk your actual call and job data and show you exactly where things are slipping.</p>
+    <div class="hero-buttons">
+      <a href="mailto:sovon@aimamoth.com?subject=Free%20Marine%20Business%20Audit" class="btn btn-primary" data-i18n="rc.cta_btn">Book A Free Audit</a>
+      <a href="index.html" class="btn btn-outline" data-i18n="rc.back_home">&larr; Back to PortRelay AI</a>
+    </div>
+    <div class="share-box reveal" style="margin-top:40px;max-width:640px;margin-left:auto;margin-right:auto;">
+      <span data-i18n="rc.share_label">Share this check with anyone, no pitch attached:</span>
+      <code>aimamoth.github.io/portrelay-site/readiness-check.html</code>
+      <button type="button" class="btn btn-outline copy-btn" id="rc-copy-btn" data-i18n="rc.copy_btn">Copy Link</button>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">PortRelay<span> AI</span></a>
+        <p data-i18n="footer.blurb">Bespoke AI service desks for marine and boat businesses.</p>
+        <p style="color:var(--text-faint);font-size:12.5px;margin-top:14px;" data-i18n="footer.offices">Offices in Canada, Switzerland &amp; India.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.nav_h">Navigate</h4>
+        <a href="index.html#how-it-works" data-i18n="nav.how">How It Works</a>
+        <a href="index.html#who-we-serve" data-i18n="nav.who">Who We Serve</a>
+        <a href="readiness-check.html" data-i18n="footer.readiness">Readiness Check</a>
+        <a href="index.html#faq" data-i18n="nav.faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.contact_h">Contact</h4>
+        <a href="mailto:sovon@aimamoth.com">sovon@aimamoth.com</a>
+        <a href="tel:+19175406222">+1 917 540 6222</a>
+        <a href="https://www.linkedin.com/in/sovonshaik/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footer.bottom">&copy; 2026 PortRelay AI. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/checklist.js"></script>
+</body>
+</html>
