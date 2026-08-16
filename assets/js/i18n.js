@@ -13,6 +13,10 @@ en: {
   "nav.contact": "Contact",
   "nav.cta": "Book a Free Audit",
 
+  "audience.label": "I'm looking for",
+  "audience.marine": "Marine Supplier",
+  "audience.refit": "Refit &amp; Project Company",
+
   "meta.home_title": "PortRelay AI — Bespoke AI Service Desks For Marine Businesses",
   "meta.home_desc": "PortRelay AI designs, builds, and runs a bespoke AI service desk for marine and boat businesses — not software you configure yourself. Answers calls, qualifies parts and repair jobs, and books the next step in whichever language your customer calls in.",
   "meta.rc_title": "Peak Season Call Readiness Check — PortRelay AI",
@@ -304,6 +308,10 @@ fr: {
   "nav.faq": "FAQ",
   "nav.contact": "Contact",
   "nav.cta": "Réserver un audit gratuit",
+
+  "audience.label": "Je suis",
+  "audience.marine": "Fournisseur nautique",
+  "audience.refit": "Chantier de refit / projet",
 
   "meta.home_title": "PortRelay AI — Accueil IA sur mesure pour entreprises nautiques",
   "meta.home_desc": "PortRelay AI conçoit, construit et exploite un service d'accueil IA sur mesure pour les entreprises nautiques, pas un logiciel que vous configurez vous-même. Répond aux appels, qualifie les demandes de pièces et réparations, et réserve la suite dans la langue de votre client.",
