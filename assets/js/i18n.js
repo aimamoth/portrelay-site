@@ -13,7 +13,7 @@ en: {
   "nav.contact": "Contact",
   "nav.cta": "Book a Free Audit",
 
-  "audience.label": "I'm looking for",
+  "audience.label": "I am",
   "audience.marine": "Marine Supplier",
   "audience.refit": "Refit &amp; Project Company",
 
