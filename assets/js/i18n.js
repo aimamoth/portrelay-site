@@ -27,7 +27,7 @@ en: {
   "hero.lead": "We design, build, and run a <strong>bespoke AI service desk</strong> for your marine business — not a software tool you configure yourself. It answers parts and repair calls, qualifies the job, and books the next step, in whichever language your customer calls in.",
   "hero.cta1": "Take the 5 Minute Readiness Check",
   "hero.cta2": "Book a Free Audit",
-  "hero.trust": "Built for chandlers, refit yards, distributors, and marinas across Europe and the United States.",
+  "hero.trust": "Built for chandlers, refit yards, distributors, marinas, and fishing suppliers across Europe and the United States.",
   "hero.badge1": "GDPR Aligned",
   "hero.badge2": "Payment Data Never Stored",
   "hero.badge3": "Built Around Your Existing Systems",
@@ -54,7 +54,7 @@ en: {
   "step5.body": "Every inquiry, quote, and follow up lives in one place, synced with whatever system you already run.",
 
   "who.eyebrow": "Who We Serve",
-  "who.h2": "Four Kinds Of Marine Business, Four Different Priorities",
+  "who.h2": "Five Kinds Of Marine Business, Five Different Priorities",
   "who.lead": "The opening conversation and the priority module differ by segment. The system is trained around how your business actually runs.",
   "seg1.tag": "Retail &amp; Installers",
   "seg1.title": "Chandlers &amp; Electronics Installers",
@@ -68,6 +68,9 @@ en: {
   "seg4.tag": "Marina &amp; Charter",
   "seg4.title": "Marinas &amp; Charter Operators",
   "seg4.body": "Multilingual owner, captain, crew, and guest communication, plus berth and scheduling questions, handled around the clock.",
+  "seg5.tag": "Fishing &amp; Tackle",
+  "seg5.title": "Fishing &amp; Tackle Suppliers",
+  "seg5.body": "Gear and part questions for anglers and working fleets alike. A boat that can't go out at 4am over a failed winch or net can't wait for browsing hours.",
 
   "besp.eyebrow": "How This Is Different",
   "besp.h2": "A System We Build And Run For You, Not Software You Configure Yourself",
@@ -105,7 +108,7 @@ en: {
   "cta.btn1": "Take The Readiness Check",
   "cta.btn2": "Book A Free Audit",
 
-  "footer.blurb": "Bespoke AI service desks for marine and boat businesses, chandlers, refit yards, distributors, and marinas across Europe and the United States.",
+  "footer.blurb": "Bespoke AI service desks for marine and boat businesses, chandlers, refit yards, distributors, marinas, and fishing suppliers across Europe and the United States.",
   "footer.offices": "Offices in Canada, Switzerland &amp; India.",
   "footer.nav_h": "Navigate",
   "footer.co_h": "Company",
@@ -123,6 +126,7 @@ en: {
   "rc.seg2": "Refit / Repair Yard",
   "rc.seg3": "Distributor",
   "rc.seg4": "Marina / Charter",
+  "rc.seg5": "Fishing / Tackle",
   "rc.progress_label": "checks completed",
 
   "rc.sec1": "Call Coverage",
@@ -174,6 +178,7 @@ en: {
   "rc.focus_seg2": "Your fastest win is likely urgent dispatch and after hours emergency handling.",
   "rc.focus_seg3": "Your fastest win is likely structured intake and CRM sync for B2B order inquiries.",
   "rc.focus_seg4": "Your fastest win is likely multilingual intake for owners, captains, and charter guests.",
+  "rc.focus_seg5": "Your fastest win is likely reception and urgent dispatch, a gear failure before a trip doesn't wait for business hours.",
 
   "calc.eyebrow": "What Is This Actually Costing You?",
   "calc.h2": "Estimate What Missed Calls Are Costing You",
@@ -323,7 +328,7 @@ fr: {
   "hero.lead": "Nous concevons, construisons et exploitons un <strong>service d'accueil IA sur mesure</strong> pour votre entreprise nautique, pas un logiciel que vous configurez vous-même. Il répond aux appels pièces et réparations, qualifie la demande, et réserve la suite, dans la langue de votre client.",
   "hero.cta1": "Faites le diagnostic en 5 minutes",
   "hero.cta2": "Réserver un audit gratuit",
-  "hero.trust": "Conçu pour les shipchandlers, chantiers de refit, distributeurs et marinas, en Europe et aux États-Unis.",
+  "hero.trust": "Conçu pour les shipchandlers, chantiers de refit, distributeurs, marinas et fournisseurs d'articles de pêche, en Europe et aux États-Unis.",
   "hero.badge1": "Conforme RGPD",
   "hero.badge2": "Données de paiement jamais stockées",
   "hero.badge3": "Intégré à vos outils existants",
@@ -350,7 +355,7 @@ fr: {
   "step5.body": "Chaque demande, devis et relance vit au même endroit, synchronisé avec les outils que vous utilisez déjà.",
 
   "who.eyebrow": "À qui nous nous adressons",
-  "who.h2": "Quatre profils d'entreprises nautiques, quatre priorités différentes",
+  "who.h2": "Cinq profils d'entreprises nautiques, cinq priorités différentes",
   "who.lead": "La conversation d'ouverture et le module prioritaire diffèrent selon le profil. Le système est calibré sur votre façon de travailler.",
   "seg1.tag": "Vente &amp; installateurs",
   "seg1.title": "Shipchandlers &amp; installateurs électronique",
@@ -364,6 +369,9 @@ fr: {
   "seg4.tag": "Marina &amp; charter",
   "seg4.title": "Marinas et opérateurs de charter",
   "seg4.body": "Communication multilingue avec propriétaires, capitaines, équipages et clients, plus questions de mouillage et planning, gérée en continu.",
+  "seg5.tag": "Pêche et articles de pêche",
+  "seg5.title": "Fournisseurs d'articles de pêche",
+  "seg5.body": "Questions de matériel et de pièces, pour plaisanciers comme pour flottes professionnelles. Un bateau qui ne peut pas sortir à 4h à cause d'un treuil ou d'un filet en panne n'attend pas les heures d'ouverture.",
 
   "besp.eyebrow": "Ce qui change vraiment",
   "besp.h2": "Un système que nous construisons et exploitons pour vous, pas un logiciel à configurer",
@@ -401,7 +409,7 @@ fr: {
   "cta.btn1": "Faire le diagnostic",
   "cta.btn2": "Réserver un audit gratuit",
 
-  "footer.blurb": "Services d'accueil IA sur mesure pour les entreprises nautiques, shipchandlers, chantiers de refit, distributeurs et marinas, en Europe et aux États-Unis.",
+  "footer.blurb": "Services d'accueil IA sur mesure pour les entreprises nautiques, shipchandlers, chantiers de refit, distributeurs, marinas et fournisseurs d'articles de pêche, en Europe et aux États-Unis.",
   "footer.offices": "Bureaux au Canada, en Suisse et en Inde.",
   "footer.nav_h": "Navigation",
   "footer.co_h": "Société",
@@ -419,6 +427,7 @@ fr: {
   "rc.seg2": "Chantier de refit / réparation",
   "rc.seg3": "Distributeur",
   "rc.seg4": "Marina / Charter",
+  "rc.seg5": "Pêche / Articles de pêche",
   "rc.progress_label": "cases cochées",
 
   "rc.sec1": "Couverture des appels",
@@ -470,6 +479,7 @@ fr: {
   "rc.focus_seg2": "Votre gain le plus rapide est probablement la gestion des interventions urgentes et des urgences hors horaires.",
   "rc.focus_seg3": "Votre gain le plus rapide est probablement la prise en charge structurée et la synchronisation CRM pour les commandes B2B.",
   "rc.focus_seg4": "Votre gain le plus rapide est probablement l'accueil multilingue pour propriétaires, capitaines et clients de charter.",
+  "rc.focus_seg5": "Votre gain le plus rapide est probablement l'accueil et la prise en charge des urgences, une panne de matériel avant une sortie n'attend pas les heures d'ouverture.",
 
   "calc.eyebrow": "Combien cela vous coûte-t-il réellement ?",
   "calc.h2": "Estimez ce que vous coûtent les appels manqués",

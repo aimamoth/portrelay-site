@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resultBand) { resultBand.textContent = dict[bandKey] || bandKey; resultBand.style.color = bandColor; }
     if (resultMsg) resultMsg.textContent = dict[msgKey] || '';
 
-    const focusMap = { seg1: 'rc.focus_seg1', seg2: 'rc.focus_seg2', seg3: 'rc.focus_seg3', seg4: 'rc.focus_seg4' };
+    const focusMap = { seg1: 'rc.focus_seg1', seg2: 'rc.focus_seg2', seg3: 'rc.focus_seg3', seg4: 'rc.focus_seg4', seg5: 'rc.focus_seg5' };
     const focusKey = segment ? focusMap[segment] : 'rc.focus_default';
     if (resultFocus) resultFocus.textContent = dict[focusKey] || '';
   }

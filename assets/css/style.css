@@ -385,7 +385,9 @@ p { margin: 0; }
 .process-step p { color: var(--text-dim); font-size: 0.92rem; }
 
 /* ---------- Segment / feature cards ---------- */
-.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
 .seg-card {
   background: var(--bg-card);
   border: 1px solid var(--line);
