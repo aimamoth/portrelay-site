@@ -737,21 +737,30 @@ html { scroll-behavior: smooth; }
 /* ---------- 3D yacht hero visual ---------- */
 .hero-yacht3d {
   position: absolute;
-  right: 3%;
-  top: 52%;
+  right: 2%;
+  top: 54%;
   transform: translateY(-50%);
-  width: 400px;
+  width: 460px;
   z-index: 1;
   pointer-events: none;
   display: none;
+  perspective: 1200px;
 }
-@media (min-width: 1040px) { .hero-yacht3d { display: block; } }
-@media (min-width: 1240px) { .hero-yacht3d { width: 460px; } }
+@media (min-width: 900px) { .hero-yacht3d { display: block; } }
+@media (min-width: 1180px) { .hero-yacht3d { width: 540px; } }
+@media (min-width: 1400px) { .hero-yacht3d { width: 620px; right: 4%; } }
 .yacht3d-tilt {
+  position: relative;
   width: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.35s ease-out;
+  transition: transform 0.2s ease-out;
   will-change: transform;
+}
+.yacht3d-sheen {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translateX(calc(var(--mx, 0) * 90px));
+  transition: transform 0.2s ease-out;
 }
 .yacht3d-float { animation: yachtBob 6s ease-in-out infinite; }
 @keyframes yachtBob {
@@ -764,7 +773,6 @@ html { scroll-behavior: smooth; }
   0%, 100% { opacity: 0.35; transform: scale(1); }
   50% { opacity: 0.55; transform: scale(1.06); }
 }
-.yacht3d-reflection { opacity: 0.16; filter: blur(2px); }
 .yacht3d-ripple { transform-box: fill-box; transform-origin: center; opacity: 0; }
 .ripple1 { animation: rippleMove 4s ease-in-out infinite; }
 .ripple2 { animation: rippleMove 4s ease-in-out infinite 1.3s; }
@@ -778,9 +786,22 @@ html { scroll-behavior: smooth; }
   0%, 100% { opacity: 0.45; }
   50% { opacity: 0.8; }
 }
+.yacht3d-wake { animation: wakeFlow 1.6s linear infinite; }
+@keyframes wakeFlow { to { stroke-dashoffset: -30; } }
+
+/* Independent parallax depth per layer, driven by --mx/--my set from cursor position */
+.yacht-layer-reflection, .yacht-layer-hull, .yacht-layer-cabin, .yacht-layer-fore {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease-out;
+}
+.yacht-layer-reflection { transform: translate(calc(var(--mx, 0) * 2px), 0); }
+.yacht-layer-hull { transform: translate(calc(var(--mx, 0) * 4px), calc(var(--my, 0) * 2px)); }
+.yacht-layer-cabin { transform: translate(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 4px)); }
+.yacht-layer-fore { transform: translate(calc(var(--mx, 0) * 13px), calc(var(--my, 0) * 5px)); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .yacht3d-float, .yacht3d-glow, .yacht3d-ripple, .bowfoam, .channel-ring::before { animation: none; }
-  .yacht3d-tilt { transition: none; }
+  .yacht3d-float, .yacht3d-glow, .yacht3d-ripple, .bowfoam, .yacht3d-wake, .channel-ring::before { animation: none; }
+  .yacht3d-tilt, .yacht3d-sheen, .yacht-layer-reflection, .yacht-layer-hull, .yacht-layer-cabin, .yacht-layer-fore { transition: none; }
 }
