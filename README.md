@@ -3,7 +3,9 @@
 Bespoke AI service desk for marine and boat businesses. Static HTML/CSS/JS, no build step, bilingual (EN/FR toggle, client-side).
 
 ## Pages
-- `index.html` — landing page
+- `index.html` — landing page (Marine Supplier track)
+- `operations-partner.html` — Refit & Project Company track
+- `charter-booking.html` — Charter Operator track: AI charter booking concierge (missed inquiry recovery, lead follow-up, yacht matching)
 - `readiness-check.html` — standalone, shareable interactive Peak Season Call Readiness Check (self-scoring checklist + cost estimator)
 
 ## Structure
