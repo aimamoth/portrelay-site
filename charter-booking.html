@@ -83,59 +83,105 @@
   <div class="hero-yacht3d" aria-hidden="true">
     <div class="yacht3d-tilt" id="yacht3dTilt">
       <div class="yacht3d-float">
-        <svg viewBox="0 0 520 340" class="yacht3d-svg" focusable="false">
+        <svg viewBox="0 0 640 380" class="yacht3d-svg" focusable="false">
           <defs>
             <linearGradient id="hullGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#E7C077"/>
-              <stop offset="35%" stop-color="#C99A4D"/>
-              <stop offset="100%" stop-color="#3A2A10"/>
+              <stop offset="0%" stop-color="#FFFFFF"/>
+              <stop offset="55%" stop-color="#F2ECDF"/>
+              <stop offset="100%" stop-color="#9FAAB0"/>
             </linearGradient>
             <linearGradient id="cabinGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#F2ECDF"/>
-              <stop offset="100%" stop-color="#B9C4C8"/>
+              <stop offset="0%" stop-color="#FFFFFF"/>
+              <stop offset="100%" stop-color="#CBD3D6"/>
             </linearGradient>
-            <linearGradient id="glassGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#8FB4BA"/>
-              <stop offset="100%" stop-color="#274752"/>
+            <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#A9CBD1"/>
+              <stop offset="100%" stop-color="#1E3B44"/>
             </linearGradient>
             <radialGradient id="waterGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#E7C077" stop-opacity="0.35"/>
+              <stop offset="0%" stop-color="#E7C077" stop-opacity="0.4"/>
               <stop offset="100%" stop-color="#E7C077" stop-opacity="0"/>
             </radialGradient>
             <linearGradient id="waterLine" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stop-color="#4C7A80" stop-opacity="0"/>
-              <stop offset="50%" stop-color="#4C7A80" stop-opacity="0.5"/>
+              <stop offset="50%" stop-color="#4C7A80" stop-opacity="0.55"/>
               <stop offset="100%" stop-color="#4C7A80" stop-opacity="0"/>
             </linearGradient>
+            <linearGradient id="sheenGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#F2ECDF" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#F2ECDF" stop-opacity="0.65"/>
+              <stop offset="100%" stop-color="#F2ECDF" stop-opacity="0"/>
+            </linearGradient>
+            <clipPath id="hullClip">
+              <path d="M100,215 C300,196 500,198 600,230 C520,258 300,266 100,255 C90,250 90,220 100,215 Z"/>
+            </clipPath>
+            <clipPath id="cabinClip">
+              <rect x="300" y="150" width="200" height="58" rx="10"/>
+            </clipPath>
           </defs>
 
-          <ellipse class="yacht3d-glow" cx="270" cy="255" rx="190" ry="34" fill="url(#waterGlow)"/>
-          <rect x="40" y="248" width="440" height="2" fill="url(#waterLine)"/>
-
-          <g class="yacht3d-reflection" transform="translate(0,470) scale(1,-1)">
-            <path d="M110,222 C110,210 130,202 158,200 L370,199 C405,199 432,208 452,222 L442,238 C400,251 140,251 96,242 C82,239 78,231 110,222 Z" fill="url(#hullGrad)"/>
-            <rect x="188" y="150" width="150" height="52" rx="8" fill="url(#cabinGrad)"/>
+          <g class="yacht-layer-reflection">
+            <ellipse class="yacht3d-glow" cx="340" cy="256" rx="230" ry="36" fill="url(#waterGlow)"/>
+            <rect x="40" y="249" width="560" height="2" fill="url(#waterLine)"/>
+            <g transform="translate(0,496) scale(1,-1)" opacity="0.16" style="filter:blur(2px)">
+              <path d="M100,215 C300,196 500,198 600,230 C520,258 300,266 100,255 C90,250 90,220 100,215 Z" fill="url(#hullGrad)"/>
+              <rect x="300" y="150" width="200" height="58" rx="10" fill="url(#cabinGrad)"/>
+              <rect x="340" y="118" width="110" height="34" rx="8" fill="url(#cabinGrad)"/>
+            </g>
           </g>
 
-          <g class="yacht3d-ripple ripple1"><ellipse cx="150" cy="260" rx="70" ry="5" fill="none" stroke="#4C7A80" stroke-width="1.4"/></g>
-          <g class="yacht3d-ripple ripple2"><ellipse cx="330" cy="266" rx="90" ry="6" fill="none" stroke="#4C7A80" stroke-width="1.4"/></g>
+          <g class="yacht-layer-fore">
+            <path class="yacht3d-wake" d="M100,250 C40,256 -30,263 -100,270" fill="none" stroke="#E7C077" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 12" opacity="0.55"/>
+            <g class="yacht3d-ripple ripple1"><ellipse cx="180" cy="262" rx="80" ry="5" fill="none" stroke="#4C7A80" stroke-width="1.4"/></g>
+            <g class="yacht3d-ripple ripple2"><ellipse cx="380" cy="268" rx="100" ry="6" fill="none" stroke="#4C7A80" stroke-width="1.4"/></g>
+            <ellipse class="bowfoam" cx="602" cy="232" rx="22" ry="10" fill="#F2ECDF" opacity="0.6"/>
+            <ellipse class="bowfoam" cx="618" cy="225" rx="10" ry="5" fill="#F2ECDF" opacity="0.5"/>
+          </g>
 
-          <g class="yacht3d-hull">
-            <ellipse class="bowfoam" cx="454" cy="228" rx="20" ry="9" fill="#F2ECDF" opacity="0.55"/>
-            <path d="M110,222 C110,210 130,202 158,200 L370,199 C405,199 432,208 452,222 L442,238 C400,251 140,251 96,242 C82,239 78,231 110,222 Z" fill="url(#hullGrad)" stroke="#E7C077" stroke-width="1.2"/>
-            <path d="M108,214 C140,206 380,205 440,216" fill="none" stroke="#F2ECDF" stroke-width="1.6" opacity="0.6"/>
-            <rect x="188" y="150" width="150" height="52" rx="8" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
-            <rect x="150" y="176" width="42" height="26" rx="6" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
-            <rect x="205" y="162" width="22" height="14" rx="3" fill="url(#glassGrad)"/>
-            <rect x="233" y="162" width="22" height="14" rx="3" fill="url(#glassGrad)"/>
-            <rect x="261" y="162" width="22" height="14" rx="3" fill="url(#glassGrad)"/>
-            <rect x="289" y="162" width="22" height="14" rx="3" fill="url(#glassGrad)"/>
-            <rect x="160" y="184" width="24" height="12" rx="3" fill="url(#glassGrad)"/>
-            <path d="M340,150 C352,146 372,146 384,152 L384,160 L340,160 Z" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
-            <path d="M300,150 L300,120" stroke="#C99A4D" stroke-width="2" stroke-linecap="round"/>
-            <path d="M300,120 C300,120 316,126 316,136" fill="none" stroke="#C99A4D" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="300" cy="116" r="4" fill="#E7C077"/>
-            <path d="M212,150 C212,150 300,138 338,150" fill="none" stroke="#C99A4D" stroke-width="1.4" opacity="0.8"/>
+          <g class="yacht-layer-hull">
+            <path d="M100,215 C300,196 500,198 600,230 C520,258 300,266 100,255 C90,250 90,220 100,215 Z" fill="url(#hullGrad)" stroke="#8A97A0" stroke-width="1"/>
+            <path d="M108,222 C300,206 480,208 588,228" fill="none" stroke="#0D202B" stroke-width="4" opacity="0.5"/>
+            <path d="M108,218 C300,202 480,204 588,224" fill="none" stroke="#E7C077" stroke-width="1.6"/>
+            <path d="M102,213 C300,193 500,195 602,228" fill="none" stroke="#C99A4D" stroke-width="1.2" opacity="0.75"/>
+            <circle cx="200" cy="238" r="5" fill="#0D202B" stroke="#C99A4D" stroke-width="1"/>
+            <circle cx="260" cy="240" r="5" fill="#0D202B" stroke="#C99A4D" stroke-width="1"/>
+            <circle cx="320" cy="241" r="5" fill="#0D202B" stroke="#C99A4D" stroke-width="1"/>
+            <circle cx="380" cy="241" r="5" fill="#0D202B" stroke="#C99A4D" stroke-width="1"/>
+            <circle cx="440" cy="240" r="5" fill="#0D202B" stroke="#C99A4D" stroke-width="1"/>
+            <rect x="66" y="246" width="30" height="9" rx="2" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
+            <g clip-path="url(#hullClip)">
+              <rect class="yacht3d-sheen" x="0" y="190" width="640" height="80" fill="url(#sheenGrad)"/>
+            </g>
+          </g>
+
+          <g class="yacht-layer-cabin">
+            <rect x="250" y="182" width="64" height="28" rx="6" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
+            <rect x="258" y="190" width="20" height="12" rx="3" fill="url(#glassGrad)"/>
+            <rect x="284" y="190" width="20" height="12" rx="3" fill="url(#glassGrad)"/>
+            <rect x="300" y="150" width="200" height="58" rx="10" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
+            <rect x="316" y="164" width="22" height="16" rx="3" fill="url(#glassGrad)"/>
+            <rect x="344" y="164" width="22" height="16" rx="3" fill="url(#glassGrad)"/>
+            <rect x="372" y="164" width="22" height="16" rx="3" fill="url(#glassGrad)"/>
+            <rect x="400" y="164" width="22" height="16" rx="3" fill="url(#glassGrad)"/>
+            <rect x="428" y="164" width="22" height="16" rx="3" fill="url(#glassGrad)"/>
+            <rect x="456" y="164" width="22" height="16" rx="3" fill="url(#glassGrad)"/>
+            <path d="M300,150 C310,144 320,142 330,150" fill="none" stroke="#0D202B" stroke-width="1" opacity="0.5"/>
+            <rect x="340" y="118" width="110" height="34" rx="8" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
+            <rect x="352" y="128" width="18" height="14" rx="3" fill="url(#glassGrad)"/>
+            <rect x="378" y="128" width="18" height="14" rx="3" fill="url(#glassGrad)"/>
+            <rect x="404" y="128" width="18" height="14" rx="3" fill="url(#glassGrad)"/>
+            <rect x="430" y="128" width="18" height="14" rx="3" fill="url(#glassGrad)"/>
+            <path d="M340,118 C340,98 450,98 450,118" fill="none" stroke="#C99A4D" stroke-width="2"/>
+            <path d="M348,118 L348,102" stroke="#C99A4D" stroke-width="1.4"/>
+            <path d="M395,118 L395,98" stroke="#C99A4D" stroke-width="1.4"/>
+            <path d="M442,118 L442,102" stroke="#C99A4D" stroke-width="1.4"/>
+            <path d="M330,118 C330,92 300,88 296,112" fill="none" stroke="#C99A4D" stroke-width="2"/>
+            <ellipse cx="292" cy="94" rx="12" ry="6" fill="url(#cabinGrad)" stroke="#0D202B" stroke-width="1"/>
+            <circle cx="276" cy="100" r="4.5" fill="url(#glassGrad)" stroke="#C99A4D" stroke-width="1"/>
+            <path d="M452,118 L452,90" stroke="#C99A4D" stroke-width="2" stroke-linecap="round"/>
+            <path d="M452,90 L452,76 L466,83 Z" fill="#E7C077"/>
+            <path d="M596,222 L596,196" stroke="#C99A4D" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="596" cy="192" r="3.4" fill="#E7C077"/>
           </g>
         </svg>
       </div>
