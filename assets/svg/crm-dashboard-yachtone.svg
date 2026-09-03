@@ -1,0 +1,94 @@
+<svg viewBox="0 0 1400 800" xmlns="http://www.w3.org/2000/svg" class="crm-dashboard-refined">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0f1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111d2e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(212, 175, 55, 0.1);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(212, 175, 55, 0.02);stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b5b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e54d3e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1400" height="800" fill="url(#bgGrad)"/>
+
+  <!-- Header -->
+  <rect width="1400" height="70" fill="#0a0f1a" opacity="0.9"/>
+  <text x="40" y="48" font-family="'Cormorant Garamond', Georgia, serif" font-size="26" font-weight="700" fill="#ffffff">YachtRelay Dashboard</text>
+  <circle cx="1350" cy="35" r="22" fill="#d4af37"/>
+  <text x="1350" y="42" font-family="Arial" font-size="14" font-weight="bold" fill="#0a0f1a" text-anchor="middle">AI</text>
+
+  <!-- KPI Cards Row 1 -->
+  <g>
+    <rect x="30" y="100" width="320" height="160" rx="14" fill="url(#cardGrad)" stroke="rgba(212, 175, 55, 0.2)" stroke-width="1.5"/>
+    <text x="50" y="135" font-family="Arial" font-size="11" font-weight="700" fill="#d4af37" letter-spacing="1">ACTIVE INQUIRIES</text>
+    <text x="50" y="175" font-family="'Cormorant Garamond', Georgia, serif" font-size="52" font-weight="700" fill="#ffffff">47</text>
+    <text x="50" y="200" font-family="Arial" font-size="10" fill="#7fa3c4">↑ 12% vs last week</text>
+    <circle cx="300" cy="145" r="28" fill="none" stroke="#ff6b5b" stroke-width="1.5" opacity="0.3"/>
+    <text x="300" y="158" font-family="Arial" font-size="18" fill="#ff6b5b" text-anchor="middle">📞</text>
+  </g>
+
+  <g>
+    <rect x="370" y="100" width="320" height="160" rx="14" fill="url(#cardGrad)" stroke="rgba(212, 175, 55, 0.2)" stroke-width="1.5"/>
+    <text x="390" y="135" font-family="Arial" font-size="11" font-weight="700" fill="#d4af37" letter-spacing="1">RESPONSE TIME</text>
+    <text x="390" y="175" font-family="'Cormorant Garamond', Georgia, serif" font-size="52" font-weight="700" fill="#ffffff">3m</text>
+    <text x="390" y="200" font-family="Arial" font-size="10" fill="#7fa3c4">45% faster than manual</text>
+    <circle cx="640" cy="145" r="28" fill="none" stroke="#4ddf8f" stroke-width="1.5" opacity="0.3"/>
+    <text x="640" y="158" font-family="Arial" font-size="18" fill="#4ddf8f" text-anchor="middle">⚡</text>
+  </g>
+
+  <g>
+    <rect x="710" y="100" width="320" height="160" rx="14" fill="url(#cardGrad)" stroke="rgba(212, 175, 55, 0.2)" stroke-width="1.5"/>
+    <text x="730" y="135" font-family="Arial" font-size="11" font-weight="700" fill="#d4af37" letter-spacing="1">CONVERSION RATE</text>
+    <text x="730" y="175" font-family="'Cormorant Garamond', Georgia, serif" font-size="52" font-weight="700" fill="#ffffff">34%</text>
+    <text x="730" y="200" font-family="Arial" font-size="10" fill="#7fa3c4">Industry average 18%</text>
+    <circle cx="980" cy="145" r="28" fill="none" stroke="#ffd93d" stroke-width="1.5" opacity="0.3"/>
+    <text x="980" y="158" font-family="Arial" font-size="18" fill="#ffd93d" text-anchor="middle">📈</text>
+  </g>
+
+  <g>
+    <rect x="1050" y="100" width="320" height="160" rx="14" fill="url(#cardGrad)" stroke="rgba(212, 175, 55, 0.2)" stroke-width="1.5"/>
+    <text x="1070" y="135" font-family="Arial" font-size="11" font-weight="700" fill="#d4af37" letter-spacing="1">WEEKLY REVENUE</text>
+    <text x="1070" y="175" font-family="'Cormorant Garamond', Georgia, serif" font-size="44" font-weight="700" fill="#ff6b5b">€127k</text>
+    <text x="1070" y="200" font-family="Arial" font-size="10" fill="#7fa3c4">From 8 confirmed charters</text>
+  </g>
+
+  <!-- Recent Bookings Section -->
+  <g>
+    <rect x="30" y="280" width="1340" height="480" rx="14" fill="url(#cardGrad)" stroke="rgba(212, 175, 55, 0.2)" stroke-width="1.5"/>
+    <text x="50" y="315" font-family="'Cormorant Garamond', Georgia, serif" font-size="20" font-weight="700" fill="#ffffff">Recent Bookings &amp; Conversations</text>
+
+    <!-- Booking 1 -->
+    <rect x="50" y="340" width="1300" height="95" rx="10" fill="rgba(30, 58, 95, 0.4)"/>
+    <circle cx="80" cy="387" r="14" fill="#ff6b5b"/>
+    <text x="110" y="380" font-family="'Cormorant Garamond', Georgia, serif" font-size="14" font-weight="700" fill="#ffffff">Gulet Sunset Charter, 8 Guests</text>
+    <text x="110" y="398" font-family="Arial" font-size="11" fill="#7fa3c4">Mediterranean, May 15–20 • AI responded 2min after inquiry</text>
+    <text x="1300" y="385" font-family="Arial" font-size="12" font-weight="700" fill="#4ddf8f" text-anchor="end">CONFIRMED</text>
+    <text x="1300" y="403" font-family="Arial" font-size="11" fill="#d4af37" text-anchor="end">€14,500 commission</text>
+
+    <!-- Booking 2 -->
+    <rect x="50" y="450" width="1300" height="95" rx="10" fill="rgba(30, 58, 95, 0.4)"/>
+    <circle cx="80" cy="497" r="14" fill="#ffd93d"/>
+    <text x="110" y="490" font-family="'Cormorant Garamond', Georgia, serif" font-size="14" font-weight="700" fill="#ffffff">Luxury Motor Yacht, 12 Guests</text>
+    <text x="110" y="508" font-family="Arial" font-size="11" fill="#7fa3c4">Caribbean, June 2–9 • Awaiting confirmation, sent 3 follow ups</text>
+    <text x="1300" y="495" font-family="Arial" font-size="12" font-weight="700" fill="#ffd93d" text-anchor="end">PENDING</text>
+    <text x="1300" y="513" font-family="Arial" font-size="11" fill="#d4af37" text-anchor="end">€22,300 potential</text>
+
+    <!-- Booking 3 -->
+    <rect x="50" y="560" width="1300" height="95" rx="10" fill="rgba(30, 58, 95, 0.4)"/>
+    <circle cx="80" cy="607" r="14" fill="#7fceff"/>
+    <text x="110" y="600" font-family="'Cormorant Garamond', Georgia, serif" font-size="14" font-weight="700" fill="#ffffff">Classic Sailing Yacht, 6 Guests</text>
+    <text x="110" y="618" font-family="Arial" font-size="11" fill="#7fa3c4">Aegean Sea, July 10–15 • Follow up in progress, likely closing soon</text>
+    <text x="1300" y="605" font-family="Arial" font-size="12" font-weight="700" fill="#4ddf8f" text-anchor="end">CONFIRMED</text>
+    <text x="1300" y="623" font-family="Arial" font-size="11" fill="#d4af37" text-anchor="end">€8,900 commission</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="50" y="790" font-family="Arial" font-size="10" fill="#5fa3c4">Last updated: Today 14:32</text>
+  <text x="1350" y="790" font-family="Arial" font-size="10" fill="#5fa3c4" text-anchor="end">Powered by YachtRelay AI</text>
+</svg>
