@@ -42,6 +42,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---- Subtle hero background parallax ----
+  const heroBg = document.querySelector('.hero-bg');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (heroBg && !reduceMotion) {
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = Math.min(window.scrollY, 600);
+        heroBg.style.transform = `scale(1.06) translateY(${y * 0.12}px)`;
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  // ---- 3D yacht tilt + parallax (charter booking page only) ----
+  const yachtTilt = document.getElementById('yacht3dTilt');
+  const heroSection = document.querySelector('.hero');
+  if (yachtTilt && heroSection && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    let raf = null;
+    const setPose = (mx, my) => {
+      // mx, my in -1..1
+      const ry = mx * 24;   // rotateY range
+      const rx = -my * 13;  // rotateX range
+      yachtTilt.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      yachtTilt.style.setProperty('--mx', mx.toFixed(3));
+      yachtTilt.style.setProperty('--my', my.toFixed(3));
+    };
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      const my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setPose(mx, my));
+    });
+    heroSection.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setPose(0, 0));
+    });
+  }
+
   // ---- Smooth FAQ expand/collapse ----
   document.querySelectorAll('.faq-item').forEach(item => {
     const summary = item.querySelector('summary');

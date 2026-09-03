@@ -323,6 +323,12 @@ p { margin: 0; }
   border: 1px solid var(--line);
   border-radius: var(--radius-m);
   padding: 28px 24px;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.process-step:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
 }
 .step-num {
   font-family: var(--font-display);
@@ -577,6 +583,25 @@ input[type="range"]::-moz-range-thumb {
    Operations Partner page — extra components
    ============================================================ */
 
+/* ---------- Wedge quote (charter page) ---------- */
+.wedge-quote {
+  background: var(--bg-card);
+  border-left: 3px solid var(--brass);
+  border-radius: var(--radius-m);
+  padding: 36px 40px;
+  margin: 0 auto;
+  max-width: 760px;
+}
+.wedge-quote p.q {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+.wedge-quote p.a { color: var(--text-dim); font-size: 0.94rem; }
+
 .stage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .stage-card {
   background: var(--bg-card);
@@ -584,7 +609,9 @@ input[type="range"]::-moz-range-thumb {
   border-radius: var(--radius-m);
   padding: 30px 26px;
   position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+.stage-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
 .stage-card.mid { border-color: var(--brass); }
 .stage-num {
   font-family: var(--font-display);
@@ -602,7 +629,8 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 860px) { .stage-grid { grid-template-columns: 1fr; } }
 
 .expand-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-.expand-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 28px 24px; }
+.expand-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 28px 24px; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+.expand-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); border-color: var(--line-strong); }
 .expand-card .rank { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate); background: var(--slate-soft); border-radius: 999px; padding: 4px 11px; display: inline-block; margin-bottom: 14px; }
 .expand-card h3 { margin-bottom: 10px; font-size: 1.08rem; }
 .expand-card p { color: var(--text-dim); font-size: 0.92rem; }
@@ -614,3 +642,107 @@ input[type="range"]::-moz-range-thumb {
 }
 .share-box code { background: var(--slate-soft); color: var(--brass-bright); padding: 6px 12px; border-radius: var(--radius-s); font-size: 0.82rem; word-break: break-all; }
 .copy-btn { font-size: 0.82rem; padding: 8px 14px; }
+
+/* ---------- Smooth scroll ---------- */
+html { scroll-behavior: smooth; }
+
+/* ---------- Channel strip ---------- */
+.channel-section { padding-top: 44px; padding-bottom: 60px; }
+.channel-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px 26px; }
+.channel-badge { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 116px; text-align: center; }
+.channel-ring {
+  width: 62px; height: 62px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-card); border: 1px solid var(--line-strong);
+  color: var(--brass); position: relative; flex-shrink: 0;
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.channel-ring svg { width: 25px; height: 25px; position: relative; z-index: 1; }
+.channel-ring::before {
+  content: ""; position: absolute; inset: -7px; border-radius: 50%;
+  border: 1px solid var(--brass); opacity: 0; animation: ringPulse 3.4s ease-out infinite;
+}
+.channel-badge:nth-child(2) .channel-ring::before { animation-delay: 0.5s; }
+.channel-badge:nth-child(3) .channel-ring::before { animation-delay: 1s; }
+.channel-badge:nth-child(4) .channel-ring::before { animation-delay: 1.5s; }
+.channel-badge:nth-child(5) .channel-ring::before { animation-delay: 2s; }
+.channel-badge:nth-child(6) .channel-ring::before { animation-delay: 2.5s; }
+.channel-badge:hover .channel-ring { color: var(--brass-bright); border-color: var(--brass); transform: translateY(-3px); }
+.channel-badge span:last-child { font-size: 0.82rem; color: var(--text-dim); }
+@keyframes ringPulse {
+  0% { transform: scale(0.92); opacity: 0.55; }
+  80% { transform: scale(1.4); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ---------- 3D yacht hero visual ---------- */
+.hero-yacht3d {
+  position: absolute;
+  right: 2%;
+  top: 54%;
+  transform: translateY(-50%);
+  width: 460px;
+  z-index: 1;
+  pointer-events: none;
+  display: none;
+  perspective: 1200px;
+}
+@media (min-width: 900px) { .hero-yacht3d { display: block; } }
+@media (min-width: 1180px) { .hero-yacht3d { width: 540px; } }
+@media (min-width: 1400px) { .hero-yacht3d { width: 620px; right: 4%; } }
+.yacht3d-tilt {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+}
+.yacht3d-sheen {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translateX(calc(var(--mx, 0) * 90px));
+  transition: transform 0.2s ease-out;
+}
+.yacht3d-float { animation: yachtBob 6s ease-in-out infinite; }
+@keyframes yachtBob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-0.6deg); }
+}
+.yacht3d-svg { width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 26px 34px rgba(0,0,0,0.5)); }
+.yacht3d-glow { animation: glowPulse 5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.06); }
+}
+.yacht3d-ripple { transform-box: fill-box; transform-origin: center; opacity: 0; }
+.ripple1 { animation: rippleMove 4s ease-in-out infinite; }
+.ripple2 { animation: rippleMove 4s ease-in-out infinite 1.3s; }
+@keyframes rippleMove {
+  0% { opacity: 0; transform: scaleX(0.7); }
+  50% { opacity: 0.4; }
+  100% { opacity: 0; transform: scaleX(1.15); }
+}
+.bowfoam { transform-box: fill-box; transform-origin: center; animation: foamPulse 3.4s ease-in-out infinite; }
+@keyframes foamPulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.8; }
+}
+.yacht3d-wake { animation: wakeFlow 1.6s linear infinite; }
+@keyframes wakeFlow { to { stroke-dashoffset: -30; } }
+
+/* Independent parallax depth per layer, driven by --mx/--my set from cursor position */
+.yacht-layer-reflection, .yacht-layer-hull, .yacht-layer-cabin, .yacht-layer-fore {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease-out;
+}
+.yacht-layer-reflection { transform: translate(calc(var(--mx, 0) * 2px), 0); }
+.yacht-layer-hull { transform: translate(calc(var(--mx, 0) * 4px), calc(var(--my, 0) * 2px)); }
+.yacht-layer-cabin { transform: translate(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 4px)); }
+.yacht-layer-fore { transform: translate(calc(var(--mx, 0) * 13px), calc(var(--my, 0) * 5px)); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .yacht3d-float, .yacht3d-glow, .yacht3d-ripple, .bowfoam, .yacht3d-wake, .channel-ring::before { animation: none; }
+  .yacht3d-tilt, .yacht3d-sheen, .yacht-layer-reflection, .yacht-layer-hull, .yacht-layer-cabin, .yacht-layer-fore { transition: none; }
+}

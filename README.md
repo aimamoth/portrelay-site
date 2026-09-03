@@ -4,6 +4,7 @@ Bespoke AI sales and charter desk for yacht charter companies, sales brokerages,
 
 ## Pages
 - `index.html` — landing page: problem, modules (website, CRM & pipelines, AI concierge, voice concierge, behavioral analytics, social & marketplace posting, AI writing assistant, integrations), how it works, who we serve, seasons, pricing + add-ons, FAQ
+- `charter-booking.html` — Charter Booking Concierge deep dive for charter operators: omnichannel inquiry handling, the three charter offers (AI Charter Booking System, Missed Inquiry Recovery, AI Lead Follow-Up), three-phase rollout, 3D yacht hero
 - `readiness-check.html` — standalone, shareable interactive Charter & Listing Inquiry Readiness Check (self-scoring checklist + cost estimator)
 
 ## Structure
