@@ -33,7 +33,7 @@ en: {
   "steps.title": "Comment Nous Fonctionnons",
   "steps.desc": "Cinq étapes du lien à la revenue",
   "step1.title": "Connectez Vos Flux",
-  "step1.desc": "Liez votre moteur de réservation, vos annonces et vos canaux d",'enquête",
+  "step1.desc": "Liez votre moteur de réservation, vos annonces et vos canaux d'enquête",
   "step2.title": "Déploiement en Quelques Heures",
   "step2.desc": "Nous construisons et testons tout avant la mise en ligne",
   "step3.title": "l'IA Prend le Relais",
