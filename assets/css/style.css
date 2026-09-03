@@ -746,3 +746,261 @@ html { scroll-behavior: smooth; }
   .yacht3d-float, .yacht3d-glow, .yacht3d-ripple, .bowfoam, .yacht3d-wake, .channel-ring::before { animation: none; }
   .yacht3d-tilt, .yacht3d-sheen, .yacht-layer-reflection, .yacht-layer-hull, .yacht-layer-cabin, .yacht-layer-fore { transition: none; }
 }
+
+/* ---------- LEWO-inspired hero with sea animation ---------- */
+.hero {
+  background: linear-gradient(135deg, #0a0f1a 0%, #0f1929 50%, #1a2849 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 120px 0;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  animation: seaShimmer 20s ease-in-out infinite;
+  background: radial-gradient(ellipse at 50% 50%, rgba(31, 118, 200, 0.1) 0%, transparent 70%);
+}
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>');
+  opacity: 0.5;
+  animation: particleFloat 30s linear infinite;
+}
+
+@keyframes seaShimmer {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.8; }
+  50% { transform: scale(1.05) translateY(-20px); opacity: 1; }
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0) rotateZ(0deg); }
+  100% { transform: translateY(-100vh) rotateZ(360deg); }
+}
+
+/* Add subtle sea particle effect */
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), rgba(255,255,255,0) 2px),
+    radial-gradient(2px 2px at 60px 70px, rgba(255,255,255,0.2), rgba(255,255,255,0) 2px),
+    radial-gradient(1px 1px at 50px 50px, rgba(255,255,255,0.25), rgba(255,255,255,0) 1px),
+    radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.15), rgba(255,255,255,0) 1px),
+    radial-gradient(2px 2px at 90px 10px, rgba(255,255,255,0.2), rgba(255,255,255,0) 2px);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: drift 20s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-200px, -200px); }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.hero .lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+  margin-bottom: 32px;
+}
+
+.hero-buttons { gap: 16px; }
+.hero .btn-primary {
+  background: linear-gradient(135deg, #ff6b5b 0%, #e54d3e 100%);
+  border: none;
+  font-weight: 600;
+  padding: 14px 32px;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+}
+
+.hero .btn-outline {
+  color: #ffffff;
+  border: 1.5px solid #ffffff;
+  font-weight: 600;
+  padding: 14px 32px;
+  font-size: 0.95rem;
+}
+
+.hero .btn-outline:hover {
+  background: rgba(255, 107, 91, 0.1);
+  border-color: #ff6b5b;
+}
+
+.hero .eyebrow {
+  color: #7fa3c4;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.hero .trust-bar {
+  color: #b0c4de;
+  font-size: 0.95rem;
+  margin-top: 24px;
+}
+
+.hero .badges {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.hero .badges span {
+  background: rgba(255, 107, 91, 0.1);
+  color: #ff6b5b;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 107, 91, 0.3);
+}
+
+/* ---------- CRM Dashboard Showcase ---------- */
+.crm-showcase { 
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+  padding: 80px 0;
+  position: relative;
+}
+
+.crm-showcase .section-head {
+  max-width: 700px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.crm-showcase h2 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  color: #0f1929;
+}
+
+.crm-showcase .lead {
+  color: #596875;
+  font-size: 1rem;
+}
+
+.crm-showcase-image {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(15, 25, 41, 0.15);
+  border: 1px solid rgba(15, 25, 41, 0.08);
+  overflow: hidden;
+}
+
+.crm-showcase-image svg,
+.crm-showcase-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- Process Steps Section ---------- */
+.process-steps {
+  background: #ffffff;
+  padding: 80px 0;
+}
+
+.process-steps .section-head {
+  max-width: 700px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.process-steps h2 {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  color: #0f1929;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.step-card {
+  text-align: center;
+  position: relative;
+}
+
+.step-number {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ff6b5b 0%, #e54d3e 100%);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 auto 20px;
+}
+
+.step-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0f1929;
+  margin-bottom: 12px;
+}
+
+.step-card p {
+  font-size: 0.9rem;
+  color: #596875;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.step-card:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -20px;
+  top: 40px;
+  color: #ddd;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .step-card:not(:last-child)::after { display: none; }
+}
+

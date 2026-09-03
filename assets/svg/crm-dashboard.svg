@@ -1,0 +1,118 @@
+<svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" class="crm-dashboard">
+  <defs>
+    <linearGradient id="dashGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1929;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2849;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#152847;stop-opacity:0.9" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b5b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e54d3e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="720" fill="url(#dashGrad)"/>
+
+  <!-- Header -->
+  <rect width="1200" height="60" fill="#0a0f1a" opacity="0.8"/>
+  <text x="30" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#fff">YachtRelay AI Dashboard</text>
+  <circle cx="1150" cy="30" r="20" fill="#ff6b5b"/>
+
+  <!-- Top Stats Row -->
+  <!-- Card 1: Active Inquiries -->
+  <g>
+    <rect x="20" y="80" width="280" height="150" rx="12" fill="url(#cardGrad)" stroke="#3a6fa0" stroke-width="1.5"/>
+    <text x="40" y="110" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#7fa3c4">ACTIVE INQUIRIES</text>
+    <text x="40" y="145" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#fff">47</text>
+    <text x="40" y="170" font-family="Arial, sans-serif" font-size="11" fill="#5fa3c4">↑ 12% from last week</text>
+    <circle cx="250" cy="120" r="25" fill="none" stroke="#ff6b5b" stroke-width="2" opacity="0.3"/>
+  </g>
+
+  <!-- Card 2: Avg Response Time -->
+  <g>
+    <rect x="320" y="80" width="280" height="150" rx="12" fill="url(#cardGrad)" stroke="#3a6fa0" stroke-width="1.5"/>
+    <text x="340" y="110" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#7fa3c4">AVG RESPONSE TIME</text>
+    <text x="340" y="145" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#fff">3m</text>
+    <text x="340" y="170" font-family="Arial, sans-serif" font-size="11" fill="#5fa3c4">↓ 45% faster than before</text>
+    <circle cx="550" cy="120" r="25" fill="none" stroke="#4ddf8f" stroke-width="2" opacity="0.3"/>
+  </g>
+
+  <!-- Card 3: Conversion Rate -->
+  <g>
+    <rect x="620" y="80" width="280" height="150" rx="12" fill="url(#cardGrad)" stroke="#3a6fa0" stroke-width="1.5"/>
+    <text x="640" y="110" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#7fa3c4">CONVERSION RATE</text>
+    <text x="640" y="145" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#fff">34%</text>
+    <text x="640" y="170" font-family="Arial, sans-serif" font-size="11" fill="#5fa3c4">8pp above industry avg</text>
+    <circle cx="850" cy="120" r="25" fill="none" stroke="#ffd93d" stroke-width="2" opacity="0.3"/>
+  </g>
+
+  <!-- Card 4: Revenue This Week -->
+  <g>
+    <rect x="920" y="80" width="260" height="150" rx="12" fill="url(#cardGrad)" stroke="#3a6fa0" stroke-width="1.5"/>
+    <text x="940" y="110" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#7fa3c4">REVENUE THIS WEEK</text>
+    <text x="940" y="145" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#ff6b5b">€127k</text>
+    <text x="940" y="170" font-family="Arial, sans-serif" font-size="11" fill="#5fa3c4">8 charters booked</text>
+  </g>
+
+  <!-- Chart: Inquiries by Channel -->
+  <g>
+    <rect x="20" y="250" width="580" height="220" rx="12" fill="url(#cardGrad)" stroke="#3a6fa0" stroke-width="1.5"/>
+    <text x="40" y="280" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#fff">Inquiries by Channel (This Week)</text>
+
+    <!-- Bars -->
+    <rect x="50" y="380" width="70" height="70" fill="url(#accentGrad)" rx="4"/>
+    <text x="85" y="460" font-family="Arial, sans-serif" font-size="11" fill="#fff" text-anchor="middle">WhatsApp</text>
+    <text x="85" y="445" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#fff" text-anchor="middle">34</text>
+
+    <rect x="140" y="355" width="70" height="95" fill="#4ddf8f" opacity="0.8" rx="4"/>
+    <text x="175" y="460" font-family="Arial, sans-serif" font-size="11" fill="#fff" text-anchor="middle">Phone</text>
+    <text x="175" y="445" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#fff" text-anchor="middle">28</text>
+
+    <rect x="230" y="300" width="70" height="150" fill="#7fceff" opacity="0.8" rx="4"/>
+    <text x="265" y="460" font-family="Arial, sans-serif" font-size="11" fill="#fff" text-anchor="middle">Website</text>
+    <text x="265" y="445" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#fff" text-anchor="middle">47</text>
+
+    <rect x="320" y="390" width="70" height="60" fill="#ffd93d" opacity="0.8" rx="4"/>
+    <text x="355" y="460" font-family="Arial, sans-serif" font-size="11" fill="#000" text-anchor="middle">Email</text>
+    <text x="355" y="445" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000" text-anchor="middle">19</text>
+
+    <rect x="410" y="410" width="70" height="40" fill="#b19cd9" opacity="0.8" rx="4"/>
+    <text x="445" y="460" font-family="Arial, sans-serif" font-size="11" fill="#fff" text-anchor="middle">Instagram</text>
+    <text x="445" y="445" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#fff" text-anchor="middle">12</text>
+  </g>
+
+  <!-- Recent Bookings List -->
+  <g>
+    <rect x="620" y="250" width="560" height="220" rx="12" fill="url(#cardGrad)" stroke="#3a6fa0" stroke-width="1.5"/>
+    <text x="640" y="280" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#fff">Recent Bookings</text>
+
+    <!-- Row 1 -->
+    <rect x="640" y="305" width="520" height="45" fill="#0a0f1a" opacity="0.5" rx="6"/>
+    <circle cx="660" cy="328" r="12" fill="#ff6b5b"/>
+    <text x="685" y="325" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#fff">Gulet Sunset Charter - 8 Guests</text>
+    <text x="685" y="340" font-family="Arial, sans-serif" font-size="10" fill="#7fa3c4">Mediterranean · €14,500</text>
+    <text x="1100" y="330" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#4ddf8f">Confirmed</text>
+
+    <!-- Row 2 -->
+    <rect x="640" y="360" width="520" height="45" fill="#0a0f1a" opacity="0.5" rx="6"/>
+    <circle cx="660" cy="383" r="12" fill="#ffd93d"/>
+    <text x="685" y="380" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#fff">Luxury Motor Yacht - 12 Guests</text>
+    <text x="685" y="395" font-family="Arial, sans-serif" font-size="10" fill="#7fa3c4">Caribbean · €22,300</text>
+    <text x="1100" y="385" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#ffd93d">Pending</text>
+
+    <!-- Row 3 -->
+    <rect x="640" y="415" width="520" height="45" fill="#0a0f1a" opacity="0.5" rx="6"/>
+    <circle cx="660" cy="438" r="12" fill="#7fceff"/>
+    <text x="685" y="435" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#fff">Classic Sailing Yacht - 6 Guests</text>
+    <text x="685" y="450" font-family="Arial, sans-serif" font-size="10" fill="#7fa3c4">Aegean · €8,900</text>
+    <text x="1100" y="440" font-family="Arial, sans-serif" font-size="11" font-weight="600" fill="#4ddf8f">Confirmed</text>
+  </g>
+
+  <!-- Bottom Info -->
+  <text x="40" y="700" font-family="Arial, sans-serif" font-size="11" fill="#5fa3c4">Last updated: Today at 14:32</text>
+  <text x="1140" y="700" font-family="Arial, sans-serif" font-size="11" fill="#5fa3c4" text-anchor="end">AI-Powered Dashboard</text>
+</svg>
