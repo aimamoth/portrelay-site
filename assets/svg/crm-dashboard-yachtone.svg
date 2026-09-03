@@ -127,7 +127,7 @@
   <!-- Recent Inquiries & Pipeline -->
   <g>
     <rect x="30" y="430" width="1340" height="440" rx="12" fill="url(#cardGrad)" stroke="rgba(212, 175, 55, 0.2)" stroke-width="1.5"/>
-    <text x="50" y="465" font-family="'Cormorant Garamond', Georgia, serif" font-size="20" font-weight="700" fill="#ffffff">Hot Leads & Recent Activity</text>
+    <text x="50" y="465" font-family="'Cormorant Garamond', Georgia, serif" font-size="20" font-weight="700" fill="#ffffff">Hot Leads &amp; Recent Activity</text>
 
     <!-- Lead 1: Confirmed Booking -->
     <g class="hot-lead" style="animation-delay: 0.2s">
