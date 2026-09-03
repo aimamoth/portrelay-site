@@ -319,26 +319,52 @@
 
 <section class="inquiry-form-section">
   <div class="container">
+    <div class="form-header reveal">
+      <h2>Ready to Transform Your Inquiry Process?</h2>
+      <p>See your dashboard. Answer every question. Close every deal. Five minutes to see the difference.</p>
+    </div>
     <div class="form-wrapper reveal">
-      <h2>Tell Us About Your Business</h2>
-      <p>Five minutes. That's all it takes to see what a transformed inquiry process looks like.</p>
       <form id="inquiry-form" class="yacht-form">
-        <div class="form-row">
-          <input type="text" name="first_name" placeholder="First Name" required/>
-          <input type="text" name="last_name" placeholder="Last Name" required/>
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" required/>
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" required/>
+          </div>
         </div>
-        <input type="email" name="email" placeholder="Email Address" required/>
-        <input type="tel" name="phone" placeholder="Phone Number"/>
-        <select name="business_type" required>
-          <option value="">What do you do?</option>
-          <option value="charter_company">Charter Company</option>
-          <option value="sales_brokerage">Sales Brokerage</option>
-          <option value="management_broker">Management & Charter Broker</option>
-          <option value="other">Other</option>
-        </select>
-        <textarea name="message" placeholder="Tell us about your inquiry volume, biggest pain point, or anything else" rows="4"></textarea>
-        <button type="submit" class="btn-submit">Send My Information</button>
-        <p class="form-note">We'll send you a personalized audit showing exactly where you're losing inquiries.</p>
+
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required/>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="business_type">What's Your Business?</label>
+          <select id="business_type" name="business_type" required>
+            <option value="">Select an option</option>
+            <option value="charter_company">Charter Company</option>
+            <option value="sales_brokerage">Sales Brokerage</option>
+            <option value="management_broker">Management & Charter Broker</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Tell Us More</label>
+          <textarea id="message" name="message" placeholder="Your biggest pain point, inquiry volume, or anything else we should know..." rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Get Your Personalized Audit</button>
+        <p class="form-note">We'll show you exactly where you're losing inquiries and deals.</p>
       </form>
     </div>
   </div>
