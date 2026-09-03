@@ -1,5 +1,5 @@
 // ============================================================
-// PortRelay AI — shared front-end behavior
+// YachtRelay AI — shared front-end behavior
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', () => {
