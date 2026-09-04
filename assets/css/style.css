@@ -1448,8 +1448,8 @@ html { scroll-behavior: smooth; }
 .integration-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 30px;
-  max-width: 1000px;
+  gap: 24px;
+  max-width: 1180px;
   margin: 0 auto 40px;
 }
 
@@ -1482,6 +1482,33 @@ html { scroll-behavior: smooth; }
   font-size: 0.85rem;
   font-weight: 600;
   text-align: center;
+}
+
+/* Real wordmark logos (YachtWorld, Rightboat, Boat Trader, HighLevel) sit on
+   their own plate instead of a colored icon circle, since they're full
+   logotypes rather than app-icon glyphs. */
+.integration-badge .logo-plate {
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  background: #f4f1ea;
+}
+
+.integration-badge .logo-plate.logo-plate--dark {
+  background: #0b223f;
+}
+
+.integration-badge .logo-plate img,
+.integration-badge .logo-plate svg {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
 }
 
 .integration-note {

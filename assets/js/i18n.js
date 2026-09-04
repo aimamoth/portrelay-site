@@ -89,7 +89,7 @@ en: {
   "mod7.body": "Listing descriptions, broker bios, charter itineraries, and news articles drafted in your brand voice from the spec sheet, ready for your edit and approval.",
   "mod8.tag": "Plugs Into Your Stack",
   "mod8.title": "Integrations",
-  "mod8.body": "Mailchimp, HubSpot, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report, and every major listing marketplace: YachtWorld, Boat Trader, boats.com, Rightboat.",
+  "mod8.body": "Mailchimp, HubSpot, HighLevel, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report, and every major listing marketplace: YachtWorld, Boat Trader, boats.com, Rightboat.",
 
   "how.eyebrow": "How It Works",
   "how.h2": "One System, Five Moving Parts, Zero Manual Work",
@@ -413,7 +413,7 @@ fr: {
   "mod7.body": "Descriptions d'annonces, bios de brokers, itinéraires de charter et articles rédigés dans le ton de votre marque à partir de la fiche technique, prêts pour votre relecture et validation.",
   "mod8.tag": "Se Branche Sur Vos Outils",
   "mod8.title": "Intégrations",
-  "mod8.body": "Mailchimp, HubSpot, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report et toutes les grandes marketplaces d'annonces : YachtWorld, Boat Trader, boats.com, Rightboat.",
+  "mod8.body": "Mailchimp, HubSpot, HighLevel, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report et toutes les grandes marketplaces d'annonces : YachtWorld, Boat Trader, boats.com, Rightboat.",
 
   "how.eyebrow": "Comment Ça Marche",
   "how.h2": "Un Système, Cinq Rouages, Zéro Travail Manuel",
@@ -737,7 +737,7 @@ es: {
   "mod7.body": "Descripciones de anuncios, biografías de brókers, itinerarios de chárter y artículos redactados con la voz de tu marca a partir de la ficha técnica, listos para tu revisión y aprobación.",
   "mod8.tag": "Se Conecta A Tus Herramientas",
   "mod8.title": "Integraciones",
-  "mod8.body": "Mailchimp, HubSpot, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report y todos los grandes marketplaces de anuncios: YachtWorld, Boat Trader, boats.com, Rightboat.",
+  "mod8.body": "Mailchimp, HubSpot, HighLevel, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report y todos los grandes marketplaces de anuncios: YachtWorld, Boat Trader, boats.com, Rightboat.",
 
   "how.eyebrow": "Cómo Funciona",
   "how.h2": "Un Sistema, Cinco Piezas, Cero Trabajo Manual",
@@ -1061,7 +1061,7 @@ it: {
   "mod7.body": "Descrizioni degli annunci, bio dei broker, itinerari charter e articoli redatti con la voce del tuo brand a partire dalla scheda tecnica, pronti per la tua revisione e approvazione.",
   "mod8.tag": "Si Collega Ai Tuoi Strumenti",
   "mod8.title": "Integrazioni",
-  "mod8.body": "Mailchimp, HubSpot, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report e tutti i principali marketplace di annunci: YachtWorld, Boat Trader, boats.com, Rightboat.",
+  "mod8.body": "Mailchimp, HubSpot, HighLevel, Constant Contact, Gmail, Outlook, Google Calendar, Shopify, Boat History Report e tutti i principali marketplace di annunci: YachtWorld, Boat Trader, boats.com, Rightboat.",
 
   "how.eyebrow": "Come Funziona",
   "how.h2": "Un Sistema, Cinque Ingranaggi, Zero Lavoro Manuale",
