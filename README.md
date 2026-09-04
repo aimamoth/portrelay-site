@@ -12,7 +12,7 @@ Bespoke AI sales and charter desk for yacht charter companies, sales brokerages,
 - `assets/js/i18n.js` — EN/FR/ES/IT dictionary + language detection and toggle
 - `assets/js/main.js` — nav, scroll reveal, FAQ accordion
 - `assets/js/checklist.js` — readiness check scoring, segment focus, cost calculator, copy-link
-- `assets/img/` — Higgsfield-generated photography (hero-marina, helm-detail, logbook-deck)
+- `assets/img/` — Higgsfield-generated photography (hero-yacht-underway, helm-console, logbook-deck)
 - `assets/video/` — hero loop
 
 ## Deploy
