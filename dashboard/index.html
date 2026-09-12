@@ -299,6 +299,10 @@
   .perf-item .v{font-family:var(--font-mono); font-size:17px; font-weight:600; margin-top:3px;}
 
   footer{margin-top:8px; font-size:12px; color:var(--ink-muted); text-align:center; line-height:1.6;}
+  .back-to-site{display:flex; justify-content:center; margin-top:18px;}
+  .back-to-site a{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--ink-secondary); text-decoration:none;}
+  .back-to-site a:hover{color:var(--accent);}
+  .back-to-site svg{width:13px; height:13px; flex:none;}
   .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
 </style>
 
@@ -371,6 +375,13 @@
     Never shown here: negotiation terms, offer amounts, or buyer contact details &mdash;
     this screen proves the system is working, it never makes the pricing or negotiating call.
   </footer>
+
+  <div class="back-to-site">
+    <a href="https://aimamoth.github.io/portrelay-site/" id="backToSiteLink">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="backToSiteText">Powered by YachtRelay AI — see the full site</span>
+    </a>
+  </div>
 </div>
 
 <script>
@@ -619,7 +630,8 @@ const UI = {
     comparisonTitle:'This month vs last month', comparisonSub:'Where buyers are in the pipeline right now, compared to a month ago',
     legendLastMonth:'Last month', legendThisMonth:'This month',
     engagementTitle:'Engagement by channel', engagementSub:'Which channels are actually generating activity',
-    topListingsTitle:'Top performing listings', topListingsSub:'Ranked by inquiries this period, colored by where each deal stands'
+    topListingsTitle:'Top performing listings', topListingsSub:'Ranked by inquiries this period, colored by where each deal stands',
+    backToSite:'Powered by YachtRelay AI — see the full site'
   }
 };
 UI.fr = {
@@ -705,7 +717,8 @@ UI.fr = {
   comparisonTitle:'Ce mois-ci vs le mois dernier', comparisonSub:'Où en sont les acheteurs dans le pipeline, comparé au mois dernier',
   legendLastMonth:'Mois dernier', legendThisMonth:'Ce mois-ci',
   engagementTitle:'Engagement par canal', engagementSub:'Quels canaux génèrent réellement de l’activité',
-  topListingsTitle:'Annonces les plus performantes', topListingsSub:'Classées par demandes sur cette période, colorées selon l’état de chaque dossier'
+  topListingsTitle:'Annonces les plus performantes', topListingsSub:'Classées par demandes sur cette période, colorées selon l’état de chaque dossier',
+  backToSite:'Propulsé par YachtRelay AI — voir le site complet'
 };
 UI.es = {
   brandTagline:'Fort Lauderdale, FL · Plan Corredor Principal', sampleTag:'Datos de muestra · ilustrativos',
@@ -790,7 +803,8 @@ UI.es = {
   comparisonTitle:'Este mes frente al mes pasado', comparisonSub:'En qué punto del pipeline están los compradores ahora, comparado con hace un mes',
   legendLastMonth:'Mes pasado', legendThisMonth:'Este mes',
   engagementTitle:'Interacción por canal', engagementSub:'Qué canales generan realmente actividad',
-  topListingsTitle:'Anuncios con mejor rendimiento', topListingsSub:'Ordenados por consultas en este período, coloreados según el estado de cada operación'
+  topListingsTitle:'Anuncios con mejor rendimiento', topListingsSub:'Ordenados por consultas en este período, coloreados según el estado de cada operación',
+  backToSite:'Desarrollado por YachtRelay AI — ver el sitio completo'
 };
 UI.it = {
   brandTagline:'Fort Lauderdale, FL · Piano Broker Responsabile', sampleTag:'Dati di esempio · a scopo illustrativo',
@@ -875,7 +889,8 @@ UI.it = {
   comparisonTitle:'Questo mese rispetto al mese scorso', comparisonSub:'A che punto sono gli acquirenti nella pipeline ora, rispetto a un mese fa',
   legendLastMonth:'Mese scorso', legendThisMonth:'Questo mese',
   engagementTitle:'Coinvolgimento per canale', engagementSub:'Quali canali generano davvero attività',
-  topListingsTitle:'Annunci con le migliori prestazioni', topListingsSub:'Classificati per richieste in questo periodo, colorati in base allo stato di ogni trattativa'
+  topListingsTitle:'Annunci con le migliori prestazioni', topListingsSub:'Classificati per richieste in questo periodo, colorati in base allo stato di ogni trattativa',
+  backToSite:'Realizzato da YachtRelay AI — vedi il sito completo'
 };
 function t(key){ const d = UI[state.lang]; return (d && d[key]!=null) ? d[key] : (UI.en[key]!=null ? UI.en[key] : key); }
 function stageLabel(stage){ return t(STAGE_KEY[stage]) || stage; }
@@ -1264,6 +1279,7 @@ function applyChrome(){
   document.getElementById('analyticsNavText').textContent = t('analyticsNavLabel');
   document.getElementById('trustGdprText').textContent = t('trustGdpr');
   document.getElementById('trustSocText').textContent = t('trustSoc');
+  document.getElementById('backToSiteText').textContent = t('backToSite');
   document.getElementById('langGroup').setAttribute('aria-label', t('languageAria'));
   document.getElementById('rangeGroup').setAttribute('aria-label', t('dateRangeAria'));
   document.getElementById('refreshBtn').setAttribute('aria-label', t('refreshAria'));
