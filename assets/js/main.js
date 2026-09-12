@@ -19,9 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    // .nav-links sits inside .site-header, which uses backdrop-filter - that
+    // creates a new CSS containing block for fixed-position descendants, so
+    // "bottom: 0" in the stylesheet resolves against the header's own small
+    // box instead of the viewport. Set an explicit pixel height on open,
+    // computed from real viewport coordinates, to sidestep that entirely.
+    const openNav = () => {
+      navLinks.classList.add('open');
+      const top = navLinks.getBoundingClientRect().top;
+      navLinks.style.height = (window.innerHeight - top) + 'px';
+    };
+    const closeNav = () => {
+      navLinks.classList.remove('open');
+      navLinks.style.height = '';
+    };
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.contains('open') ? closeNav() : openNav();
+    });
     navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => navLinks.classList.remove('open'));
+      a.addEventListener('click', closeNav);
     });
   }
 
