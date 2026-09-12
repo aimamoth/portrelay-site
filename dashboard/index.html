@@ -1,3 +1,5 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Binnacle</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -254,12 +256,25 @@
   .btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
   .btn.text{border-color:transparent; color:var(--ink-secondary); text-decoration:underline;}
   .sent-note{font-size:12.5px; color:var(--status-good); font-weight:600; display:flex; align-items:center; gap:6px;}
-  .visitor-row{display:grid; grid-template-columns:1.4fr 1fr .8fr 1fr .9fr; gap:12px; align-items:center; padding:12px 4px; font-size:13px;}
+  .visitor-row{display:grid; grid-template-columns:1.5fr .7fr .7fr 1.2fr 1.3fr; gap:12px; align-items:center; padding:12px 4px; font-size:13px; text-align:left;}
   .visitor-row + .visitor-row{border-top:1px solid var(--border);}
   .visitor-row.head{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted); font-weight:600;}
-  @media (max-width:760px){.visitor-row{grid-template-columns:1fr; gap:2px; padding:12px 0;} .visitor-row.head{display:none;}}
+  button.visitor-row-link{width:100%; background:none; border:none; position:relative; padding-right:26px; cursor:pointer; border-radius:var(--radius-sm);}
+  button.visitor-row-link:hover{background:var(--surface-alt);}
+  .visitor-chev{position:absolute; right:6px; top:50%; transform:translateY(-50%);}
+  @media (max-width:760px){
+    .visitor-row{grid-template-columns:1fr; gap:2px; padding:12px 0;}
+    .visitor-row.head{display:none;}
+    button.visitor-row-link{padding-right:4px;}
+    .visitor-chev{display:none;}
+  }
   .conf{font-family:var(--font-mono);}
   .conf.high{color:var(--status-good);} .conf.med{color:var(--status-warning);} .conf.low{color:var(--status-neutral);}
+  .us-only-tag{font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-muted); border:1px solid var(--border-strong); border-radius:999px; padding:1px 7px; margin-left:6px; font-weight:700; vertical-align:middle; white-space:nowrap;}
+  .research-field{margin:0 0 14px;}
+  .research-field .fl{font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted); font-weight:600; margin-bottom:3px;}
+  .research-field .fv{font-size:14px; color:var(--ink); line-height:1.5;}
+  .research-field .fv.muted{color:var(--ink-muted); font-style:italic;}
 
   /* channel intro (AI SDR / Deanonymization explainers) */
   .channel-intro{background:var(--surface-alt); border:1px solid var(--border); border-radius:var(--radius-md); padding:16px 18px; margin-bottom:16px;}
@@ -377,7 +392,7 @@
   </footer>
 
   <div class="back-to-site">
-    <a href="https://aimamoth.github.io/portrelay-site/" id="backToSiteLink">
+    <a href="https://yachtrelayai.com/" id="backToSiteLink">
       <svg viewBox="0 0 20 20" fill="none"><path d="M12 4l-6 6 6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span id="backToSiteText">Powered by YachtRelay AI — see the full site</span>
     </a>
@@ -434,14 +449,14 @@ const LISTINGS = [
 ];
 
 const CHANNELS = [
+  {id:'deanon', icon:'radar', color:'#46707E', base:{count:61, closed:2, interested:14, churned:45}, replyValue:2, replyUnit:'unitFirstOutreach', countLabelKey:'countLabelInterestedOutreached', kind:'visitors'},
+  {id:'ai_sdr', icon:'bot', color:'#7C5CBF', base:{count:22, closed:6, interested:11, churned:5}, replyValue:12, replyUnit:'unitSec', kind:'thread'},
   {id:'whatsapp', icon:'chat', color:'#27AE60', base:{count:42, closed:9, interested:24, churned:9}, replyValue:3, replyUnit:'unitMin', kind:'thread'},
   {id:'sms', icon:'sms', color:'#4C6EF5', base:{count:18, closed:3, interested:10, churned:5}, replyValue:6, replyUnit:'unitMin', kind:'thread'},
   {id:'call', icon:'phone', color:'#E08A3E', base:{count:11, closed:4, interested:5, churned:2}, replyValue:1, replyUnit:'unitMin', kind:'thread'},
   {id:'website', icon:'web', color:'#8B6A2E', base:{count:27, closed:5, interested:15, churned:7}, replyValue:4, replyUnit:'unitMin', kind:'thread'},
   {id:'instagram', icon:'camera', iconClass:'ig', base:{count:19, closed:3, interested:11, churned:5}, replyValue:5, replyUnit:'unitMin', kind:'thread'},
-  {id:'email', icon:'mail', color:'#3B6FA6', base:{count:15, closed:4, interested:7, churned:4}, replyValue:25, replyUnit:'unitMin', kind:'thread'},
-  {id:'deanon', icon:'radar', color:'#46707E', base:{count:61, closed:2, interested:14, churned:45}, replyValue:2, replyUnit:'unitFirstOutreach', countLabelKey:'countLabelInterestedOutreached', kind:'visitors'},
-  {id:'ai_sdr', icon:'bot', color:'#7C5CBF', base:{count:22, closed:6, interested:11, churned:5}, replyValue:12, replyUnit:'unitSec', kind:'thread'}
+  {id:'email', icon:'mail', color:'#3B6FA6', base:{count:15, closed:4, interested:7, churned:4}, replyValue:25, replyUnit:'unitMin', kind:'thread'}
 ];
 
 const RANGE_FACTOR = {month:1, '30d':0.97, quarter:2.85};
@@ -495,7 +510,11 @@ const MSG_TIMES = {
 };
 
 const VISITORS = [
-  {confidence:88}, {confidence:34}, {confidence:76}, {confidence:21}, {confidence:81}
+  {confidence:88, resolved:true, country:'US', followupStage:'aiOutreachSent'},
+  {confidence:34, resolved:false, country:null, followupStage:'belowThreshold'},
+  {confidence:76, resolved:true, country:'US', followupStage:'handedToBroker'},
+  {confidence:21, resolved:false, country:null, followupStage:'belowThreshold'},
+  {confidence:81, resolved:true, country:'CA', followupStage:'repliedInterested'}
 ];
 
 const DEALS = [
@@ -529,6 +548,20 @@ const STAGE_COMPARE = {
 };
 
 const STAGE_KEY = {'Inquiry':'stageInquiry','Qualified':'stageQualified','Showing':'stageShowing','Showing scheduled':'stageShowingScheduled','Offer':'stageOffer','Offer out':'stageOfferOut','Under contract':'stageUnderContract','Sold':'stageSold'};
+
+const FOLLOWUP_META = {
+  belowThreshold:{key:'followupBelowThreshold', c:'var(--status-neutral)', s:'var(--status-neutral-soft)'},
+  aiOutreachSent:{key:'followupAiOutreachSent', c:'var(--status-info)', s:'var(--status-info-soft)'},
+  awaitingReply:{key:'followupAwaitingReply', c:'var(--status-warning)', s:'var(--status-warning-soft)'},
+  repliedInterested:{key:'followupRepliedInterested', c:'var(--status-good)', s:'var(--status-good-soft)'},
+  handedToBroker:{key:'followupHandedToBroker', c:'var(--accent)', s:'var(--accent-soft)'},
+  meetingBooked:{key:'followupMeetingBooked', c:'var(--status-good)', s:'var(--status-good-soft)'},
+  optedOut:{key:'followupOptedOut', c:'var(--status-neutral)', s:'var(--status-neutral-soft)'}
+};
+function followupLabel(stage){ const m = FOLLOWUP_META[stage]; return m ? t(m.key) : ''; }
+function followupMeta(stage){ return FOLLOWUP_META[stage] || FOLLOWUP_META.belowThreshold; }
+const COUNTRY_KEY = {US:'countryUS', CA:'countryCA'};
+function countryLabel(code){ return code ? t(COUNTRY_KEY[code] || code) : t('countryUnknown'); }
 const CHANNEL_KEY = {whatsapp:'chWhatsapp', sms:'chSms', call:'chCall', website:'chWebsite', instagram:'chInstagram', email:'chEmail', deanon:'chDeanon', ai_sdr:'chAiSdr'};
 const STATUS_KEY = {closed:'statusClosed', still_interested:'statusStillInterested', churned:'statusChurned'};
 const LOCALE_MAP = {en:'en-US', fr:'fr-FR', es:'es-ES', it:'it-IT'};
@@ -631,7 +664,17 @@ const UI = {
     legendLastMonth:'Last month', legendThisMonth:'This month',
     engagementTitle:'Engagement by channel', engagementSub:'Which channels are actually generating activity',
     topListingsTitle:'Top performing listings', topListingsSub:'Ranked by inquiries this period, colored by where each deal stands',
-    backToSite:'Powered by YachtRelay AI — see the full site'
+    backToSite:'Powered by YachtRelay AI — see the full site',
+    visCountryLabel:'Country', visFollowupLabel:'Follow-up stage',
+    followupBelowThreshold:'Not actioned yet', followupAiOutreachSent:'AI outreach sent', followupAwaitingReply:'Awaiting reply',
+    followupRepliedInterested:'Replied, interested', followupHandedToBroker:'Handed to broker', followupMeetingBooked:'Meeting booked', followupOptedOut:'Opted out',
+    countryUS:'United States', countryCA:'Canada', countryUnknown:'Unknown',
+    viewResearch:'View research', usOnlyTag:'US only',
+    researchTitle:'Research', researchSub:'What we found that can help you close faster',
+    fieldIndustry:'Industry', fieldContact:'Likely contact', fieldCompanySize:'Company size', fieldVessel:'Vessel on file',
+    fieldSignal:'Signal', fieldNote:'Note', fieldActivityOnSite:'Activity on your site',
+    vesselUsOnlyNote:'Vessel documentation lookup covers US-flagged vessels only',
+    visitorNotFound:'That visitor record couldn’t be found — it may have moved.'
   }
 };
 UI.fr = {
@@ -718,7 +761,17 @@ UI.fr = {
   legendLastMonth:'Mois dernier', legendThisMonth:'Ce mois-ci',
   engagementTitle:'Engagement par canal', engagementSub:'Quels canaux génèrent réellement de l’activité',
   topListingsTitle:'Annonces les plus performantes', topListingsSub:'Classées par demandes sur cette période, colorées selon l’état de chaque dossier',
-  backToSite:'Propulsé par YachtRelay AI — voir le site complet'
+  backToSite:'Propulsé par YachtRelay AI — voir le site complet',
+  visCountryLabel:'Pays', visFollowupLabel:'Étape de suivi',
+  followupBelowThreshold:'Pas encore traité', followupAiOutreachSent:'Contact IA envoyé', followupAwaitingReply:'En attente de réponse',
+  followupRepliedInterested:'A répondu, intéressé', followupHandedToBroker:'Transmis au courtier', followupMeetingBooked:'Rendez-vous pris', followupOptedOut:'Désinscrit',
+  countryUS:'États-Unis', countryCA:'Canada', countryUnknown:'Inconnu',
+  viewResearch:'Voir la recherche', usOnlyTag:'États-Unis uniquement',
+  researchTitle:'Recherche', researchSub:'Ce que nous avons trouvé pour vous aider à conclure plus vite',
+  fieldIndustry:'Secteur', fieldContact:'Contact probable', fieldCompanySize:'Taille de l’entreprise', fieldVessel:'Bateau enregistré',
+  fieldSignal:'Signal', fieldNote:'Note', fieldActivityOnSite:'Activité sur votre site',
+  vesselUsOnlyNote:'La recherche de documentation de bateau ne couvre que les bateaux immatriculés aux États-Unis',
+  visitorNotFound:'Cette fiche visiteur n’a pas pu être trouvée — elle a peut-être été déplacée.'
 };
 UI.es = {
   brandTagline:'Fort Lauderdale, FL · Plan Corredor Principal', sampleTag:'Datos de muestra · ilustrativos',
@@ -804,7 +857,17 @@ UI.es = {
   legendLastMonth:'Mes pasado', legendThisMonth:'Este mes',
   engagementTitle:'Interacción por canal', engagementSub:'Qué canales generan realmente actividad',
   topListingsTitle:'Anuncios con mejor rendimiento', topListingsSub:'Ordenados por consultas en este período, coloreados según el estado de cada operación',
-  backToSite:'Desarrollado por YachtRelay AI — ver el sitio completo'
+  backToSite:'Desarrollado por YachtRelay AI — ver el sitio completo',
+  visCountryLabel:'País', visFollowupLabel:'Etapa de seguimiento',
+  followupBelowThreshold:'Sin acción todavía', followupAiOutreachSent:'Contacto de IA enviado', followupAwaitingReply:'Esperando respuesta',
+  followupRepliedInterested:'Respondió, interesado', followupHandedToBroker:'Transferido al corredor', followupMeetingBooked:'Reunión agendada', followupOptedOut:'Se dio de baja',
+  countryUS:'Estados Unidos', countryCA:'Canadá', countryUnknown:'Desconocido',
+  viewResearch:'Ver la investigación', usOnlyTag:'Solo EE. UU.',
+  researchTitle:'Investigación', researchSub:'Lo que hemos encontrado para ayudarle a cerrar más rápido',
+  fieldIndustry:'Sector', fieldContact:'Contacto probable', fieldCompanySize:'Tamaño de la empresa', fieldVessel:'Embarcación registrada',
+  fieldSignal:'Señal', fieldNote:'Nota', fieldActivityOnSite:'Actividad en su sitio',
+  vesselUsOnlyNote:'La búsqueda de documentación de embarcaciones solo cubre embarcaciones abanderadas en EE. UU.',
+  visitorNotFound:'No se pudo encontrar esa ficha de visitante — puede haberse movido.'
 };
 UI.it = {
   brandTagline:'Fort Lauderdale, FL · Piano Broker Responsabile', sampleTag:'Dati di esempio · a scopo illustrativo',
@@ -890,7 +953,17 @@ UI.it = {
   legendLastMonth:'Mese scorso', legendThisMonth:'Questo mese',
   engagementTitle:'Coinvolgimento per canale', engagementSub:'Quali canali generano davvero attività',
   topListingsTitle:'Annunci con le migliori prestazioni', topListingsSub:'Classificati per richieste in questo periodo, colorati in base allo stato di ogni trattativa',
-  backToSite:'Realizzato da YachtRelay AI — vedi il sito completo'
+  backToSite:'Realizzato da YachtRelay AI — vedi il sito completo',
+  visCountryLabel:'Paese', visFollowupLabel:'Fase di follow-up',
+  followupBelowThreshold:'Non ancora gestito', followupAiOutreachSent:'Contatto IA inviato', followupAwaitingReply:'In attesa di risposta',
+  followupRepliedInterested:'Ha risposto, interessato', followupHandedToBroker:'Passato al broker', followupMeetingBooked:'Appuntamento fissato', followupOptedOut:'Disiscritto',
+  countryUS:'Stati Uniti', countryCA:'Canada', countryUnknown:'Sconosciuto',
+  viewResearch:'Vedi la ricerca', usOnlyTag:'Solo USA',
+  researchTitle:'Ricerca', researchSub:'Cosa abbiamo trovato per aiutarti a chiudere più in fretta',
+  fieldIndustry:'Settore', fieldContact:'Contatto probabile', fieldCompanySize:'Dimensione azienda', fieldVessel:'Imbarcazione registrata',
+  fieldSignal:'Segnale', fieldNote:'Nota', fieldActivityOnSite:'Attività sul tuo sito',
+  vesselUsOnlyNote:'La ricerca sulla documentazione dell’imbarcazione copre solo le imbarcazioni battenti bandiera USA',
+  visitorNotFound:'Questa scheda visitatore non è stata trovata — potrebbe essere stata spostata.'
 };
 function t(key){ const d = UI[state.lang]; return (d && d[key]!=null) ? d[key] : (UI.en[key]!=null ? UI.en[key] : key); }
 function stageLabel(stage){ return t(STAGE_KEY[stage]) || stage; }
@@ -913,11 +986,20 @@ const TX = {
         f:['Sale closed in 6 days','Recent haul-out and bottom paint','Well-documented maintenance history']}
     },
     visitors:[
-      {company:'Anchor Harbor Capital', contact:'Likely: J. Reddington, Managing Partner', pages:'Viewed Princess X95 twice, spec sheet download', identified:'3 hr ago', status:'Handed to AI SDR'},
+      {company:'Anchor Harbor Capital', contact:'Likely: J. Reddington, Managing Partner', pages:'Viewed Princess X95 twice, spec sheet download', identified:'3 hr ago', status:'Handed to AI SDR',
+        industry:'Private equity', companySize:'~25 employees', vessel:'2018 58’ Princess, per USCG documentation — likely an upgrade purchase',
+        signal:'Visited the Princess X95 listing twice this week and downloaded the spec sheet — classic upgrade-buyer behavior',
+        note:'12+ years in private equity, based in Boston'},
       {company:'Unresolved — residential IP, Palm Beach', contact:'—', pages:'Viewed 2 listings, 40s avg', identified:'6 hr ago', status:'Below threshold — not actioned'},
-      {company:'Meridian Capital Advisors', contact:'Likely: S. Kwan, Principal', pages:'Viewed Riva 76 + financing page', identified:'yesterday', status:'Pending broker review'},
+      {company:'Meridian Capital Advisors', contact:'Likely: S. Kwan, Principal', pages:'Viewed Riva 76 + financing page', identified:'yesterday', status:'Pending broker review',
+        industry:'Wealth management / capital advisory', companySize:'~10 employees', vessel:'None on file — likely a first-time buyer',
+        signal:'Viewed the Riva 76 listing and the financing page back to back — likely evaluating affordability',
+        note:'Recently promoted to Principal per LinkedIn, 8 years at the firm'},
       {company:'Unresolved — mobile carrier network', contact:'—', pages:'Viewed homepage only', identified:'yesterday', status:'Below threshold — not actioned'},
-      {company:'Blue Horizon Family Office', contact:'Likely: A. Devereux', pages:'Viewed Azimut Grande 27M, returned 3x', identified:'2 days ago', status:'Handed to AI SDR'}
+      {company:'Blue Horizon Family Office', contact:'Likely: A. Devereux', pages:'Viewed Azimut Grande 27M, returned 3x', identified:'2 days ago', status:'Handed to AI SDR',
+        industry:'Family office', companySize:'~8 employees', vessel:null,
+        signal:'Returned to the Azimut Grande 27M listing three times this week — a strong repeat-visit signal',
+        note:'Family office manages holdings across marine and aviation assets'}
     ],
     threads:{
       whatsapp:{
@@ -1000,11 +1082,20 @@ TX.fr = {
       f:['Vente conclue en 6 jours','Carénage et peinture de coque récents','Historique d’entretien bien documenté']}
   },
   visitors:[
-    {company:'Anchor Harbor Capital', contact:'Probable : J. Reddington, associé gérant', pages:'A consulté le Princess X95 deux fois, téléchargement de la fiche technique', identified:'il y a 3 h', status:'Transmis au SDR IA'},
+    {company:'Anchor Harbor Capital', contact:'Probable : J. Reddington, associé gérant', pages:'A consulté le Princess X95 deux fois, téléchargement de la fiche technique', identified:'il y a 3 h', status:'Transmis au SDR IA',
+      industry:'Capital-investissement', companySize:'~25 salariés', vessel:'Princess 58 pieds de 2018, selon les registres USCG — probablement un achat de mise à niveau',
+      signal:'A consulté l’annonce du Princess X95 deux fois cette semaine et téléchargé la fiche technique — comportement typique d’un acheteur en mise à niveau',
+      note:'12 ans et plus en capital-investissement, basé à Boston'},
     {company:'Non identifié — IP résidentielle, Palm Beach', contact:'—', pages:'A consulté 2 annonces, 40 s en moyenne', identified:'il y a 6 h', status:'Sous le seuil — aucune action'},
-    {company:'Meridian Capital Advisors', contact:'Probable : S. Kwan, associé', pages:'A consulté le Riva 76 et la page financement', identified:'hier', status:'En attente de revue par le courtier'},
+    {company:'Meridian Capital Advisors', contact:'Probable : S. Kwan, associé', pages:'A consulté le Riva 76 et la page financement', identified:'hier', status:'En attente de revue par le courtier',
+      industry:'Gestion de patrimoine / conseil en capital', companySize:'~10 salariés', vessel:'Aucun bateau enregistré — probablement un premier achat',
+      signal:'A consulté l’annonce du Riva 76 puis la page financement juste après — évalue probablement le budget',
+      note:'Récemment promu associé selon LinkedIn, 8 ans dans le cabinet'},
     {company:'Non identifié — réseau mobile', contact:'—', pages:'A consulté uniquement la page d’accueil', identified:'hier', status:'Sous le seuil — aucune action'},
-    {company:'Blue Horizon Family Office', contact:'Probable : A. Devereux', pages:'A consulté l’Azimut Grande 27M, revenu 3 fois', identified:'il y a 2 jours', status:'Transmis au SDR IA'}
+    {company:'Blue Horizon Family Office', contact:'Probable : A. Devereux', pages:'A consulté l’Azimut Grande 27M, revenu 3 fois', identified:'il y a 2 jours', status:'Transmis au SDR IA',
+      industry:'Family office', companySize:'~8 salariés', vessel:null,
+      signal:'Revenu sur l’annonce de l’Azimut Grande 27M trois fois cette semaine — signal fort de visite répétée',
+      note:'Ce family office gère des actifs à la fois nautiques et aéronautiques'}
   ],
   threads:{
     whatsapp:{
@@ -1086,11 +1177,20 @@ TX.es = {
       f:['Venta cerrada en 6 días','Varada y pintura de fondo recientes','Historial de mantenimiento bien documentado']}
   },
   visitors:[
-    {company:'Anchor Harbor Capital', contact:'Probable: J. Reddington, socio director', pages:'Vio el Princess X95 dos veces, descargó la ficha técnica', identified:'hace 3 h', status:'Transferido al SDR de IA'},
+    {company:'Anchor Harbor Capital', contact:'Probable: J. Reddington, socio director', pages:'Vio el Princess X95 dos veces, descargó la ficha técnica', identified:'hace 3 h', status:'Transferido al SDR de IA',
+      industry:'Capital privado', companySize:'~25 empleados', vessel:'Princess de 58 pies de 2018, según los registros de la USCG — probablemente busca mejorar de embarcación',
+      signal:'Vio el anuncio del Princess X95 dos veces esta semana y descargó la ficha técnica — comportamiento típico de comprador que busca mejorar',
+      note:'Más de 12 años en capital privado, con sede en Boston'},
     {company:'Sin identificar — IP residencial, Palm Beach', contact:'—', pages:'Vio 2 anuncios, 40 s de media', identified:'hace 6 h', status:'Por debajo del umbral — sin acción'},
-    {company:'Meridian Capital Advisors', contact:'Probable: S. Kwan, socio principal', pages:'Vio el Riva 76 y la página de financiación', identified:'ayer', status:'Pendiente de revisión del corredor'},
+    {company:'Meridian Capital Advisors', contact:'Probable: S. Kwan, socio principal', pages:'Vio el Riva 76 y la página de financiación', identified:'ayer', status:'Pendiente de revisión del corredor',
+      industry:'Gestión patrimonial / asesoría de capital', companySize:'~10 empleados', vessel:'Ninguna embarcación registrada — probablemente su primera compra',
+      signal:'Vio el anuncio del Riva 76 y justo después la página de financiación — probablemente evaluando el presupuesto',
+      note:'Ascendido recientemente a socio principal según LinkedIn, 8 años en la firma'},
     {company:'Sin identificar — red de operador móvil', contact:'—', pages:'Solo vio la página de inicio', identified:'ayer', status:'Por debajo del umbral — sin acción'},
-    {company:'Blue Horizon Family Office', contact:'Probable: A. Devereux', pages:'Vio el Azimut Grande 27M, volvió 3 veces', identified:'hace 2 días', status:'Transferido al SDR de IA'}
+    {company:'Blue Horizon Family Office', contact:'Probable: A. Devereux', pages:'Vio el Azimut Grande 27M, volvió 3 veces', identified:'hace 2 días', status:'Transferido al SDR de IA',
+      industry:'Family office', companySize:'~8 empleados', vessel:null,
+      signal:'Volvió al anuncio del Azimut Grande 27M tres veces esta semana — una señal fuerte de visita repetida',
+      note:'Esta family office gestiona activos tanto náuticos como aeronáuticos'}
   ],
   threads:{
     whatsapp:{
@@ -1172,11 +1272,20 @@ TX.it = {
       f:['Vendita conclusa in 6 giorni','Alaggio e pittura antivegetativa recenti','Storico di manutenzione ben documentato']}
   },
   visitors:[
-    {company:'Anchor Harbor Capital', contact:'Probabile: J. Reddington, socio amministratore', pages:'Ha visto il Princess X95 due volte, scaricato la scheda tecnica', identified:'3 h fa', status:'Passato all’SDR IA'},
+    {company:'Anchor Harbor Capital', contact:'Probabile: J. Reddington, socio amministratore', pages:'Ha visto il Princess X95 due volte, scaricato la scheda tecnica', identified:'3 h fa', status:'Passato all’SDR IA',
+      industry:'Private equity', companySize:'~25 dipendenti', vessel:'Princess 58 piedi del 2018, da documentazione USCG — probabile acquisto di aggiornamento',
+      signal:'Ha visto l’annuncio del Princess X95 due volte questa settimana e scaricato la scheda tecnica — comportamento tipico di chi vuole passare a una barca più grande',
+      note:'Oltre 12 anni nel private equity, con sede a Boston'},
     {company:'Non identificato — IP residenziale, Palm Beach', contact:'—', pages:'Ha visto 2 annunci, 40 s in media', identified:'6 h fa', status:'Sotto la soglia — nessuna azione'},
-    {company:'Meridian Capital Advisors', contact:'Probabile: S. Kwan, socio', pages:'Ha visto il Riva 76 e la pagina finanziamento', identified:'ieri', status:'In attesa di revisione del broker'},
+    {company:'Meridian Capital Advisors', contact:'Probabile: S. Kwan, socio', pages:'Ha visto il Riva 76 e la pagina finanziamento', identified:'ieri', status:'In attesa di revisione del broker',
+      industry:'Gestione patrimoniale / consulenza di capitale', companySize:'~10 dipendenti', vessel:'Nessuna imbarcazione registrata — probabilmente al primo acquisto',
+      signal:'Ha visto l’annuncio del Riva 76 e subito dopo la pagina finanziamento — probabilmente sta valutando il budget',
+      note:'Promosso di recente a socio secondo LinkedIn, 8 anni nell’azienda'},
     {company:'Non identificato — rete di un operatore mobile', contact:'—', pages:'Ha visto solo la homepage', identified:'ieri', status:'Sotto la soglia — nessuna azione'},
-    {company:'Blue Horizon Family Office', contact:'Probabile: A. Devereux', pages:'Ha visto l’Azimut Grande 27M, tornato 3 volte', identified:'2 giorni fa', status:'Passato all’SDR IA'}
+    {company:'Blue Horizon Family Office', contact:'Probabile: A. Devereux', pages:'Ha visto l’Azimut Grande 27M, tornato 3 volte', identified:'2 giorni fa', status:'Passato all’SDR IA',
+      industry:'Family office', companySize:'~8 dipendenti', vessel:null,
+      signal:'Tornato sull’annuncio dell’Azimut Grande 27M tre volte questa settimana — un forte segnale di visita ripetuta',
+      note:'Questo family office gestisce patrimoni sia nautici che aeronautici'}
   ],
   threads:{
     whatsapp:{
@@ -1253,7 +1362,7 @@ function sdrChatTX(){ return (TX[state.lang] && TX[state.lang].sdrChat) || TX.en
 function loadLang(){ try{ const v = localStorage.getItem('binnacle_lang'); return (v && UI[v]!==undefined) ? v : 'en'; }catch(e){ return 'en'; } }
 function saveLang(l){ try{ localStorage.setItem('binnacle_lang', l); }catch(e){} }
 
-let state = {range:'month', lang:loadLang(), view:'dashboard', channelId:null, threadId:null, listingId:null, sortCol:'inquiries', sortDir:'desc',
+let state = {range:'month', lang:loadLang(), view:'dashboard', channelId:null, threadId:null, listingId:null, visitorIndex:null, sortCol:'inquiries', sortDir:'desc',
   cleanupFixed:{}, sentMessages:{}, loading:false};
 
 function scale(n){return Math.round(n * RANGE_FACTOR[state.range]);}
@@ -1311,6 +1420,7 @@ function renderApp(){
   else if(state.view==='thread'){ app.innerHTML = threadViewHTML(state.channelId, state.threadId); bindThreadView(); }
   else if(state.view==='listing'){ app.innerHTML = listingViewHTML(state.listingId); bindListingView(); }
   else if(state.view==='analytics'){ app.innerHTML = analyticsPageHTML(); bindListingView(); }
+  else if(state.view==='visitor'){ app.innerHTML = visitorViewHTML(state.visitorIndex); bindThreadView(); }
 }
 function navigate(fn){ fn(); window.scrollTo({top:0}); renderApp(); }
 
@@ -1555,16 +1665,20 @@ function channelViewHTML(channelId){
           <li>${t('deanonCap1')}</li><li>${t('deanonCap2')}</li><li>${t('deanonCap3')}</li><li>${t('deanonCap4')}</li>
         </ul>
       </div>
-      <div class="visitor-row head"><div>${t('visResolved')}</div><div>${t('visContact')}</div><div>${t('visConfidence')}</div><div>${t('visActivity')}</div><div>${t('visStatus')}</div></div>
+      <div class="visitor-row head"><div>${t('visResolved')}</div><div>${t('visConfidence')}</div><div>${t('visCountryLabel')}</div><div>${t('visFollowupLabel')}</div><div>${t('visActivity')}</div></div>
       ${VISITORS.map((v,i)=>{
         const vx = visitorTX(i);
         const level = v.confidence>=80?'high':v.confidence>=50?'med':'low';
-        return `<div class="visitor-row">
-          <div>${vx.company}</div><div>${vx.contact}</div>
+        const fm = followupMeta(v.followupStage);
+        const inner = `
+          <div>${vx.company}</div>
           <div class="conf ${level}">${v.confidence}%</div>
-          <div>${vx.pages}</div>
-          <div>${vx.status}</div>
-        </div>`;
+          <div>${countryLabel(v.country)}</div>
+          <div><span class="stage-pill" style="color:${fm.c};background:${fm.s}">${followupLabel(v.followupStage)}</span></div>
+          <div>${vx.pages}</div>`;
+        return v.resolved
+          ? `<button class="visitor-row visitor-row-link" data-visitor="${i}">${inner}<span class="chev visitor-chev">&#8250;</span></button>`
+          : `<div class="visitor-row">${inner}</div>`;
       }).join('')}
     </div>`;
   }
@@ -1840,6 +1954,55 @@ function analyticsPageHTML(){
   </div>`;
 }
 
+function visitorViewHTML(idx){
+  const i = Number(idx);
+  const v = VISITORS[i];
+  if(!v || !v.resolved){
+    return `<button class="back-btn" data-back="channel">&larr; ${t('backTo')} ${channelName('deanon')}</button>
+    <div class="panel"><div class="empty-note">${t('visitorNotFound')}</div></div>`;
+  }
+  const vx = visitorTX(i);
+  const fm = followupMeta(v.followupStage);
+  const level = v.confidence>=80?'high':v.confidence>=50?'med':'low';
+  const vesselValue = v.country==='US' ? vx.vessel : t('vesselUsOnlyNote');
+  return `
+  <button class="back-btn" data-back="channel">&larr; ${t('backTo')} ${channelName('deanon')}</button>
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="panel-title">${vx.company}</div><div class="panel-sub">${countryLabel(v.country)} &middot; <span class="conf ${level}">${v.confidence}%</span></div></div>
+      <span class="stage-pill" style="color:${fm.c};background:${fm.s}">${followupLabel(v.followupStage)}</span>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-item"><div class="l">${t('fieldIndustry')}</div><div class="v" style="font-family:var(--font-body); font-size:13.5px; font-weight:600;">${vx.industry}</div></div>
+      <div class="spec-item"><div class="l">${t('fieldContact')}</div><div class="v" style="font-family:var(--font-body); font-size:13.5px; font-weight:600;">${vx.contact}</div></div>
+      <div class="spec-item"><div class="l">${t('fieldCompanySize')}</div><div class="v" style="font-family:var(--font-body); font-size:13.5px; font-weight:600;">${vx.companySize}</div></div>
+    </div>
+
+    <div class="channel-intro">
+      <h3>${t('researchTitle')}</h3>
+      <p style="margin:0 0 14px; font-size:13px; color:var(--ink-muted);">${t('researchSub')}</p>
+
+      <div class="research-field">
+        <div class="fl">${t('fieldVessel')}<span class="us-only-tag">${t('usOnlyTag')}</span></div>
+        <div class="fv ${vesselValue===vx.vessel ? '' : 'muted'}">${vesselValue}</div>
+      </div>
+      <div class="research-field">
+        <div class="fl">${t('fieldSignal')}</div>
+        <div class="fv">${vx.signal}</div>
+      </div>
+      <div class="research-field">
+        <div class="fl">${t('fieldNote')}</div>
+        <div class="fv">${vx.note}</div>
+      </div>
+      <div class="research-field" style="margin-bottom:0">
+        <div class="fl">${t('fieldActivityOnSite')}</div>
+        <div class="fv">${vx.pages}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
 /* ============================= EVENT BINDING ============================= */
 function bindListingView(){
   document.querySelectorAll('[data-back]').forEach(el=>el.addEventListener('click', ()=>{ navigate(()=>{ state.view='dashboard'; }); }));
@@ -1870,6 +2033,9 @@ function bindChannelView(){
   document.querySelectorAll('[data-back]').forEach(el=>el.addEventListener('click', ()=>{ navigate(()=>{ state.view='dashboard'; }); }));
   document.querySelectorAll('[data-thread]').forEach(el=>el.addEventListener('click', ()=>{
     navigate(()=>{ state.view='thread'; state.threadId=el.dataset.thread; });
+  }));
+  document.querySelectorAll('[data-visitor]').forEach(el=>el.addEventListener('click', ()=>{
+    navigate(()=>{ state.view='visitor'; state.visitorIndex=el.dataset.visitor; });
   }));
 }
 function bindThreadView(){
