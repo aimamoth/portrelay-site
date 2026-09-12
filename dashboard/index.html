@@ -192,11 +192,13 @@
   th{text-align:left; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted); font-weight:600; padding:8px 10px; border-bottom:1px solid var(--border-strong); cursor:pointer; white-space:nowrap;}
   td{padding:9px 10px; border-bottom:1px solid var(--border); white-space:nowrap;}
   tr:last-child td{border-bottom:none;}
-  td.name{font-weight:600; white-space:normal;}
+  td.name{font-weight:600; white-space:normal; min-width:150px;}
+  @media (max-width:600px){ td.name{white-space:nowrap; min-width:0;} }
 
   /* deal pipeline */
   .kanban{display:grid; grid-template-columns:repeat(5,1fr); gap:10px;}
   @media (max-width:900px){.kanban{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.kanban{grid-template-columns:1fr;}}
   .kanban-col{background:var(--surface-alt); border-radius:var(--radius-sm); padding:10px;}
   .kanban-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
   .kanban-head .t{font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-secondary);}
@@ -1605,7 +1607,7 @@ function trendChartSVG(values, opts){
 }
 
 function hBarChartSVG(items, opts){
-  const o = Object.assign({w:600, barH:22, gap:14, labelW:150}, opts||{});
+  const o = Object.assign({w:600, barH:22, gap:14, labelW:150, labelSize:12.5}, opts||{});
   const max = Math.max(...items.map(i=>i.value)) * 1.08 || 1;
   const h = items.length*(o.barH+o.gap) - o.gap;
   const chartW = o.w-o.labelW-46;
@@ -1613,7 +1615,7 @@ function hBarChartSVG(items, opts){
     const yy = i*(o.barH+o.gap);
     const bw = Math.max((it.value/max)*chartW, 3);
     return `
-      <text x="0" y="${yy+o.barH*0.68}" font-size="12.5" fill="var(--ink-secondary)">${it.label}</text>
+      <text x="0" y="${yy+o.barH*0.68}" font-size="${o.labelSize}" fill="var(--ink-secondary)">${it.label}</text>
       <rect x="${o.labelW}" y="${yy}" width="${chartW}" height="${o.barH}" rx="5" fill="var(--surface-alt)"/>
       <rect x="${o.labelW}" y="${yy}" width="${bw}" height="${o.barH}" rx="5" fill="${it.color}"/>
       <text x="${o.labelW+bw+8}" y="${yy+o.barH*0.68}" font-size="12" font-family="var(--font-mono)" fill="var(--ink)">${it.value}</text>`;
@@ -1945,7 +1947,7 @@ function analyticsPageHTML(){
 
   <div class="panel">
     <div class="panel-head"><div><div class="panel-title">${t('engagementTitle')}</div><div class="panel-sub">${t('engagementSub')}</div></div></div>
-    ${hBarChartSVG(channelItems, {barH:20, gap:12})}
+    ${hBarChartSVG(channelItems, {barH:20, gap:12, labelW:235, labelSize:11})}
   </div>
 
   <div class="panel">
