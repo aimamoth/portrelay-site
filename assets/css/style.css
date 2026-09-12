@@ -267,8 +267,9 @@ p { margin: 0; }
 }
 
 @media (max-width: 420px) {
-  .lang-toggle button { padding: 5px 9px; font-size: 0.7rem; }
-  .site-header .container { gap: 12px; }
+  .lang-toggle button { padding: 4px 7px; font-size: 0.68rem; }
+  .site-header .container { gap: 8px; }
+  .nav-right { gap: 8px; }
 }
 
 @media (max-width: 560px) {
