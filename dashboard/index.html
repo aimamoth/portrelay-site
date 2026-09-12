@@ -1,0 +1,1897 @@
+<title>Binnacle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#EFF3F3; --surface:#FFFFFF; --surface-alt:#E4EAEA;
+    --border:#C9D2D2; --border-strong:#A9B8B8;
+    --ink:#10242C; --ink-secondary:#46606A; --ink-muted:#7C9096;
+    --accent:#8B6A2E; --accent-ink:#FFFFFF; --accent-soft:#F1E6D2;
+    --status-good:#2E7D5E; --status-good-soft:#DCEEE6;
+    --status-warning:#C1671F; --status-warning-soft:#F5E4D3;
+    --status-critical:#B4342E; --status-critical-soft:#F6DEDB;
+    --status-info:#2F6E8C; --status-info-soft:#DCE9EE;
+    --status-neutral:#6B7C82; --status-neutral-soft:#E6EAEB;
+    --stage-contract:#6B5CA5; --stage-contract-soft:#EAE5F5;
+    --font-display:'Fraunces',Georgia,serif;
+    --font-body:'Public Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --font-mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+    --radius-sm:6px; --radius-md:10px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B1B24; --surface:#122733; --surface-alt:#1A323F;
+      --border:#24424F; --border-strong:#315A69;
+      --ink:#E8EEF0; --ink-secondary:#A9BAC0; --ink-muted:#708289;
+      --accent:#D4AF5A; --accent-ink:#0B1B24; --accent-soft:#3A3220;
+      --status-good:#4FAE84; --status-good-soft:#16352C;
+      --status-warning:#E08A3E; --status-warning-soft:#3A2A18;
+      --status-critical:#E2635C; --status-critical-soft:#3A1E1C;
+      --status-info:#5FA8C9; --status-info-soft:#17303A;
+      --status-neutral:#8CA0A6; --status-neutral-soft:#1E2C30;
+      --stage-contract:#B9A6E8; --stage-contract-soft:#2A2340;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B1B24; --surface:#122733; --surface-alt:#1A323F;
+    --border:#24424F; --border-strong:#315A69;
+    --ink:#E8EEF0; --ink-secondary:#A9BAC0; --ink-muted:#708289;
+    --accent:#D4AF5A; --accent-ink:#0B1B24; --accent-soft:#3A3220;
+    --status-good:#4FAE84; --status-good-soft:#16352C;
+    --status-warning:#E08A3E; --status-warning-soft:#3A2A18;
+    --status-critical:#E2635C; --status-critical-soft:#3A1E1C;
+    --status-info:#5FA8C9; --status-info-soft:#17303A;
+    --status-neutral:#8CA0A6; --status-neutral-soft:#1E2C30;
+    --stage-contract:#B9A6E8; --stage-contract-soft:#2A2340;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:15px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--font-display); text-wrap:balance; margin:0;}
+  .mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums;}
+  button{font-family:inherit; color:inherit; cursor:pointer;}
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px;}
+  .shell{max-width:1280px; margin:0 auto; padding:22px clamp(16px,4vw,32px) 72px;}
+
+  /* ---------- header ---------- */
+  .topbar{
+    position:relative; overflow:hidden; border-radius:var(--radius-md);
+    background:var(--surface); border:1px solid var(--border);
+    padding:22px clamp(16px,3vw,28px); margin-bottom:20px;
+  }
+  .contour{position:absolute; inset:0; opacity:.14; pointer-events:none;}
+  .topbar-row{position:relative; display:flex; flex-wrap:wrap; gap:18px; align-items:flex-start; justify-content:space-between;}
+  .brand{display:flex; align-items:center; gap:12px; min-width:220px;}
+  .brand-mark{width:38px; height:38px; flex:none; color:var(--accent);}
+  .brand-text h1{font-size:21px; font-weight:600; letter-spacing:.2px;}
+  .brand-text p{margin:2px 0 0; color:var(--ink-muted); font-size:12.5px;}
+  .topbar-right{display:flex; flex-direction:column; align-items:flex-end; gap:10px;}
+  .demo-tag{
+    font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-muted);
+    border:1px solid var(--border-strong); border-radius:999px; padding:4px 10px;
+  }
+  .refresh-btn{
+    display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--ink-secondary);
+    background:none; border:none; padding:2px 0;
+  }
+  .refresh-btn:hover{color:var(--ink);}
+  .refresh-btn svg{width:13px; height:13px; transition:transform .4s ease;}
+  .refresh-btn.spinning svg{transform:rotate(360deg);}
+  .pill-group{display:flex; gap:6px; background:var(--surface-alt); border-radius:999px; padding:4px;}
+  .pill-btn{
+    border:none; background:transparent; color:var(--ink-secondary); font-size:12.5px; font-weight:500;
+    padding:6px 12px; border-radius:999px; transition:background .15s,color .15s; white-space:nowrap;
+  }
+  .pill-btn.active{background:var(--accent); color:var(--accent-ink);}
+  .lang-group .pill-btn{padding:6px 10px; font-family:var(--font-mono); font-size:11.5px; font-weight:600;}
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:7px; background:var(--accent); color:var(--accent-ink);
+    font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px; text-decoration:none; white-space:nowrap;
+  }
+  .cta-btn:hover{filter:brightness(1.06);}
+  .cta-btn svg{width:15px; height:15px; flex:none;}
+  .cta-foot{display:flex; justify-content:center; margin:8px 0 18px;}
+  .cta-btn-lg{font-size:14px; padding:11px 22px;}
+  .nav-btn{
+    display:inline-flex; align-items:center; gap:7px; background:var(--surface); color:var(--ink-secondary);
+    border:1px solid var(--border-strong); font-size:13px; font-weight:600; padding:8px 15px; border-radius:999px; white-space:nowrap;
+  }
+  .nav-btn:hover{color:var(--ink); border-color:var(--ink-muted);}
+  .nav-btn svg{width:15px; height:15px; flex:none;}
+
+  /* trust row */
+  .trust-row{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:14px 0 4px;}
+  .trust-badge{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; color:var(--ink-muted); border:1px solid var(--border); border-radius:999px; padding:5px 12px;}
+  .trust-badge svg{width:13px; height:13px; flex:none;}
+
+  /* analytics charts */
+  .northstar-value{font-family:var(--font-mono); font-size:clamp(32px,5vw,44px); font-weight:600; letter-spacing:-.01em;}
+  .northstar-badge{display:inline-flex; align-items:center; gap:5px; font-size:13px; font-weight:700; color:var(--status-good); background:var(--status-good-soft); border-radius:999px; padding:4px 12px; margin-left:10px;}
+  .trend-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:6px;}
+  .trend-card .trend-label{font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted); font-weight:600;}
+  .trend-card .trend-value{font-family:var(--font-mono); font-size:20px; font-weight:600; margin:3px 0 8px;}
+  .chart-legend{display:flex; gap:16px; margin-bottom:10px; font-size:12px; color:var(--ink-secondary);}
+  .chart-legend span{display:inline-flex; align-items:center; gap:6px;}
+  .chart-legend .sw{width:9px; height:9px; border-radius:2px; display:inline-block;}
+  .status-line{position:relative; margin-top:16px; font-size:14px; color:var(--ink-secondary); display:flex; align-items:center; gap:8px;}
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--status-good); flex:none;}
+
+  /* ---------- KPI ---------- */
+  .kpi-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-bottom:20px;}
+  .kpi-tile{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md);
+    padding:20px 22px; position:relative;
+  }
+  .kpi-label{font-size:12.5px; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.06em; font-weight:500;}
+  .kpi-value{font-family:var(--font-mono); font-size:clamp(28px,4vw,38px); font-weight:600; margin-top:6px; letter-spacing:-.01em;}
+  .kpi-trend{display:inline-flex; align-items:center; gap:4px; font-size:12.5px; font-weight:600; margin-top:8px; color:var(--status-good);}
+  .kpi-tile.alert{border-color:var(--status-critical); background:var(--status-critical-soft);}
+  .kpi-tile.alert .kpi-value{color:var(--status-critical);}
+  .kpi-tile.alert .kpi-label{color:var(--status-critical);}
+  .kpi-tile.ok .kpi-value{color:var(--status-good);}
+  .kpi-tile.clickable{cursor:pointer; text-align:left; width:100%; font-family:inherit;}
+  .kpi-tile.clickable:hover{border-color:var(--border-strong);}
+  .kpi-action{font-size:12px; font-weight:600; margin-top:8px; color:var(--ink-secondary); text-decoration:underline;}
+
+  /* skeleton loading */
+  .skel{background:var(--surface-alt); border-radius:6px; position:relative; overflow:hidden;}
+  .skel::after{
+    content:''; position:absolute; inset:0; transform:translateX(-100%);
+    background:linear-gradient(90deg, transparent, color-mix(in srgb, var(--ink) 8%, transparent), transparent);
+    animation:shimmer 1.5s infinite;
+  }
+  @keyframes shimmer{100%{transform:translateX(100%);}}
+  @media (prefers-reduced-motion:reduce){.skel::after{animation:none;}}
+  .skel-kpi{height:96px; border-radius:var(--radius-md);}
+  .skel-panel{height:180px; border-radius:var(--radius-md); margin-bottom:16px;}
+
+  /* ---------- panels ---------- */
+  .panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:18px 20px; margin-bottom:16px;}
+  .panel-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px;}
+  .panel-title{font-size:15.5px; font-weight:600;}
+  .panel-sub{font-size:12.5px; color:var(--ink-muted);}
+
+  /* response speed */
+  .bar-row{display:grid; grid-template-columns:120px 1fr 52px; align-items:center; gap:10px; padding:7px 0;}
+  .bar-row + .bar-row{border-top:1px solid var(--border);}
+  .bar-label{font-size:13px; color:var(--ink-secondary);}
+  .bar-track{height:8px; background:var(--surface-alt); border-radius:5px; overflow:hidden;}
+  .bar-fill{height:100%; background:var(--accent); border-radius:5px;}
+  .bar-value{font-family:var(--font-mono); font-size:12.5px; text-align:right; color:var(--ink);}
+  .panel-foot-stat{margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:13px; color:var(--ink-secondary); display:flex; justify-content:space-between;}
+
+  /* sold yacht cleanup */
+  .cleanup-row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding:10px 0;}
+  .cleanup-row + .cleanup-row{border-top:1px solid var(--border);}
+  .cleanup-name{font-size:13.5px; font-weight:600;}
+  .cleanup-meta{font-size:12px; color:var(--ink-muted); margin-top:3px;}
+  .platform-chips{display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;}
+  .chip{font-size:11px; padding:2px 8px; border-radius:999px; font-weight:600;}
+  .chip.good{background:var(--status-good-soft); color:var(--status-good);}
+  .chip.warning{background:var(--status-warning-soft); color:var(--status-warning);}
+  .chip.critical{background:var(--status-critical-soft); color:var(--status-critical);}
+  .fix-btn{font-size:12px; font-weight:600; border:1px solid var(--status-critical); color:var(--status-critical); background:transparent; padding:6px 12px; border-radius:var(--radius-sm); white-space:nowrap;}
+  .fix-btn:hover{background:var(--status-critical-soft);}
+  .empty-note{font-size:13px; color:var(--ink-muted); padding:6px 0;}
+
+  /* funnel */
+  .funnel-row{display:flex; gap:6px; margin-bottom:16px;}
+  .funnel-step{flex:1; text-align:center; padding:12px 8px; border-radius:var(--radius-sm); background:var(--surface-alt); position:relative;}
+  .funnel-step .n{font-family:var(--font-mono); font-size:20px; font-weight:600;}
+  .funnel-step .l{font-size:11.5px; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.04em; margin-top:2px;}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{text-align:left; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted); font-weight:600; padding:8px 10px; border-bottom:1px solid var(--border-strong); cursor:pointer; white-space:nowrap;}
+  td{padding:9px 10px; border-bottom:1px solid var(--border); white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+  td.name{font-weight:600; white-space:normal;}
+
+  /* deal pipeline */
+  .kanban{display:grid; grid-template-columns:repeat(5,1fr); gap:10px;}
+  @media (max-width:900px){.kanban{grid-template-columns:repeat(2,1fr);}}
+  .kanban-col{background:var(--surface-alt); border-radius:var(--radius-sm); padding:10px;}
+  .kanban-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
+  .kanban-head .t{font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-secondary);}
+  .kanban-head .c{font-family:var(--font-mono); font-size:13px; font-weight:600;}
+  .deal-chip{background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:6px 8px; font-size:11.5px; margin-bottom:6px;}
+  .deal-chip b{display:block; font-size:12px;}
+  .followup-badge{margin-top:6px; font-size:12.5px; color:var(--status-warning); font-weight:600;}
+  .kanban-dot{width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:6px;}
+  .stage-pill{font-size:11.5px; font-weight:700; padding:3px 10px; border-radius:999px; display:inline-block; white-space:nowrap;}
+  .listing-link{background:none; border:none; padding:0; text-align:left; font-family:inherit; font-weight:600; color:var(--ink); cursor:pointer; text-decoration:underline; text-decoration-color:var(--border-strong); text-underline-offset:2px;}
+  .listing-link:hover{color:var(--accent); text-decoration-color:var(--accent);}
+
+  /* channel panel */
+  .channel-row{
+    display:grid; grid-template-columns:1.6fr .9fr .9fr 1.4fr 20px; gap:14px; align-items:center;
+    padding:14px 10px; border-radius:var(--radius-sm); cursor:pointer; text-align:left; width:100%; background:none; border:1px solid transparent;
+  }
+  .channel-row:hover{background:var(--surface-alt); border-color:var(--border);}
+  .channel-row + .channel-row{border-top:1px solid var(--border);}
+  @media (max-width:760px){.channel-row{grid-template-columns:1fr; gap:8px;} .channel-row .chev{display:none;}}
+  .channel-name{display:flex; align-items:center; gap:10px; font-weight:600; font-size:14px;}
+  .channel-ico{width:30px; height:30px; flex:none; border-radius:8px; background:color-mix(in srgb, var(--c, var(--accent)) 16%, var(--surface)); color:var(--c, var(--accent)); display:flex; align-items:center; justify-content:center;}
+  .channel-ico.ig{background:linear-gradient(135deg,#FED373 0%,#F65678 42%,#C13584 70%,#5851DB 100%); color:#fff;}
+  .channel-count{font-family:var(--font-mono); font-size:15px;}
+  .channel-count .u{display:block; font-size:11px; color:var(--ink-muted); font-family:var(--font-body);}
+  .split-bar{height:8px; border-radius:5px; overflow:hidden; display:flex; background:var(--surface-alt);}
+  .split-legend{display:flex; gap:10px; margin-top:5px; font-size:11px; color:var(--ink-muted);}
+  .split-legend span{display:inline-flex; align-items:center; gap:4px;}
+  .dot{width:7px; height:7px; border-radius:50%; display:inline-block;}
+  .chev{color:var(--ink-muted);}
+
+  /* detail views */
+  .back-btn{display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--ink-secondary); background:none; border:none; padding:0 0 14px; }
+  .back-btn:hover{color:var(--ink);}
+  .thread-list-item{display:flex; gap:12px; align-items:flex-start; justify-content:space-between; padding:14px 4px; cursor:pointer; border-radius:var(--radius-sm);}
+  .thread-list-item:hover{background:var(--surface-alt);}
+  .thread-list-item + .thread-list-item{border-top:1px solid var(--border);}
+  .tli-buyer{font-weight:600; font-size:14px;}
+  .tli-meta{font-size:12.5px; color:var(--ink-muted); margin-top:2px;}
+  .tli-preview{font-size:13px; color:var(--ink-secondary); margin-top:5px; max-width:520px;}
+  .status-pill{font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; white-space:nowrap;}
+  .status-pill.closed{background:var(--status-good-soft); color:var(--status-good);}
+  .status-pill.still_interested{background:var(--status-info-soft); color:var(--status-info);}
+  .status-pill.churned{background:var(--status-neutral-soft); color:var(--status-neutral);}
+  .status-pill.pending{background:var(--status-warning-soft); color:var(--status-warning);}
+
+  .msg-log{display:flex; flex-direction:column; gap:10px; margin-bottom:18px;}
+  .msg{max-width:74%; padding:10px 13px; border-radius:12px; font-size:13.5px; line-height:1.45;}
+  .msg.buyer{align-self:flex-start; background:var(--surface-alt); border-bottom-left-radius:3px;}
+  .msg.broker{align-self:flex-end; background:var(--accent-soft); color:var(--ink); border-bottom-right-radius:3px;}
+  .msg .t{display:block; font-size:10.5px; color:var(--ink-muted); margin-top:5px;}
+  .draft-box{border:1px dashed var(--border-strong); border-radius:var(--radius-md); padding:14px 16px; background:var(--surface-alt);}
+  .draft-label{font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--accent); font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:6px;}
+  textarea{width:100%; min-height:88px; resize:vertical; border:1px solid var(--border-strong); border-radius:var(--radius-sm); padding:10px 12px; font-family:var(--font-body); font-size:13.5px; background:var(--surface); color:var(--ink);}
+  .draft-actions{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;}
+  .btn{border-radius:var(--radius-sm); padding:9px 16px; font-size:13px; font-weight:600; border:1px solid var(--border-strong); background:var(--surface); color:var(--ink);}
+  .btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+  .btn.text{border-color:transparent; color:var(--ink-secondary); text-decoration:underline;}
+  .sent-note{font-size:12.5px; color:var(--status-good); font-weight:600; display:flex; align-items:center; gap:6px;}
+  .visitor-row{display:grid; grid-template-columns:1.4fr 1fr .8fr 1fr .9fr; gap:12px; align-items:center; padding:12px 4px; font-size:13px;}
+  .visitor-row + .visitor-row{border-top:1px solid var(--border);}
+  .visitor-row.head{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted); font-weight:600;}
+  @media (max-width:760px){.visitor-row{grid-template-columns:1fr; gap:2px; padding:12px 0;} .visitor-row.head{display:none;}}
+  .conf{font-family:var(--font-mono);}
+  .conf.high{color:var(--status-good);} .conf.med{color:var(--status-warning);} .conf.low{color:var(--status-neutral);}
+
+  /* channel intro (AI SDR / Deanonymization explainers) */
+  .channel-intro{background:var(--surface-alt); border:1px solid var(--border); border-radius:var(--radius-md); padding:16px 18px; margin-bottom:16px;}
+  .channel-intro h3{font-size:14.5px; font-weight:600; margin-bottom:6px;}
+  .channel-intro p{margin:0 0 10px; font-size:13.5px; color:var(--ink-secondary); max-width:640px; line-height:1.55;}
+  .capability-list{display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none;}
+  .capability-list li{font-size:12px; font-weight:600; color:var(--accent); background:var(--accent-soft); border-radius:999px; padding:5px 12px;}
+
+  /* listing detail page */
+  .listing-head{display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px; margin-bottom:6px;}
+  .listing-title h2{font-size:22px; font-weight:600;}
+  .listing-title .sub{font-size:13px; color:var(--ink-muted); margin-top:3px; font-family:var(--font-mono);}
+  .listing-price{font-family:var(--font-mono); font-size:26px; font-weight:600; text-align:right;}
+  .listing-hero{
+    aspect-ratio:16/8; border-radius:var(--radius-md); border:1px solid var(--border); background:var(--surface-alt);
+    display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; margin:16px 0 10px;
+  }
+  .listing-hero svg{width:70%; max-width:420px; color:var(--accent);}
+  .photo-tag{position:absolute; top:10px; right:10px; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted); background:var(--surface); border:1px solid var(--border-strong); border-radius:999px; padding:3px 9px;}
+  .gallery-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:20px;}
+  .gallery-thumb{aspect-ratio:1; border-radius:var(--radius-sm); background:var(--surface-alt); border:1px solid var(--border); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; color:var(--ink-muted);}
+  .gallery-thumb svg{width:20px; height:20px;}
+  .gallery-thumb span{font-size:10.5px;}
+  .spec-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:14px; margin-bottom:20px;}
+  .spec-item .l{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted);}
+  .spec-item .v{font-family:var(--font-mono); font-size:14.5px; margin-top:3px;}
+  .listing-desc{font-size:14px; line-height:1.65; color:var(--ink-secondary); max-width:640px; margin-bottom:20px;}
+  .feature-list{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px 16px; margin:0 0 20px; padding:0; list-style:none;}
+  .feature-list li{font-size:13px; display:flex; gap:8px; align-items:flex-start;}
+  .feature-list li::before{content:'✓'; color:var(--status-good); font-weight:700; flex:none;}
+  .feature-list.quotes li::before{content:'“'; color:var(--accent); font-family:var(--font-display); font-size:22px; line-height:0.5; font-weight:700;}
+  .feature-list.quotes li{font-style:italic; color:var(--ink-secondary);}
+  .lang-split{font-size:12.5px; color:var(--ink-secondary); margin-top:2px;}
+  .perf-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:14px; margin-bottom:6px;}
+  .perf-item{background:var(--surface-alt); border-radius:var(--radius-sm); padding:12px 14px;}
+  .perf-item .l{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-muted);}
+  .perf-item .v{font-family:var(--font-mono); font-size:17px; font-weight:600; margin-top:3px;}
+
+  footer{margin-top:8px; font-size:12px; color:var(--ink-muted); text-align:center; line-height:1.6;}
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+</style>
+
+<div class="shell">
+  <div class="topbar">
+    <svg class="contour" viewBox="0 0 900 160" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-20 130 C 120 90, 260 150, 420 100 S 700 60, 940 110" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+      <path d="M-20 90 C 140 40, 300 110, 460 55 S 720 10, 940 60" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+      <path d="M-20 45 C 160 5, 320 65, 480 15 S 740 -20, 940 20" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+    </svg>
+    <div class="topbar-row">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="17.5" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M20 6v5M20 29v5M6 20h5M29 20h5" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M20 20 L27 13 L22 22 L13 27 Z" fill="currentColor"/>
+        </svg>
+        <div class="brand-text">
+          <h1>Meridian Yacht Sales</h1>
+          <p id="tagline">Fort Lauderdale, FL &middot; Managing Broker plan</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+          <button class="nav-btn" id="analyticsNavBtn">
+            <svg viewBox="0 0 20 20" fill="none"><path d="M4 16V9M10 16V4M16 16v-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span id="analyticsNavText">Analytics</span>
+          </button>
+          <a class="cta-btn" id="ctaTop" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon" target="_blank" rel="noopener">
+            <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="4.5" width="14" height="12" rx="1.6" stroke="currentColor" stroke-width="1.5"/><path d="M3 8h14M7 3v3M13 3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span id="ctaTopText">Book a call</span>
+          </a>
+        </div>
+        <div class="lang-group pill-group" role="tablist" id="langGroup">
+          <button class="pill-btn" data-lang="en">EN</button>
+          <button class="pill-btn" data-lang="fr">FR</button>
+          <button class="pill-btn" data-lang="es">ES</button>
+          <button class="pill-btn" data-lang="it">IT</button>
+        </div>
+        <span class="demo-tag" id="demoTag">Sample data &middot; illustrative</span>
+        <div class="pill-group" role="tablist" id="rangeGroup">
+          <button class="pill-btn" data-range="month">This month</button>
+          <button class="pill-btn" data-range="30d">Last 30 days</button>
+          <button class="pill-btn" data-range="quarter">This quarter</button>
+        </div>
+        <button class="refresh-btn" id="refreshBtn">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M16 5.5a6.5 6.5 0 1 0 1.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M17.5 3v3.2h-3.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="lastUpdated">Updated just now</span>
+        </button>
+      </div>
+    </div>
+    <div class="status-line"><span class="status-dot"></span><span id="statusLine"></span></div>
+  </div>
+
+  <div id="app"></div>
+
+  <div class="cta-foot">
+    <a class="cta-btn cta-btn-lg" id="ctaBottom" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon" target="_blank" rel="noopener">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="4.5" width="14" height="12" rx="1.6" stroke="currentColor" stroke-width="1.5"/><path d="M3 8h14M7 3v3M13 3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span id="ctaBottomText">Book a call</span>
+    </a>
+  </div>
+
+  <div class="trust-row">
+    <span class="trust-badge"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 16.5 5v4.2c0 4.1-2.7 7.4-6.5 8.3-3.8-.9-6.5-4.2-6.5-8.3V5L10 2.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span id="trustGdprText">GDPR compliant</span></span>
+    <span class="trust-badge"><svg viewBox="0 0 20 20" fill="none"><path d="M10 2.5 16.5 5v4.2c0 4.1-2.7 7.4-6.5 8.3-3.8-.9-6.5-4.2-6.5-8.3V5L10 2.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span id="trustSocText">SOC 2 compatible</span></span>
+  </div>
+
+  <footer id="footerNote">
+    Never shown here: negotiation terms, offer amounts, or buyer contact details &mdash;
+    this screen proves the system is working, it never makes the pricing or negotiating call.
+  </footer>
+</div>
+
+<script>
+/* ============================= ICONS / ILLUSTRATIONS ============================= */
+const ICONS = {
+  chat:'<path d="M6 8h16v10H12l-5 4v-4H6z" fill="currentColor"/>',
+  sms:'<rect x="5" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 11h10M9 14.5h6" stroke="currentColor" stroke-width="1.6"/>',
+  phone:'<path d="M8 6c1 3 2 5 4 7s4 3 7 4l2-3 4 2v3c0 2-2 3-4 3-8 0-16-8-16-16 0-2 1-4 3-4h3z" fill="currentColor"/>',
+  web:'<circle cx="14" cy="14" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 14h17M14 5.5c2.6 2.4 4 5.4 4 8.5s-1.4 6.1-4 8.5c-2.6-2.4-4-5.4-4-8.5s1.4-6.1 4-8.5z" fill="none" stroke="currentColor" stroke-width="1.4"/>',
+  radar:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M14 14 L21 8" stroke="currentColor" stroke-width="1.8"/><circle cx="14" cy="14" r="1.6" fill="currentColor"/>',
+  bot:'<rect x="7" y="10" width="14" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="11.5" cy="15.5" r="1.4" fill="currentColor"/><circle cx="16.5" cy="15.5" r="1.4" fill="currentColor"/><path d="M14 10V6m-3 0h6" stroke="currentColor" stroke-width="1.6"/>',
+  mail:'<rect x="5" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M6 9l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7"/>',
+  camera:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="14" cy="14" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/>'
+};
+
+const YACHT_SVG = `<svg viewBox="0 0 300 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 108 Q75 118 150 108 T300 108" stroke="currentColor" stroke-width="1.2" opacity=".35"/>
+  <path d="M0 118 Q75 126 150 118 T300 118" stroke="currentColor" stroke-width="1.2" opacity=".2"/>
+  <path d="M40 96 C60 100 220 100 250 92 L262 100 C240 108 60 110 34 104 Z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+  <path d="M70 96 L78 66 H190 L214 84 L214 96 Z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linejoin="round"/>
+  <path d="M96 66 L100 46 H150 L160 66" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
+  <path d="M182 46 L182 20" stroke="currentColor" stroke-width="1.4"/>
+  <circle cx="118" cy="80" r="4.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+  <circle cx="140" cy="80" r="4.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+  <circle cx="162" cy="80" r="4.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+</svg>`;
+
+/* ============================= STRUCTURAL DATA (language-neutral) ============================= */
+const LISTINGS = [
+  {id:'L1', name:'Azimut Grande 27M — "Meridian Blue"', loa:'88 ft / 26.9 m', price:'$6,450,000', inquiries:31, avgResp:'3 min', stage:'Offer', dom:64,
+    platforms:{yachtworld:'good', rightboat:'good', boattrader:'good'},
+    year:2022, builder:'Azimut Yachts', beam:'21 ft 4 in', draft:'6 ft 2 in', cabins:5, heads:5,
+    engines:'2x MAN V12, 1550 hp (420 hrs)', hull:'GRP composite', location:'Fort Lauderdale, FL'},
+  {id:'L2', name:'Sunseeker 74 — "Isla Mar"', loa:'74 ft / 22.6 m', price:'$2,150,000', inquiries:22, avgResp:'5 min', stage:'Showing', dom:41,
+    platforms:{yachtworld:'good', rightboat:'good', boattrader:'warning'},
+    year:2019, builder:'Sunseeker', beam:'18 ft 1 in', draft:'5 ft 6 in', cabins:4, heads:4,
+    engines:'2x MAN V8, 1400 hp (610 hrs)', hull:'GRP composite', location:'Miami Beach, FL'},
+  {id:'L3', name:'Princess X95 — "Windfall"', loa:'95 ft / 29.0 m', price:'$8,900,000', inquiries:14, avgResp:'2 min', stage:'Qualified', dom:19,
+    platforms:{yachtworld:'good', rightboat:'good', boattrader:'good'},
+    year:2023, builder:'Princess Yachts', beam:'20 ft 8 in', draft:'6 ft 0 in', cabins:5, heads:6,
+    engines:'2x MAN V12, 1900 hp (210 hrs)', hull:'GRP composite', location:'Fort Lauderdale, FL'},
+  {id:'L4', name:'Riva 76 Perseo — "Dolce Vita II"', loa:'76 ft / 23.2 m', price:'$3,750,000', inquiries:9, avgResp:'4 min', stage:'Under contract', dom:88,
+    platforms:{yachtworld:'good', rightboat:'good', boattrader:'warning'},
+    year:2018, builder:'Riva', beam:'17 ft 9 in', draft:'5 ft 3 in', cabins:3, heads:3,
+    engines:'2x MAN V8, 1200 hp (740 hrs)', hull:'GRP composite', location:'Naples, FL'},
+  {id:'L5', name:'Ferretti 720 — "Second Wind"', loa:'72 ft / 22.0 m', price:'$2,890,000', inquiries:6, avgResp:'6 min', stage:'Sold', dom:0,
+    platforms:{yachtworld:'good', rightboat:'good', boattrader:'critical'},
+    year:2017, builder:'Ferretti Yachts', beam:'17 ft 2 in', draft:'5 ft 7 in', cabins:3, heads:3,
+    engines:'2x MAN V8, 1000 hp (890 hrs)', hull:'GRP composite', location:'Fort Lauderdale, FL'}
+];
+
+const CHANNELS = [
+  {id:'whatsapp', icon:'chat', color:'#27AE60', base:{count:42, closed:9, interested:24, churned:9}, replyValue:3, replyUnit:'unitMin', kind:'thread'},
+  {id:'sms', icon:'sms', color:'#4C6EF5', base:{count:18, closed:3, interested:10, churned:5}, replyValue:6, replyUnit:'unitMin', kind:'thread'},
+  {id:'call', icon:'phone', color:'#E08A3E', base:{count:11, closed:4, interested:5, churned:2}, replyValue:1, replyUnit:'unitMin', kind:'thread'},
+  {id:'website', icon:'web', color:'#8B6A2E', base:{count:27, closed:5, interested:15, churned:7}, replyValue:4, replyUnit:'unitMin', kind:'thread'},
+  {id:'instagram', icon:'camera', iconClass:'ig', base:{count:19, closed:3, interested:11, churned:5}, replyValue:5, replyUnit:'unitMin', kind:'thread'},
+  {id:'email', icon:'mail', color:'#3B6FA6', base:{count:15, closed:4, interested:7, churned:4}, replyValue:25, replyUnit:'unitMin', kind:'thread'},
+  {id:'deanon', icon:'radar', color:'#46707E', base:{count:61, closed:2, interested:14, churned:45}, replyValue:2, replyUnit:'unitFirstOutreach', countLabelKey:'countLabelInterestedOutreached', kind:'visitors'},
+  {id:'ai_sdr', icon:'bot', color:'#7C5CBF', base:{count:22, closed:6, interested:11, churned:5}, replyValue:12, replyUnit:'unitSec', kind:'thread'}
+];
+
+const RANGE_FACTOR = {month:1, '30d':0.97, quarter:2.85};
+
+const THREADS = {
+  whatsapp:[
+    {id:'w1', buyer:'R. Alvarez', listing:'Azimut Grande 27M — Meridian Blue', status:'still_interested', messages:[{from:'buyer'},{from:'broker'},{from:'buyer'}]},
+    {id:'w2', buyer:'T. Nguyen', listing:'Sunseeker 74 — Isla Mar', status:'closed', sentAlready:true, messages:[{from:'buyer'},{from:'broker'}]},
+    {id:'w3', buyer:'K. Meunier', listing:'Princess X95 — Windfall', status:'churned', messages:[{from:'buyer'}]}
+  ],
+  sms:[
+    {id:'s1', buyer:'J. Okafor', listing:'Riva 76 Perseo — Dolce Vita II', status:'still_interested', messages:[{from:'buyer'}]},
+    {id:'s2', buyer:'M. Sørensen', listing:'Princess X95 — Windfall', status:'closed', sentAlready:true, messages:[{from:'buyer'},{from:'broker'}]},
+    {id:'s3', buyer:'D. Park', listing:'Sunseeker 74 — Isla Mar', status:'churned', messages:[{from:'buyer'}]}
+  ],
+  call:[
+    {id:'c1', buyer:'A. Bianchi', listing:'Azimut Grande 27M — Meridian Blue', status:'still_interested', needsManualDraft:true, messages:[{from:'buyer'}]},
+    {id:'c2', buyer:'S. Whitfield', listing:'Riva 76 Perseo — Dolce Vita II', status:'closed', sentAlready:true, messages:[{from:'buyer'}]},
+    {id:'c3', buyer:'L. Haddad', listing:'Ferretti 720 — Second Wind', status:'churned', messages:[{from:'buyer'}]}
+  ],
+  website:[
+    {id:'we1', buyer:'C. Marsh', buyerTag:'tagForm', listing:'Sunseeker 74 — Isla Mar', status:'still_interested', messages:[{from:'buyer'}]},
+    {id:'we2', buyer:'P. Ibarra', buyerTag:'tagForm', listing:'Princess X95 — Windfall', status:'closed', sentAlready:true, messages:[{from:'buyer'}]},
+    {id:'we3', buyer:'G. Fontaine', buyerTag:'tagForm', listing:'Azimut Grande 27M — Meridian Blue', status:'churned', messages:[{from:'buyer'}]}
+  ],
+  instagram:[
+    {id:'ig1', buyer:'liv.sails', buyerTag:'tagDm', listing:'Sunseeker 74 — Isla Mar', status:'still_interested', messages:[{from:'buyer'}]},
+    {id:'ig2', buyer:'yachtlife_mia', buyerTag:'tagDm', listing:'Azimut Grande 27M — Meridian Blue', status:'closed', sentAlready:true, messages:[{from:'buyer'}]},
+    {id:'ig3', buyer:'reef.wanderer', buyerTag:'tagDm', listing:'Princess X95 — Windfall', status:'churned', messages:[{from:'buyer'}]}
+  ],
+  email:[
+    {id:'e1', buyer:'Carlos Duarte', listing:'Riva 76 Perseo — Dolce Vita II', status:'still_interested', messages:[{from:'buyer'}]},
+    {id:'e2', buyer:'Helen Whitcombe', listing:'Sunseeker 74 — Isla Mar', status:'closed', sentAlready:true, messages:[{from:'buyer'}]},
+    {id:'e3', buyer:'Marcus Webb', listing:'Azimut Grande 27M — Meridian Blue', status:'churned', messages:[{from:'buyer'}]}
+  ],
+  ai_sdr:[
+    {id:'a1', buyer:'H. Delacroix', buyerTag:'tagIdentifiedVisitor', listing:'Princess X95 — Windfall', status:'still_interested', pendingFirstTouch:true, messages:[]},
+    {id:'a2', buyer:'V. Castellano', listing:'Sunseeker 74 — Isla Mar', status:'still_interested', messages:[{from:'ai'},{from:'buyer'}]},
+    {id:'a3', buyer:'N. Osei', listing:'Riva 76 Perseo — Dolce Vita II', status:'churned', optedOut:true, messages:[{from:'ai'},{from:'buyer'}]}
+  ]
+};
+/* message clock-stamps (kept language-neutral, shown as-is in every language) */
+const MSG_TIMES = {
+  whatsapp:{w1:['9:02 AM','9:04 AM','9:41 AM'], w2:['Tue 4:12 PM','Tue 4:15 PM'], w3:['Fri 6:50 PM']},
+  sms:{s1:['1:10 PM'], s2:['Mon 5:02 PM','Mon 5:10 PM'], s3:['Thu 2:30 PM']},
+  call:{c1:['12:15 PM'], c2:['Fri 10:05 AM'], c3:['last Wed']},
+  website:{we1:['2:48 PM'], we2:['Sun 6:20 PM'], we3:['last Mon']},
+  instagram:{ig1:['4:02 PM'], ig2:['Sat 1:10 PM'], ig3:['last Thu']},
+  email:{e1:['10:12 AM'], e2:['Tue 9:40 AM'], e3:['last Mon']},
+  ai_sdr:{a2:['Mon 9:00 AM','Mon 3:40 PM'], a3:['Fri 11:00 AM','Fri 1:15 PM']}
+};
+
+const VISITORS = [
+  {confidence:88}, {confidence:34}, {confidence:76}, {confidence:21}, {confidence:81}
+];
+
+const DEALS = [
+  {stage:'Inquiry', count:12, chips:['R. Alvarez — Grande 27M','C. Marsh — Sunseeker 74']},
+  {stage:'Qualified', count:9, chips:['K. Meunier — Windfall','J. Okafor — Riva 76']},
+  {stage:'Showing scheduled', count:6, chips:['A. Bianchi — Grande 27M','P. Ibarra — Windfall']},
+  {stage:'Offer out', count:3, chips:['T. Nguyen — Isla Mar']},
+  {stage:'Under contract', count:2, chips:['M. Sørensen — Windfall','S. Whitfield — Dolce Vita II']}
+];
+
+/* ============================= ANALYTICS DATA (illustrative, 6-month trend) ============================= */
+const TREND_MONTHS_END = new Date(2026, 8, 1); // September 2026
+const TREND = {
+  commission:[62000, 78000, 95000, 118000, 145000, 184000],
+  inquiries:[71, 78, 85, 94, 102, 118],
+  responseMin:[22, 14, 9, 6, 4, 3],
+  conversionPct:[4.5, 5.2, 5.8, 6.6, 7.1, 7.6]
+};
+function trendMonthLabels(){
+  const out = [];
+  for(let i=5;i>=0;i--){
+    const d = new Date(TREND_MONTHS_END.getFullYear(), TREND_MONTHS_END.getMonth()-i, 1);
+    out.push(d.toLocaleDateString(LOCALE_MAP[state.lang]||'en-US', {month:'short'}));
+  }
+  return out;
+}
+const STAGE_COMPARE = {
+  categories:['Inquiry','Qualified','Showing','Offer','Sold'],
+  lastMonth:[102, 62, 26, 6, 0],
+  thisMonth:[118, 76, 34, 9, 1]
+};
+
+const STAGE_KEY = {'Inquiry':'stageInquiry','Qualified':'stageQualified','Showing':'stageShowing','Showing scheduled':'stageShowingScheduled','Offer':'stageOffer','Offer out':'stageOfferOut','Under contract':'stageUnderContract','Sold':'stageSold'};
+const CHANNEL_KEY = {whatsapp:'chWhatsapp', sms:'chSms', call:'chCall', website:'chWebsite', instagram:'chInstagram', email:'chEmail', deanon:'chDeanon', ai_sdr:'chAiSdr'};
+const STATUS_KEY = {closed:'statusClosed', still_interested:'statusStillInterested', churned:'statusChurned'};
+const LOCALE_MAP = {en:'en-US', fr:'fr-FR', es:'es-ES', it:'it-IT'};
+
+const STAGE_META = {
+  'Inquiry':{c:'var(--status-neutral)', s:'var(--status-neutral-soft)'},
+  'Qualified':{c:'var(--status-info)', s:'var(--status-info-soft)'},
+  'Showing':{c:'var(--accent)', s:'var(--accent-soft)'},
+  'Showing scheduled':{c:'var(--accent)', s:'var(--accent-soft)'},
+  'Offer':{c:'var(--status-warning)', s:'var(--status-warning-soft)'},
+  'Offer out':{c:'var(--status-warning)', s:'var(--status-warning-soft)'},
+  'Under contract':{c:'var(--stage-contract)', s:'var(--stage-contract-soft)'},
+  'Sold':{c:'var(--status-good)', s:'var(--status-good-soft)'}
+};
+function stageMeta(stage){ return STAGE_META[stage] || {c:'var(--ink-muted)', s:'var(--surface-alt)'}; }
+
+/* ============================= UI STRING DICTIONARY ============================= */
+const UI = {
+  en:{
+    brandTagline:'Fort Lauderdale, FL · Managing Broker plan', sampleTag:'Sample data · illustrative',
+    rangeMonth:'This month', range30:'Last 30 days', rangeQuarter:'This quarter',
+    dateRangeAria:'Date range', languageAria:'Language', refreshAria:'Refresh data',
+    updated:'Updated', refreshing:'Refreshing latest activity…',
+    statusMonth:'4 new inquiries today, all answered within 3 minutes.',
+    status30:'31 inquiries over the last 30 days, average reply time holding under 4 minutes.',
+    statusQuarter:'112 inquiries this quarter across every channel, 3 listings closed.',
+    kpiInquiries:'Inquiries this system caught', kpiCommission:'Commission protected (est.)',
+    kpiAttention:'Listings needing attention', trendPrefix:'vs. previous period',
+    kpiClear:'Everything cleared', kpiAttentionAction:'Still live after selling — view',
+    panelChannelTitle:'Inquiries by channel', panelChannelSub:'Click a channel to see the conversations behind the numbers',
+    panelCleanupTitle:'Sold Yacht Cleanup', panelCleanupSub:'Listings still showing live somewhere after they sold',
+    panelListingsTitle:'Listings & pipeline', panelListingsSub:'Inquiry → Qualified → Showing → Offer, this period',
+    panelDealTitle:'Deal pipeline', panelDealSub:'Every active buyer conversation, by stage',
+    panelResponseTitle:'Response speed', panelResponseSub:'Average first reply, by listing platform',
+    outsideHours:'Answered outside working hours',
+    colListing:'Listing', colInquiries:'Inquiries', colAvgResp:'Avg. response', colStage:'Stage', colDom:'Days on market',
+    markFixed:'Mark fixed', cleared:'cleared', checking:'checking', stillLive:'still live', daysAgo:'days ago',
+    emptyCleanup:'Nothing flagged — every sold listing is cleared everywhere we can verify.',
+    followups:'2 follow-ups owed today', avgReplyLabel:'avg reply',
+    backToDashboard:'Back to dashboard', backTo:'Back to', conversationsPeriod:'conversations this period',
+    noMessagesYet:'No messages yet — AI SDR has drafted an opening message awaiting approval.',
+    aiSdrPrefix:'AI SDR:', youPrefix:'You:',
+    draftSuggestion:'AI-drafted next message — suggestion only',
+    draftFirstTouch:'AI-drafted next message — first outreach, needs approval like any reply',
+    approveSend:'Approve & Send', writeOwnInstead:'Write your own instead',
+    sentToBuyer:'Sent to buyer', justNow:'just now',
+    optedOutMsg:'Buyer asked to be removed from follow-ups — no further AI outreach will be drafted for this thread.',
+    noDraftTitle:'AI couldn’t draft this one',
+    noDraftBody:'No transcript was available to draft from for this call. Write the follow-up yourself — nothing is blocked.',
+    writePlaceholder:'Write your reply…',
+    channelNotFound:'That channel isn’t available right now — go back and pick another one.',
+    threadNotFound:'That conversation couldn’t be found — it may have moved. Go back and try again.',
+    listingNotFound:'That listing couldn’t be found — it may have been removed.',
+    deanonSub:'Identification only — becomes an AI SDR conversation only once outreach starts, and only above the confidence threshold.',
+    deanonWhatTitle:'What this does for you',
+    deanonWhatBody:'Most buyers browsing your listings never fill out a form or send a message — they look, compare, and leave. This finds them anyway: it resolves anonymous website visitors to a likely company or contact wherever the signal is strong enough, then hands qualified matches to the AI SDR to follow up and find out if they’re a real, in-market buyer. A visit that would have left no trace becomes a tracked, qualified lead instead.',
+    deanonCap1:'Resolves visitors to a company / contact', deanonCap2:'Only acts above a disclosed confidence threshold',
+    deanonCap3:'Hands qualified matches to AI SDR for follow-up', deanonCap4:'Never contacts a visitor directly — only once resolved',
+    visResolved:'Resolved to', visContact:'Likely contact', visConfidence:'Confidence', visActivity:'Activity', visStatus:'Status',
+    sdrWhatTitle:'What this is',
+    sdrWhatBody:'An AI sales development rep working your leads around the clock. It reaches out to identified visitors and unclaimed inbound leads by chat or by natural-sounding voice call, in your brokerage’s voice — qualifying budget, timeline, and boat preferences, answering listing questions accurately, and booking a showing straight onto your calendar. Every message it drafts, and every call script, waits for your approval before anything reaches a buyer.',
+    sdrCap1:'Trained on your listings, pricing, and past deal files', sdrCap2:'Answers FAQs on the spot',
+    sdrCap3:'Puts the buyer straight through to you when they ask for you', sdrCap4:'Books showings and sea trials on your calendar',
+    sdrCap5:'Speaks the buyer’s language, no interpreter needed', sdrCap6:'Handles the repetitive stuff, spec sheets, availability, follow ups',
+    sdrCap7:'Flags a hot buyer to you the moment they show real intent', sdrCap8:'Never quotes a final price or negotiates, that’s still you',
+    sdrCap9:'Covers nights, weekends, and boat show week',
+    sdrChatTitle:'Sample chatbot conversation', sdrChatSub:'A drafted example showing how a real website visit plays out',
+    sdrOutboundTitle:'Outbound follow ups',
+    chatAnalyticsTitle:'Chatbot analytics', chatAnalyticsSub:'How the website chatbot is performing this period',
+    chatConversations:'Conversations', chatResolved:'Resolved without you', chatAppts:'Showings booked', chatSpecSheets:'Spec sheets sent',
+    chatTopQuestionsTitle:'What buyers ask most', chatByLanguage:'Conversations by language',
+    callAnalyticsTitle:'Call analytics', callAnalyticsSub:'How the AI voice line is performing this period',
+    callsHandled:'Calls answered', callAvgLength:'Avg. call length', callTransferred:'Transferred to you',
+    callAfterHours:'Answered after hours', callMissed:'Missed calls', callTopReasonsTitle:'Most common reasons for calling',
+    langEN:'English', langFR:'French', langES:'Spanish', langIT:'Italian',
+    chatTopQuestions:['Is it still available?','What is the asking price?','Can I see the engine hours?','Do you take trade ins?','When can I come see it?'],
+    callTopReasons:['Confirming the asking price','Availability for a showing','Questions about the survey','Financing questions','Asking for the broker directly'],
+    photoTag:'Sample layout · add real photos', galExterior:'Exterior', galSalon:'Salon', galMaster:'Master cabin', galHelm:'Helm',
+    specLOA:'LOA', specBeam:'Beam', specDraft:'Draft', specCabins:'Cabins', specHeads:'Heads', specHull:'Hull', specEngines:'Engines', specYear:'Year',
+    listedOn:'Listed on', listingPerf:'This listing’s performance',
+    liveAccurate:'live & accurate', stillShowingSold:'still showing as available',
+    perfInquiries:'Inquiries', perfAvgResp:'Avg. response', perfDom:'Days on market', perfStage:'Funnel stage',
+    footerNote:'Never shown here: negotiation terms, offer amounts, or buyer contact details — this screen proves the system is working, it never makes the pricing or negotiating call.',
+    platOwnSite:'Own site', platPhoneWA:'Phone / WhatsApp',
+    unitMin:'min', unitSec:'sec', unitFirstOutreach:'hr to first outreach',
+    tagForm:'(form)', tagDm:'(DM)', tagIdentifiedVisitor:'(identified visitor)',
+    statusClosed:'Closed', statusStillInterested:'Still interested', statusChurned:'Churned', statusDraftPending:'Draft pending',
+    stageInquiry:'Inquiry', stageQualified:'Qualified', stageShowing:'Showing', stageShowingScheduled:'Showing scheduled',
+    stageOffer:'Offer', stageOfferOut:'Offer out', stageUnderContract:'Under contract', stageSold:'Sold',
+    chWhatsapp:'WhatsApp', chSms:'SMS', chCall:'Call', chWebsite:'Website inquiry', chInstagram:'Instagram',
+    chEmail:'Email inquiry', chDeanon:'Website Visitor Deanonymization', chAiSdr:'AI SDR',
+    countLabelInquiries:'inquiries', countLabelInterestedOutreached:'interested / outreached',
+    bookCall:'Book a call',
+    analyticsNavLabel:'Analytics', trustGdpr:'GDPR compliant', trustSoc:'SOC 2 compatible',
+    northStarLabel:'Your north star: commission protected', northStarSub:'The dollar value this system has protected for you, month by month',
+    overMonths:'over the last 6 months',
+    metricsOverTimeTitle:'Key metrics over time', metricsOverTimeSub:'The last 6 months, month by month',
+    inquiriesTrendLabel:'Inquiries', responseTrendLabel:'Avg. response time', conversionTrendLabel:'Inquiry to close rate',
+    comparisonTitle:'This month vs last month', comparisonSub:'Where buyers are in the pipeline right now, compared to a month ago',
+    legendLastMonth:'Last month', legendThisMonth:'This month',
+    engagementTitle:'Engagement by channel', engagementSub:'Which channels are actually generating activity',
+    topListingsTitle:'Top performing listings', topListingsSub:'Ranked by inquiries this period, colored by where each deal stands'
+  }
+};
+UI.fr = {
+  brandTagline:'Fort Lauderdale, FL · Formule Courtier Principal', sampleTag:'Données d’exemple · à titre indicatif',
+  rangeMonth:'Ce mois-ci', range30:'30 derniers jours', rangeQuarter:'Ce trimestre',
+  dateRangeAria:'Période', languageAria:'Langue', refreshAria:'Actualiser les données',
+  updated:'Mis à jour', refreshing:'Actualisation de l’activité…',
+  statusMonth:'4 nouvelles demandes aujourd’hui, toutes traitées en moins de 3 minutes.',
+  status30:'31 demandes sur les 30 derniers jours, temps de réponse moyen sous 4 minutes.',
+  statusQuarter:'112 demandes ce trimestre sur tous les canaux, 3 annonces vendues.',
+  kpiInquiries:'Demandes captées par le système', kpiCommission:'Commission protégée (est.)',
+  kpiAttention:'Annonces à surveiller', trendPrefix:'par rapport à la période précédente',
+  kpiClear:'Tout est résolu', kpiAttentionAction:'Encore visible après la vente — voir',
+  panelChannelTitle:'Demandes par canal', panelChannelSub:'Cliquez sur un canal pour voir les conversations derrière les chiffres',
+  panelCleanupTitle:'Nettoyage des annonces vendues', panelCleanupSub:'Annonces encore visibles ailleurs après leur vente',
+  panelListingsTitle:'Annonces et pipeline', panelListingsSub:'Demande → Qualifié → Visite → Offre, sur cette période',
+  panelDealTitle:'Pipeline des transactions', panelDealSub:'Chaque conversation acheteur active, par étape',
+  panelResponseTitle:'Vitesse de réponse', panelResponseSub:'Premier temps de réponse moyen, par plateforme d’annonce',
+  outsideHours:'Répondu hors des heures de bureau',
+  colListing:'Annonce', colInquiries:'Demandes', colAvgResp:'Réponse moy.', colStage:'Étape', colDom:'Jours sur le marché',
+  markFixed:'Marquer comme corrigé', cleared:'nettoyé', checking:'vérification', stillLive:'encore visible', daysAgo:'jours',
+  emptyCleanup:'Rien à signaler — chaque annonce vendue est nettoyée partout où nous pouvons le vérifier.',
+  followups:'2 relances dues aujourd’hui', avgReplyLabel:'réponse moy.',
+  backToDashboard:'Retour au tableau de bord', backTo:'Retour à', conversationsPeriod:'conversations sur cette période',
+  noMessagesYet:'Aucun message encore — le SDR IA a préparé un message d’ouverture en attente d’approbation.',
+  aiSdrPrefix:'SDR IA :', youPrefix:'Vous :',
+  draftSuggestion:'Message suivant rédigé par l’IA — simple suggestion',
+  draftFirstTouch:'Message rédigé par l’IA — premier contact, nécessite une approbation comme toute réponse',
+  approveSend:'Approuver et envoyer', writeOwnInstead:'Rédiger le mien à la place',
+  sentToBuyer:'Envoyé à l’acheteur', justNow:'à l’instant',
+  optedOutMsg:'L’acheteur a demandé à être retiré des relances — aucun autre message IA ne sera rédigé pour cette conversation.',
+  noDraftTitle:'L’IA n’a pas pu rédiger de brouillon pour celui-ci',
+  noDraftBody:'Aucune transcription n’était disponible pour cet appel. Rédigez vous-même la relance — rien n’est bloqué.',
+  writePlaceholder:'Rédigez votre réponse…',
+  channelNotFound:'Ce canal n’est pas disponible pour le moment — retournez et choisissez-en un autre.',
+  threadNotFound:'Cette conversation n’a pas pu être trouvée — elle a peut-être été déplacée. Retournez et réessayez.',
+  listingNotFound:'Cette annonce n’a pas pu être trouvée — elle a peut-être été supprimée.',
+  deanonSub:'Identification seulement — ne devient une conversation SDR IA qu’une fois le contact lancé, et seulement au-dessus du seuil de confiance.',
+  deanonWhatTitle:'Ce que cela fait pour vous',
+  deanonWhatBody:'La plupart des acheteurs qui consultent vos annonces ne remplissent jamais un formulaire ni n’envoient de message — ils regardent, comparent, puis partent. Ceci les retrouve malgré tout : le système identifie les visiteurs anonymes du site et les relie à une entreprise ou un contact probable dès que le signal est suffisamment fort, puis transmet les correspondances qualifiées au SDR IA pour relancer et vérifier s’il s’agit d’un véritable acheteur. Une visite qui n’aurait laissé aucune trace devient ainsi un lead suivi et qualifié.',
+  deanonCap1:'Identifie les visiteurs jusqu’à une entreprise / un contact', deanonCap2:'N’agit qu’au-dessus d’un seuil de confiance déclaré',
+  deanonCap3:'Transmet les correspondances qualifiées au SDR IA', deanonCap4:'Ne contacte jamais un visiteur directement — seulement une fois identifié',
+  visResolved:'Identifié comme', visContact:'Contact probable', visConfidence:'Confiance', visActivity:'Activité', visStatus:'Statut',
+  sdrWhatTitle:'Ce que c’est',
+  sdrWhatBody:'Un commercial IA qui travaille vos prospects jour et nuit. Il contacte les visiteurs identifiés et les leads entrants non pris en charge, par message ou par appel vocal au son naturel, avec la voix de votre agence — en qualifiant le budget, le délai et les préférences de bateau, en répondant avec précision aux questions sur les annonces, et en réservant une visite directement dans votre agenda. Chaque message rédigé, et chaque script d’appel, attend votre approbation avant d’atteindre un acheteur.',
+  sdrCap1:'Formé sur vos annonces, vos prix et vos anciens dossiers de vente', sdrCap2:'Répond aux questions fréquentes sur le champ',
+  sdrCap3:'Vous passe l’appel directement dès qu’un acheteur le demande', sdrCap4:'Réserve les visites et essais en mer dans votre agenda',
+  sdrCap5:'Parle la langue de l’acheteur, sans interprète', sdrCap6:'S’occupe des tâches répétitives, fiches techniques, disponibilités, relances',
+  sdrCap7:'Vous signale un acheteur chaud dès qu’il montre un vrai intérêt', sdrCap8:'Ne donne jamais un prix final et ne négocie pas, ça reste vous',
+  sdrCap9:'Couvre les nuits, les week-ends et la semaine du salon nautique',
+  sdrChatTitle:'Exemple de conversation du chatbot', sdrChatSub:'Un exemple rédigé montrant comment se déroule une vraie visite du site',
+  sdrOutboundTitle:'Relances sortantes',
+  chatAnalyticsTitle:'Statistiques du chatbot', chatAnalyticsSub:'Comment se comporte le chatbot du site sur cette période',
+  chatConversations:'Conversations', chatResolved:'Résolu sans vous', chatAppts:'Visites réservées', chatSpecSheets:'Fiches techniques envoyées',
+  chatTopQuestionsTitle:'Ce que les acheteurs demandent le plus', chatByLanguage:'Conversations par langue',
+  callAnalyticsTitle:'Statistiques des appels', callAnalyticsSub:'Comment se comporte la ligne vocale IA sur cette période',
+  callsHandled:'Appels répondus', callAvgLength:'Durée moy. d’appel', callTransferred:'Transférés à vous',
+  callAfterHours:'Répondus hors horaires', callMissed:'Appels manqués', callTopReasonsTitle:'Raisons d’appel les plus fréquentes',
+  langEN:'Anglais', langFR:'Français', langES:'Espagnol', langIT:'Italien',
+  chatTopQuestions:['Est-elle toujours disponible ?','Quel est le prix demandé ?','Puis-je voir les heures moteur ?','Reprenez-vous un bateau ?','Quand puis-je venir la voir ?'],
+  callTopReasons:['Confirmer le prix demandé','Disponibilité pour une visite','Questions sur l’expertise','Questions de financement','Demander à parler au courtier'],
+  photoTag:'Mise en page d’exemple · ajoutez de vraies photos', galExterior:'Extérieur', galSalon:'Salon', galMaster:'Cabine principale', galHelm:'Poste de pilotage',
+  specLOA:'LHT', specBeam:'Bau', specDraft:'Tirant d’eau', specCabins:'Cabines', specHeads:'Sanitaires', specHull:'Coque', specEngines:'Moteurs', specYear:'Année',
+  listedOn:'Diffusé sur', listingPerf:'Performance de cette annonce',
+  liveAccurate:'en ligne et à jour', stillShowingSold:'encore affiché comme disponible',
+  perfInquiries:'Demandes', perfAvgResp:'Réponse moy.', perfDom:'Jours sur le marché', perfStage:'Étape de l’entonnoir',
+  footerNote:'Jamais affiché ici : conditions de négociation, montants d’offre ou coordonnées de l’acheteur — cet écran prouve que le système fonctionne, il ne prend jamais de décision de prix ou de négociation.',
+  platOwnSite:'Site propre', platPhoneWA:'Téléphone / WhatsApp',
+  unitMin:'min', unitSec:'s', unitFirstOutreach:'h avant le premier contact',
+  tagForm:'(formulaire)', tagDm:'(MP)', tagIdentifiedVisitor:'(visiteur identifié)',
+  statusClosed:'Conclu', statusStillInterested:'Toujours intéressé', statusChurned:'Perdu', statusDraftPending:'Brouillon en attente',
+  stageInquiry:'Demande', stageQualified:'Qualifié', stageShowing:'Visite', stageShowingScheduled:'Visite programmée',
+  stageOffer:'Offre', stageOfferOut:'Offre envoyée', stageUnderContract:'Sous compromis', stageSold:'Vendu',
+  chWhatsapp:'WhatsApp', chSms:'SMS', chCall:'Appel', chWebsite:'Demande site web', chInstagram:'Instagram',
+  chEmail:'Demande par e-mail', chDeanon:'Désanonymisation des visiteurs du site', chAiSdr:'SDR IA',
+  countLabelInquiries:'demandes', countLabelInterestedOutreached:'intéressés / contactés',
+  bookCall:'Réserver un appel',
+  analyticsNavLabel:'Statistiques', trustGdpr:'Conforme RGPD', trustSoc:'Compatible SOC 2',
+  northStarLabel:'Votre indicateur clé : commission protégée', northStarSub:'La valeur en dollars que ce système vous a protégée, mois par mois',
+  overMonths:'sur les 6 derniers mois',
+  metricsOverTimeTitle:'Indicateurs clés dans le temps', metricsOverTimeSub:'Les 6 derniers mois, mois par mois',
+  inquiriesTrendLabel:'Demandes', responseTrendLabel:'Temps de réponse moy.', conversionTrendLabel:'Taux demande → vente',
+  comparisonTitle:'Ce mois-ci vs le mois dernier', comparisonSub:'Où en sont les acheteurs dans le pipeline, comparé au mois dernier',
+  legendLastMonth:'Mois dernier', legendThisMonth:'Ce mois-ci',
+  engagementTitle:'Engagement par canal', engagementSub:'Quels canaux génèrent réellement de l’activité',
+  topListingsTitle:'Annonces les plus performantes', topListingsSub:'Classées par demandes sur cette période, colorées selon l’état de chaque dossier'
+};
+UI.es = {
+  brandTagline:'Fort Lauderdale, FL · Plan Corredor Principal', sampleTag:'Datos de muestra · ilustrativos',
+  rangeMonth:'Este mes', range30:'Últimos 30 días', rangeQuarter:'Este trimestre',
+  dateRangeAria:'Rango de fechas', languageAria:'Idioma', refreshAria:'Actualizar datos',
+  updated:'Actualizado', refreshing:'Actualizando la actividad reciente…',
+  statusMonth:'4 nuevas consultas hoy, todas respondidas en menos de 3 minutos.',
+  status30:'31 consultas en los últimos 30 días, tiempo medio de respuesta por debajo de 4 minutos.',
+  statusQuarter:'112 consultas este trimestre en todos los canales, 3 embarcaciones vendidas.',
+  kpiInquiries:'Consultas captadas por el sistema', kpiCommission:'Comisión protegida (est.)',
+  kpiAttention:'Anuncios que requieren atención', trendPrefix:'frente al período anterior',
+  kpiClear:'Todo resuelto', kpiAttentionAction:'Aún visible tras la venta — ver',
+  panelChannelTitle:'Consultas por canal', panelChannelSub:'Haga clic en un canal para ver las conversaciones detrás de los números',
+  panelCleanupTitle:'Limpieza de embarcaciones vendidas', panelCleanupSub:'Anuncios que aún aparecen en algún sitio tras la venta',
+  panelListingsTitle:'Anuncios y pipeline', panelListingsSub:'Consulta → Cualificado → Visita → Oferta, en este período',
+  panelDealTitle:'Pipeline de operaciones', panelDealSub:'Cada conversación activa con un comprador, por etapa',
+  panelResponseTitle:'Velocidad de respuesta', panelResponseSub:'Tiempo medio de primera respuesta, por plataforma de anuncio',
+  outsideHours:'Respondido fuera del horario laboral',
+  colListing:'Anuncio', colInquiries:'Consultas', colAvgResp:'Resp. media', colStage:'Etapa', colDom:'Días en el mercado',
+  markFixed:'Marcar como corregido', cleared:'resuelto', checking:'verificando', stillLive:'aún visible', daysAgo:'días',
+  emptyCleanup:'Nada que señalar — cada anuncio vendido está resuelto en todo lo que podemos verificar.',
+  followups:'2 seguimientos pendientes hoy', avgReplyLabel:'resp. media',
+  backToDashboard:'Volver al panel', backTo:'Volver a', conversationsPeriod:'conversaciones en este período',
+  noMessagesYet:'Aún sin mensajes — el SDR de IA ha preparado un mensaje de apertura pendiente de aprobación.',
+  aiSdrPrefix:'SDR IA:', youPrefix:'Usted:',
+  draftSuggestion:'Siguiente mensaje redactado por IA — solo una sugerencia',
+  draftFirstTouch:'Mensaje redactado por IA — primer contacto, necesita aprobación como cualquier respuesta',
+  approveSend:'Aprobar y enviar', writeOwnInstead:'Escribir el mío en su lugar',
+  sentToBuyer:'Enviado al comprador', justNow:'ahora mismo',
+  optedOutMsg:'El comprador pidió no recibir más seguimientos — no se redactará más contacto de IA para esta conversación.',
+  noDraftTitle:'La IA no pudo redactar este mensaje',
+  noDraftBody:'No había transcripción disponible para redactar esta llamada. Escriba usted mismo el seguimiento — nada está bloqueado.',
+  writePlaceholder:'Escriba su respuesta…',
+  channelNotFound:'Ese canal no está disponible ahora — vuelva y elija otro.',
+  threadNotFound:'No se pudo encontrar esa conversación — puede haberse movido. Vuelva e inténtelo de nuevo.',
+  listingNotFound:'No se pudo encontrar ese anuncio — puede haber sido eliminado.',
+  deanonSub:'Solo identificación — se convierte en conversación del SDR de IA solo cuando se inicia el contacto, y solo por encima del umbral de confianza.',
+  deanonWhatTitle:'Qué hace esto por usted',
+  deanonWhatBody:'La mayoría de los compradores que ven sus anuncios nunca rellenan un formulario ni envían un mensaje — miran, comparan y se van. Esto los encuentra de todos modos: resuelve la identidad de los visitantes anónimos del sitio hasta una empresa o contacto probable siempre que la señal sea suficientemente fuerte, y luego pasa las coincidencias cualificadas al SDR de IA para hacer seguimiento y averiguar si es un comprador real. Una visita que no habría dejado rastro se convierte así en un lead cualificado y con seguimiento.',
+  deanonCap1:'Resuelve visitantes hasta una empresa / contacto', deanonCap2:'Solo actúa por encima de un umbral de confianza declarado',
+  deanonCap3:'Pasa las coincidencias cualificadas al SDR de IA', deanonCap4:'Nunca contacta a un visitante directamente — solo una vez identificado',
+  visResolved:'Identificado como', visContact:'Contacto probable', visConfidence:'Confianza', visActivity:'Actividad', visStatus:'Estado',
+  sdrWhatTitle:'Qué es esto',
+  sdrWhatBody:'Un representante de ventas con IA que trabaja sus leads día y noche. Contacta a los visitantes identificados y a los leads entrantes sin atender, por chat o por llamada de voz de sonido natural, con la voz de su agencia — cualificando presupuesto, plazos y preferencias de embarcación, respondiendo con precisión a preguntas sobre los anuncios, y reservando una visita directamente en su calendario. Cada mensaje que redacta, y cada guion de llamada, espera su aprobación antes de llegar a un comprador.',
+  sdrCap1:'Entrenado con sus anuncios, precios y expedientes de ventas anteriores', sdrCap2:'Responde preguntas frecuentes al instante',
+  sdrCap3:'Le pasa la llamada directamente en cuanto un comprador lo pide', sdrCap4:'Reserva visitas y pruebas de mar en su agenda',
+  sdrCap5:'Habla el idioma del comprador, sin intérprete', sdrCap6:'Se encarga de lo repetitivo, fichas técnicas, disponibilidad, seguimientos',
+  sdrCap7:'Le avisa de un comprador interesado de verdad en el momento', sdrCap8:'Nunca da un precio final ni negocia, eso sigue siendo cosa suya',
+  sdrCap9:'Cubre noches, fines de semana y la semana del salón náutico',
+  sdrChatTitle:'Ejemplo de conversación del chatbot', sdrChatSub:'Un ejemplo redactado que muestra cómo se desarrolla una visita real al sitio',
+  sdrOutboundTitle:'Seguimientos salientes',
+  chatAnalyticsTitle:'Estadísticas del chatbot', chatAnalyticsSub:'Cómo está rindiendo el chatbot del sitio en este período',
+  chatConversations:'Conversaciones', chatResolved:'Resuelto sin usted', chatAppts:'Visitas reservadas', chatSpecSheets:'Fichas técnicas enviadas',
+  chatTopQuestionsTitle:'Lo que más preguntan los compradores', chatByLanguage:'Conversaciones por idioma',
+  callAnalyticsTitle:'Estadísticas de llamadas', callAnalyticsSub:'Cómo está rindiendo la línea de voz de IA en este período',
+  callsHandled:'Llamadas atendidas', callAvgLength:'Duración media', callTransferred:'Transferidas a usted',
+  callAfterHours:'Atendidas fuera de horario', callMissed:'Llamadas perdidas', callTopReasonsTitle:'Motivos de llamada más frecuentes',
+  langEN:'Inglés', langFR:'Francés', langES:'Español', langIT:'Italiano',
+  chatTopQuestions:['¿Sigue disponible?','¿Cuál es el precio de venta?','¿Puedo ver las horas de motor?','¿Aceptan un barco como parte de pago?','¿Cuándo puedo ir a verla?'],
+  callTopReasons:['Confirmar el precio de venta','Disponibilidad para una visita','Preguntas sobre la inspección','Preguntas de financiación','Pedir hablar con el corredor'],
+  photoTag:'Diseño de muestra · añada fotos reales', galExterior:'Exterior', galSalon:'Salón', galMaster:'Camarote principal', galHelm:'Puesto de mando',
+  specLOA:'Eslora', specBeam:'Manga', specDraft:'Calado', specCabins:'Camarotes', specHeads:'Baños', specHull:'Casco', specEngines:'Motores', specYear:'Año',
+  listedOn:'Publicado en', listingPerf:'Rendimiento de este anuncio',
+  liveAccurate:'en línea y correcto', stillShowingSold:'sigue mostrándose como disponible',
+  perfInquiries:'Consultas', perfAvgResp:'Resp. media', perfDom:'Días en el mercado', perfStage:'Etapa del embudo',
+  footerNote:'Nunca se muestra aquí: condiciones de negociación, importes de oferta ni datos de contacto del comprador — esta pantalla demuestra que el sistema funciona, nunca toma decisiones de precio o negociación.',
+  platOwnSite:'Sitio propio', platPhoneWA:'Teléfono / WhatsApp',
+  unitMin:'min', unitSec:'s', unitFirstOutreach:'h hasta el primer contacto',
+  tagForm:'(formulario)', tagDm:'(MD)', tagIdentifiedVisitor:'(visitante identificado)',
+  statusClosed:'Cerrado', statusStillInterested:'Aún interesado', statusChurned:'Perdido', statusDraftPending:'Borrador pendiente',
+  stageInquiry:'Consulta', stageQualified:'Cualificado', stageShowing:'Visita', stageShowingScheduled:'Visita programada',
+  stageOffer:'Oferta', stageOfferOut:'Oferta enviada', stageUnderContract:'Bajo contrato', stageSold:'Vendido',
+  chWhatsapp:'WhatsApp', chSms:'SMS', chCall:'Llamada', chWebsite:'Consulta del sitio web', chInstagram:'Instagram',
+  chEmail:'Consulta por correo electrónico', chDeanon:'Desanonimización de visitantes del sitio', chAiSdr:'SDR de IA',
+  countLabelInquiries:'consultas', countLabelInterestedOutreached:'interesados / contactados',
+  bookCall:'Reservar una llamada',
+  analyticsNavLabel:'Estadísticas', trustGdpr:'Conforme al RGPD', trustSoc:'Compatible con SOC 2',
+  northStarLabel:'Su métrica estrella: comisión protegida', northStarSub:'El valor en dólares que este sistema le ha protegido, mes a mes',
+  overMonths:'en los últimos 6 meses',
+  metricsOverTimeTitle:'Métricas clave en el tiempo', metricsOverTimeSub:'Los últimos 6 meses, mes a mes',
+  inquiriesTrendLabel:'Consultas', responseTrendLabel:'Tiempo de respuesta medio', conversionTrendLabel:'Tasa consulta a venta',
+  comparisonTitle:'Este mes frente al mes pasado', comparisonSub:'En qué punto del pipeline están los compradores ahora, comparado con hace un mes',
+  legendLastMonth:'Mes pasado', legendThisMonth:'Este mes',
+  engagementTitle:'Interacción por canal', engagementSub:'Qué canales generan realmente actividad',
+  topListingsTitle:'Anuncios con mejor rendimiento', topListingsSub:'Ordenados por consultas en este período, coloreados según el estado de cada operación'
+};
+UI.it = {
+  brandTagline:'Fort Lauderdale, FL · Piano Broker Responsabile', sampleTag:'Dati di esempio · a scopo illustrativo',
+  rangeMonth:'Questo mese', range30:'Ultimi 30 giorni', rangeQuarter:'Questo trimestre',
+  dateRangeAria:'Intervallo di date', languageAria:'Lingua', refreshAria:'Aggiorna i dati',
+  updated:'Aggiornato', refreshing:'Aggiornamento dell’attività in corso…',
+  statusMonth:'4 nuove richieste oggi, tutte gestite in meno di 3 minuti.',
+  status30:'31 richieste negli ultimi 30 giorni, tempo medio di risposta sotto i 4 minuti.',
+  statusQuarter:'112 richieste questo trimestre su tutti i canali, 3 imbarcazioni vendute.',
+  kpiInquiries:'Richieste intercettate dal sistema', kpiCommission:'Commissione protetta (stim.)',
+  kpiAttention:'Annunci da controllare', trendPrefix:'rispetto al periodo precedente',
+  kpiClear:'Tutto risolto', kpiAttentionAction:'Ancora visibile dopo la vendita — vedi',
+  panelChannelTitle:'Richieste per canale', panelChannelSub:'Clicca su un canale per vedere le conversazioni dietro i numeri',
+  panelCleanupTitle:'Pulizia annunci venduti', panelCleanupSub:'Annunci ancora visibili altrove dopo la vendita',
+  panelListingsTitle:'Annunci e pipeline', panelListingsSub:'Richiesta → Qualificato → Visita → Offerta, in questo periodo',
+  panelDealTitle:'Pipeline delle trattative', panelDealSub:'Ogni conversazione attiva con un acquirente, per fase',
+  panelResponseTitle:'Velocità di risposta', panelResponseSub:'Tempo medio di prima risposta, per piattaforma di annuncio',
+  outsideHours:'Risposto fuori dall’orario di lavoro',
+  colListing:'Annuncio', colInquiries:'Richieste', colAvgResp:'Risposta media', colStage:'Fase', colDom:'Giorni sul mercato',
+  markFixed:'Segna come risolto', cleared:'risolto', checking:'in verifica', stillLive:'ancora visibile', daysAgo:'giorni fa',
+  emptyCleanup:'Nulla da segnalare — ogni annuncio venduto è risolto ovunque possiamo verificarlo.',
+  followups:'2 follow-up dovuti oggi', avgReplyLabel:'risposta media',
+  backToDashboard:'Torna alla dashboard', backTo:'Torna a', conversationsPeriod:'conversazioni in questo periodo',
+  noMessagesYet:'Ancora nessun messaggio — l’SDR IA ha preparato un messaggio di apertura in attesa di approvazione.',
+  aiSdrPrefix:'SDR IA:', youPrefix:'Tu:',
+  draftSuggestion:'Prossimo messaggio redatto dall’IA — solo un suggerimento',
+  draftFirstTouch:'Messaggio redatto dall’IA — primo contatto, richiede approvazione come qualsiasi risposta',
+  approveSend:'Approva e invia', writeOwnInstead:'Scrivi il tuo messaggio',
+  sentToBuyer:'Inviato all’acquirente', justNow:'proprio ora',
+  optedOutMsg:'L’acquirente ha chiesto di essere rimosso dai follow-up — non verrà redatto nessun altro contatto IA per questa conversazione.',
+  noDraftTitle:'L’IA non è riuscita a redigere questo messaggio',
+  noDraftBody:'Non era disponibile nessuna trascrizione per questa chiamata. Scrivi tu stesso il follow-up — nulla è bloccato.',
+  writePlaceholder:'Scrivi la tua risposta…',
+  channelNotFound:'Questo canale non è disponibile al momento — torna indietro e scegline un altro.',
+  threadNotFound:'Questa conversazione non è stata trovata — potrebbe essere stata spostata. Torna indietro e riprova.',
+  listingNotFound:'Questo annuncio non è stato trovato — potrebbe essere stato rimosso.',
+  deanonSub:'Solo identificazione — diventa una conversazione dell’SDR IA solo quando parte il contatto, e solo sopra la soglia di confidenza.',
+  deanonWhatTitle:'Cosa fa questo per te',
+  deanonWhatBody:'La maggior parte degli acquirenti che visitano i tuoi annunci non compila mai un modulo né invia un messaggio — guardano, confrontano e se ne vanno. Questo li trova comunque: risolve i visitatori anonimi del sito fino a un’azienda o un contatto probabile ovunque il segnale sia sufficientemente forte, poi passa le corrispondenze qualificate all’SDR IA per fare follow-up e scoprire se si tratta di un vero acquirente. Una visita che non avrebbe lasciato traccia diventa così un lead tracciato e qualificato.',
+  deanonCap1:'Risolve i visitatori fino a un’azienda / contatto', deanonCap2:'Agisce solo sopra una soglia di confidenza dichiarata',
+  deanonCap3:'Passa le corrispondenze qualificate all’SDR IA', deanonCap4:'Non contatta mai un visitatore direttamente — solo una volta identificato',
+  visResolved:'Identificato come', visContact:'Contatto probabile', visConfidence:'Confidenza', visActivity:'Attività', visStatus:'Stato',
+  sdrWhatTitle:'Cosa è questo',
+  sdrWhatBody:'Un rappresentante di vendita IA che lavora i tuoi contatti giorno e notte. Contatta i visitatori identificati e i lead in ingresso non gestiti, via chat o con una chiamata vocale dal suono naturale, con la voce della tua agenzia — qualificando budget, tempistiche e preferenze sull’imbarcazione, rispondendo con precisione alle domande sugli annunci, e prenotando una visita direttamente nel tuo calendario. Ogni messaggio che redige, e ogni script di chiamata, attende la tua approvazione prima di raggiungere un acquirente.',
+  sdrCap1:'Addestrato sui tuoi annunci, prezzi e pratiche di vendita passate', sdrCap2:'Risponde alle domande frequenti sul momento',
+  sdrCap3:'Ti passa la chiamata subito quando un acquirente lo chiede', sdrCap4:'Prenota visite e prove in mare direttamente sul tuo calendario',
+  sdrCap5:'Parla la lingua dell’acquirente, senza interprete', sdrCap6:'Si occupa delle cose ripetitive, schede tecniche, disponibilità, follow up',
+  sdrCap7:'Ti segnala un acquirente interessato sul serio non appena lo dimostra', sdrCap8:'Non dà mai un prezzo finale e non negozia, quello resta a te',
+  sdrCap9:'Copre notti, weekend e la settimana del salone nautico',
+  sdrChatTitle:'Esempio di conversazione del chatbot', sdrChatSub:'Un esempio scritto che mostra come si svolge una vera visita al sito',
+  sdrOutboundTitle:'Follow up in uscita',
+  chatAnalyticsTitle:'Statistiche del chatbot', chatAnalyticsSub:'Come sta andando il chatbot del sito in questo periodo',
+  chatConversations:'Conversazioni', chatResolved:'Risolto senza di te', chatAppts:'Visite prenotate', chatSpecSheets:'Schede tecniche inviate',
+  chatTopQuestionsTitle:'Cosa chiedono di più gli acquirenti', chatByLanguage:'Conversazioni per lingua',
+  callAnalyticsTitle:'Statistiche delle chiamate', callAnalyticsSub:'Come sta andando la linea vocale IA in questo periodo',
+  callsHandled:'Chiamate risposte', callAvgLength:'Durata media chiamata', callTransferred:'Trasferite a te',
+  callAfterHours:'Risposte fuori orario', callMissed:'Chiamate perse', callTopReasonsTitle:'Motivi di chiamata più frequenti',
+  langEN:'Inglese', langFR:'Francese', langES:'Spagnolo', langIT:'Italiano',
+  chatTopQuestions:['È ancora disponibile?','Qual è il prezzo richiesto?','Posso vedere le ore motore?','Accettate una permuta?','Quando posso venire a vederla?'],
+  callTopReasons:['Confermare il prezzo richiesto','Disponibilità per una visita','Domande sulla perizia','Domande di finanziamento','Chiedere di parlare con il broker'],
+  photoTag:'Layout di esempio · aggiungi foto reali', galExterior:'Esterno', galSalon:'Salone', galMaster:'Cabina armatoriale', galHelm:'Plancia di comando',
+  specLOA:'LFT', specBeam:'Larghezza', specDraft:'Pescaggio', specCabins:'Cabine', specHeads:'Bagni', specHull:'Scafo', specEngines:'Motori', specYear:'Anno',
+  listedOn:'Pubblicato su', listingPerf:'Prestazioni di questo annuncio',
+  liveAccurate:'online e corretto', stillShowingSold:'ancora mostrato come disponibile',
+  perfInquiries:'Richieste', perfAvgResp:'Risposta media', perfDom:'Giorni sul mercato', perfStage:'Fase del funnel',
+  footerNote:'Non mostrato qui: condizioni di negoziazione, importi dell’offerta o dati di contatto dell’acquirente — questa schermata dimostra che il sistema funziona, non prende mai decisioni di prezzo o negoziazione.',
+  platOwnSite:'Sito proprio', platPhoneWA:'Telefono / WhatsApp',
+  unitMin:'min', unitSec:'s', unitFirstOutreach:'h al primo contatto',
+  tagForm:'(modulo)', tagDm:'(DM)', tagIdentifiedVisitor:'(visitatore identificato)',
+  statusClosed:'Chiuso', statusStillInterested:'Ancora interessato', statusChurned:'Perso', statusDraftPending:'Bozza in attesa',
+  stageInquiry:'Richiesta', stageQualified:'Qualificato', stageShowing:'Visita', stageShowingScheduled:'Visita programmata',
+  stageOffer:'Offerta', stageOfferOut:'Offerta inviata', stageUnderContract:'Sotto contratto', stageSold:'Venduto',
+  chWhatsapp:'WhatsApp', chSms:'SMS', chCall:'Chiamata', chWebsite:'Richiesta dal sito web', chInstagram:'Instagram',
+  chEmail:'Richiesta via email', chDeanon:'Deanonimizzazione visitatori del sito', chAiSdr:'SDR IA',
+  countLabelInquiries:'richieste', countLabelInterestedOutreached:'interessati / contattati',
+  bookCall:'Prenota una chiamata',
+  analyticsNavLabel:'Statistiche', trustGdpr:'Conforme al GDPR', trustSoc:'Compatibile con SOC 2',
+  northStarLabel:'La tua metrica guida: commissione protetta', northStarSub:'Il valore in dollari che questo sistema ti ha protetto, mese per mese',
+  overMonths:'negli ultimi 6 mesi',
+  metricsOverTimeTitle:'Metriche chiave nel tempo', metricsOverTimeSub:'Gli ultimi 6 mesi, mese per mese',
+  inquiriesTrendLabel:'Richieste', responseTrendLabel:'Tempo di risposta medio', conversionTrendLabel:'Tasso richiesta-vendita',
+  comparisonTitle:'Questo mese rispetto al mese scorso', comparisonSub:'A che punto sono gli acquirenti nella pipeline ora, rispetto a un mese fa',
+  legendLastMonth:'Mese scorso', legendThisMonth:'Questo mese',
+  engagementTitle:'Coinvolgimento per canale', engagementSub:'Quali canali generano davvero attività',
+  topListingsTitle:'Annunci con le migliori prestazioni', topListingsSub:'Classificati per richieste in questo periodo, colorati in base allo stato di ogni trattativa'
+};
+function t(key){ const d = UI[state.lang]; return (d && d[key]!=null) ? d[key] : (UI.en[key]!=null ? UI.en[key] : key); }
+function stageLabel(stage){ return t(STAGE_KEY[stage]) || stage; }
+function channelName(id){ return t(CHANNEL_KEY[id]); }
+function statusLabel(s){ return t(STATUS_KEY[s]); }
+
+/* ============================= TRANSLATABLE CONTENT (prose) ============================= */
+const TX = {
+  en:{
+    listings:{
+      L1:{d:'A low-hour flagship Grande with the full-beam owner’s suite forward and a garage large enough for a tender and a jet ski. Zero-speed stabilizers keep her flat at anchor, and the flybridge layout is built for entertaining as much as passage-making.',
+        f:['Zero-speed stabilizers','Full-beam master suite forward','Tender + jet ski garage','Recent 2024 detailing and bottom job','Starlink onboard Wi-Fi','Generator redundancy, 2x 27kW']},
+      L2:{d:'A well-kept 74 with a bright, open-plan salon and hydraulic swim platform that turns the aft cockpit into a beach club. Single owner since new, on a strict service schedule with full records.',
+        f:['Hydraulic swim platform','Single owner since new','Full service records available','Flybridge wet bar + grill','Underwater lighting','Recent canvas replacement']},
+      L3:{d:'Effectively a new build — under 250 engine hours — with the X-Class beach club aft and a sky lounge that opens fully to the flybridge. Still under builder warranty.',
+        f:['Under builder warranty','Beach club with fold-down bulwark','Sky lounge, full-opening glass','Captain’s cabin forward','Seakeeper gyro stabilization','Delivered with full electronics package']},
+      L4:{d:'A design-forward Perseo with the signature Riva mahogany detailing throughout. Buyer’s survey completed and financing confirmed — closing scheduled pending final title work.',
+        f:['Signature mahogany interior joinery','Survey completed, no material findings','Financing confirmed','Recent engine service, both mains','Custom Riva tender included']},
+      L5:{d:'Sold after a 6-day marketing window once the AI system caught and qualified the winning inquiry within minutes of it landing. Listing sync is still catching up on one marketplace — see Sold Yacht Cleanup.',
+        f:['Sale closed in 6 days','Recent haul-out and bottom paint','Well-documented maintenance history']}
+    },
+    visitors:[
+      {company:'Anchor Harbor Capital', contact:'Likely: J. Reddington, Managing Partner', pages:'Viewed Princess X95 twice, spec sheet download', identified:'3 hr ago', status:'Handed to AI SDR'},
+      {company:'Unresolved — residential IP, Palm Beach', contact:'—', pages:'Viewed 2 listings, 40s avg', identified:'6 hr ago', status:'Below threshold — not actioned'},
+      {company:'Meridian Capital Advisors', contact:'Likely: S. Kwan, Principal', pages:'Viewed Riva 76 + financing page', identified:'yesterday', status:'Pending broker review'},
+      {company:'Unresolved — mobile carrier network', contact:'—', pages:'Viewed homepage only', identified:'yesterday', status:'Below threshold — not actioned'},
+      {company:'Blue Horizon Family Office', contact:'Likely: A. Devereux', pages:'Viewed Azimut Grande 27M, returned 3x', identified:'2 days ago', status:'Handed to AI SDR'}
+    ],
+    threads:{
+      whatsapp:{
+        w1:{time:'11 min ago', m:['Is the Grande 27M still available for a showing this Saturday?','Yes — she’s available. I can hold 10am or 2pm for you, which works better?','2pm works. Can we also see the engine room this time?'],
+          draft:'Confirmed for 2pm Saturday — I’ll have the engine room open and the survey report ready for you to review at the dock.'},
+        w2:{time:'2 days ago', m:['We loved the sea trial. Sending the offer through our attorney tomorrow.','Fantastic — I’ll flag the file so we can turn it around fast once it lands.']},
+        w3:{time:'6 days ago', m:['Went with another 90-footer that had lower hours on the mains. Appreciate the time.'],
+          draft:'Totally understand — appreciate you letting us know. I’ll keep you on the list if anything closer to spec comes on.'}
+      },
+      sms:{
+        s1:{time:'38 min ago', m:['Financing pre-approval just cleared. Can we lock in a sea trial for next week?'],
+          draft:'Great news — I have Tuesday or Thursday morning open for a sea trial, let me know which works and I’ll confirm with the captain.'},
+        s2:{time:'yesterday', m:['Offer accepted on our end — excited!','Congratulations — closing docs going out today.']},
+        s3:{time:'5 days ago', m:['Budget shifted — looking under $1.5M now, this is out of range for us.'],
+          draft:'Understood, thank you for the update — I’ll flag you if something in that range comes through.'}
+      },
+      call:{
+        c1:{time:'1 hr ago', m:['(Call, 6 min) Asked about charter income history and hull warranty transfer.']},
+        c2:{time:'3 days ago', m:['(Call, 14 min) Verbally accepted asking price pending survey.']},
+        c3:{time:'last week', m:['(Call, 3 min) Vessel already sold by the time they called — disappointed it was still listed live.'],
+          draft:'Apologies for the mix-up — that listing should have been pulled sooner. Happy to show you two comparable boats we have coming available.'}
+      },
+      website:{
+        we1:{time:'27 min ago', m:['Requested spec sheet and asked if seller would consider a trade-in of a 2019 46’.'],
+          draft:'Sending the full spec sheet now — seller is open to discussing a trade, happy to set up a call this week to talk numbers.'},
+        we2:{time:'4 days ago', m:['Confirmed — moving forward with the purchase agreement.']},
+        we3:{time:'1 week ago', m:['Decided to charter for a season before buying — not ready yet.'],
+          draft:'Makes sense — a season of chartering is a smart way to test the size. I’ll check back in with you toward the end of the season.'}
+      },
+      instagram:{
+        ig1:{time:'19 min ago', m:['obsessed with the flybridge shots 😍 is there a video walkthrough anywhere?'],
+          draft:'So glad you asked — sending over the full walkthrough video and drone footage now. Happy to set up a private viewing whenever works for you.'},
+        ig2:{time:'3 days ago', m:['Just spoke with my broker — moving forward on our end, thank you!']},
+        ig3:{time:'5 days ago', m:['Gorgeous boat but out of our range for now — following the page for future listings.'],
+          draft:'Appreciate you saying so — I’ll keep an eye out and tag you if something closer to your range comes up.'}
+      },
+      email:{
+        e1:{time:'44 min ago', m:['Could you send the full documentation package — survey history, maintenance logs, and title? Reviewing with my broker this week.'],
+          draft:'Attaching the full documentation package now — survey history, maintenance logs, and clean title. Happy to jump on a call with your broker if useful.'},
+        e2:{time:'2 days ago', m:['Wire confirmation attached — thank you for making this so smooth.']},
+        e3:{time:'1 week ago', m:['Decided to hold off for this year given the budget — will reach back out next season.'],
+          draft:'Totally understandable — I’ll check back in ahead of next season in case anything’s changed.'}
+      },
+      ai_sdr:{
+        a1:{time:'2 hr ago', m:[],
+          draft:'Hi Mr. Delacroix — noticed you spent some time on the Princess X95 listing. She’s had strong interest this month; happy to send current availability for a private viewing if useful.'},
+        a2:{time:'yesterday', m:['Hi Mr. Castellano — following up on the Sunseeker 74 you viewed twice this week. Availability is open for a sea trial Thursday or Friday, either work?','Friday could work, what time?'],
+          draft:'Friday works well — I have 10am or 1pm open, either is fine, I’ll confirm the captain once you pick a time.'},
+        a3:{time:'3 days ago', m:['Hi Mr. Osei — saw you were comparing the Riva 76 against a couple of similar listings. Want a side-by-side spec sheet sent over?','No thanks, went a different direction. Please remove me from follow-ups.']}
+      }
+    },
+    sdrChat:{visitor:'D. Ferreira', messages:[
+      {from:'bot', text:'Hi, thanks for stopping by Meridian Yacht Sales. I’m the virtual assistant here. Are you looking into a specific yacht today?'},
+      {from:'visitor', text:'yeah the sunseeker 74'},
+      {from:'bot', text:'Great choice. The Sunseeker 74 “Isla Mar” is a 2019 model, 74 feet, listed at $2,150,000. She’s a single owner boat with full service records and a hydraulic swim platform. Want the full spec sheet?'},
+      {from:'visitor', text:'yes please, and is she still available?'},
+      {from:'bot', text:'Still available, no offers on her right now. I’ll send the spec sheet over. Can I grab your email?'},
+      {from:'visitor', text:'d.ferreira@email.com'},
+      {from:'bot', text:'Sent. Anything else I can help with, financing, trade ins, or would you like to see her in person?'},
+      {from:'visitor', text:'can i talk to someone about financing'},
+      {from:'bot', text:'Of course. I’ll connect you with Sovon, the listing broker, right away. He’ll call you within the hour. Want me to book a showing this week too while I have you?'},
+      {from:'visitor', text:'yes, thursday afternoon works'},
+      {from:'bot', text:'Thursday afternoon it is. I’ve got 2 PM open at the marina. I’ll confirm with Sovon and send a calendar invite. Anything else before I let you go?'},
+      {from:'visitor', text:'no that’s it, thanks'},
+      {from:'bot', text:'You’re welcome. Sovon will be in touch shortly, and I’ll text you a reminder before Thursday.'}
+    ]}
+  }
+};
+TX.fr = {
+  listings:{
+    L1:{d:'Un Grande amiral à faibles heures, avec la suite propriétaire pleine largeur à l’avant et un garage assez grand pour une annexe et un jet-ski. Les stabilisateurs à vitesse nulle la maintiennent à plat au mouillage, et le flybridge est pensé autant pour recevoir que pour naviguer.',
+      f:['Stabilisateurs à vitesse nulle','Suite principale pleine largeur à l’avant','Garage annexe + jet-ski','Remise à neuf complète et carénage récents (2024)','Wi-Fi Starlink à bord','Double groupe électrogène, 2x 27 kW']},
+    L2:{d:'Un 74 pieds bien entretenu, avec un salon lumineux à plan ouvert et une plateforme de bain hydraulique qui transforme le cockpit arrière en beach club. Propriétaire unique depuis le neuf, entretien rigoureux avec historique complet.',
+      f:['Plateforme de bain hydraulique','Propriétaire unique depuis le neuf','Historique d’entretien complet disponible','Bar humide et grill au flybridge','Éclairage sous-marin','Taud et bâches récemment remplacés']},
+    L3:{d:'Pratiquement neuf — moins de 250 heures moteur — avec le beach club X-Class à l’arrière et un sky lounge qui s’ouvre entièrement sur le flybridge. Encore sous garantie constructeur.',
+      f:['Sous garantie constructeur','Beach club avec pavois rabattable','Sky lounge, baies vitrées à ouverture totale','Cabine capitaine à l’avant','Stabilisation gyroscopique Seakeeper','Livré avec un pack électronique complet']},
+    L4:{d:'Un Perseo au design affirmé, avec les finitions signature en acajou Riva sur tout le bateau. Expertise acheteur réalisée et financement confirmé — clôture prévue, en attente des dernières formalités de titre.',
+      f:['Menuiserie intérieure signature en acajou','Expertise réalisée, aucune anomalie majeure','Financement confirmé','Révision moteur récente sur les deux moteurs principaux','Annexe Riva sur mesure incluse']},
+    L5:{d:'Vendu après seulement 6 jours de commercialisation, dès que le système IA a capté et qualifié la demande gagnante en quelques minutes. La synchronisation des annonces est encore en cours sur une plateforme — voir le nettoyage des annonces vendues.',
+      f:['Vente conclue en 6 jours','Carénage et peinture de coque récents','Historique d’entretien bien documenté']}
+  },
+  visitors:[
+    {company:'Anchor Harbor Capital', contact:'Probable : J. Reddington, associé gérant', pages:'A consulté le Princess X95 deux fois, téléchargement de la fiche technique', identified:'il y a 3 h', status:'Transmis au SDR IA'},
+    {company:'Non identifié — IP résidentielle, Palm Beach', contact:'—', pages:'A consulté 2 annonces, 40 s en moyenne', identified:'il y a 6 h', status:'Sous le seuil — aucune action'},
+    {company:'Meridian Capital Advisors', contact:'Probable : S. Kwan, associé', pages:'A consulté le Riva 76 et la page financement', identified:'hier', status:'En attente de revue par le courtier'},
+    {company:'Non identifié — réseau mobile', contact:'—', pages:'A consulté uniquement la page d’accueil', identified:'hier', status:'Sous le seuil — aucune action'},
+    {company:'Blue Horizon Family Office', contact:'Probable : A. Devereux', pages:'A consulté l’Azimut Grande 27M, revenu 3 fois', identified:'il y a 2 jours', status:'Transmis au SDR IA'}
+  ],
+  threads:{
+    whatsapp:{
+      w1:{time:'il y a 11 min', m:['Le Grande 27M est-il toujours disponible pour une visite ce samedi ?','Oui, elle est disponible. Je peux vous réserver 10h ou 14h, qu’est-ce qui vous convient le mieux ?','14h me convient. Peut-on aussi voir la salle des machines cette fois ?'],
+        draft:'Confirmé pour samedi 14h — la salle des machines sera ouverte et le rapport d’expertise prêt à consulter au quai.'},
+      w2:{time:'il y a 2 jours', m:['L’essai en mer nous a beaucoup plu. Nous envoyons l’offre via notre avocat demain.','Excellent — je signale le dossier pour qu’on puisse le traiter rapidement dès qu’il arrive.']},
+      w3:{time:'il y a 6 jours', m:['Nous avons opté pour un autre 90 pieds avec moins d’heures moteur. Merci pour votre temps.'],
+        draft:'Je comprends tout à fait — merci de nous avoir prévenus. Je vous tiens informé si quelque chose de plus proche de vos critères se présente.'}
+    },
+    sms:{
+      s1:{time:'il y a 38 min', m:['La pré-approbation du financement vient d’être validée. Peut-on fixer un essai en mer la semaine prochaine ?'],
+        draft:'Excellente nouvelle — j’ai mardi ou jeudi matin de libre pour un essai en mer, dites-moi ce qui vous convient et je confirme avec le capitaine.'},
+      s2:{time:'hier', m:['Offre acceptée de notre côté — nous sommes ravis !','Félicitations — les documents de clôture partent aujourd’hui.']},
+      s3:{time:'il y a 5 jours', m:['Notre budget a changé — nous visons maintenant moins de 1,5 M$, celui-ci est hors de portée pour nous.'],
+        draft:'Bien compris, merci de nous tenir informés — je vous préviens si quelque chose dans cette gamme se présente.'}
+    },
+    call:{
+      c1:{time:'il y a 1 h', m:['(Appel, 6 min) A demandé l’historique des revenus de charter et le transfert de la garantie coque.']},
+      c2:{time:'il y a 3 jours', m:['(Appel, 14 min) A accepté verbalement le prix demandé, sous réserve de l’expertise.']},
+      c3:{time:'la semaine dernière', m:['(Appel, 3 min) Le bateau était déjà vendu au moment de leur appel — déçu qu’il soit encore affiché comme disponible.'],
+        draft:'Désolé pour ce contretemps — cette annonce aurait dû être retirée plus tôt. Je serais ravi de vous montrer deux bateaux comparables qui vont être disponibles.'}
+    },
+    website:{
+      we1:{time:'il y a 27 min', m:['A demandé la fiche technique et si le vendeur envisagerait une reprise d’un 46 pieds de 2019.'],
+        draft:'J’envoie la fiche technique complète maintenant — le vendeur est ouvert à discuter d’une reprise, je peux organiser un appel cette semaine pour parler chiffres.'},
+      we2:{time:'il y a 4 jours', m:['Confirmé — nous poursuivons avec le contrat de vente.']},
+      we3:{time:'il y a 1 semaine', m:['Nous avons décidé de louer en charter une saison avant d’acheter — pas encore prêts.'],
+        draft:'Cela se comprend — une saison en charter est une bonne façon de tester la taille. Je vous recontacte vers la fin de la saison.'}
+    },
+    instagram:{
+      ig1:{time:'il y a 19 min', m:['complètement fan des photos du flybridge 😍 il y a une vidéo de visite quelque part ?'],
+        draft:'Ravi que vous demandiez — je vous envoie la vidéo de visite complète et les images drone tout de suite. Je peux organiser une visite privée quand vous voulez.'},
+      ig2:{time:'il y a 3 jours', m:['Je viens de parler à mon courtier — nous allons de l’avant de notre côté, merci !']},
+      ig3:{time:'il y a 5 jours', m:['Magnifique bateau mais hors de notre budget pour le moment — je continue de suivre la page pour les prochaines annonces.'],
+        draft:'Merci de le dire — je garde un œil ouvert et je vous tague si quelque chose de plus proche de votre budget arrive.'}
+    },
+    email:{
+      e1:{time:'il y a 44 min', m:['Pourriez-vous m’envoyer le dossier complet — historique des expertises, carnet d’entretien et titre de propriété ? Je l’examine avec mon courtier cette semaine.'],
+        draft:'Je joins maintenant le dossier complet — historique des expertises, carnet d’entretien et titre de propriété en règle. Je serais ravi d’appeler votre courtier si utile.'},
+      e2:{time:'il y a 2 jours', m:['Confirmation de virement jointe — merci d’avoir rendu tout cela si simple.']},
+      e3:{time:'il y a 1 semaine', m:['Nous avons décidé d’attendre cette année compte tenu du budget — nous vous recontacterons la saison prochaine.'],
+        draft:'Tout à fait compréhensible — je vous recontacte avant la prochaine saison, au cas où la situation aurait changé.'}
+    },
+    ai_sdr:{
+      a1:{time:'il y a 2 h', m:[],
+        draft:'Bonjour M. Delacroix — j’ai remarqué que vous aviez passé du temps sur l’annonce du Princess X95. Elle suscite beaucoup d’intérêt ce mois-ci ; je peux vous envoyer les disponibilités actuelles pour une visite privée si cela vous intéresse.'},
+      a2:{time:'hier', m:['Bonjour M. Castellano — je fais suite à votre intérêt pour le Sunseeker 74 que vous avez consulté deux fois cette semaine. Un essai en mer est possible jeudi ou vendredi, cela vous convient-il ?','Vendredi pourrait convenir, à quelle heure ?'],
+        draft:'Vendredi convient bien — j’ai 10h ou 13h de libre, les deux me vont, je confirme avec le capitaine une fois votre choix fait.'},
+      a3:{time:'il y a 3 jours', m:['Bonjour M. Osei — j’ai vu que vous compariez le Riva 76 avec quelques annonces similaires. Souhaitez-vous une fiche comparative ?','Non merci, nous avons choisi une autre direction. Merci de me retirer des relances.']}
+    }
+  },
+  sdrChat:{visitor:'D. Ferreira', messages:[
+    {from:'bot', text:'Bonjour, merci de votre visite chez Meridian Yacht Sales. Je suis l’assistant virtuel ici. Vous vous intéressez à un bateau en particulier aujourd’hui ?'},
+    {from:'visitor', text:'oui le sunseeker 74'},
+    {from:'bot', text:'Excellent choix. Le Sunseeker 74 « Isla Mar » est un modèle 2019, 74 pieds, affiché à 2 150 000 $. Propriétaire unique, historique d’entretien complet et plateforme de bain hydraulique. Vous voulez la fiche technique complète ?'},
+    {from:'visitor', text:'oui merci, et elle est toujours disponible ?'},
+    {from:'bot', text:'Toujours disponible, aucune offre en cours dessus. J’envoie la fiche technique. Je peux avoir votre e-mail ?'},
+    {from:'visitor', text:'d.ferreira@email.com'},
+    {from:'bot', text:'Envoyé. Autre chose, financement, reprise, ou vous voulez la voir en personne ?'},
+    {from:'visitor', text:'je peux parler à quelqu’un pour le financement'},
+    {from:'bot', text:'Bien sûr. Je vous mets en contact avec Sovon, le courtier en charge, tout de suite. Il vous appelle dans l’heure. Je vous réserve aussi une visite cette semaine pendant que je vous ai ?'},
+    {from:'visitor', text:'oui, jeudi après-midi ça marche'},
+    {from:'bot', text:'Jeudi après-midi, c’est noté. J’ai 14h de libre au port. Je confirme avec Sovon et je vous envoie une invitation. Autre chose avant de vous laisser ?'},
+    {from:'visitor', text:'non c’est tout, merci'},
+    {from:'bot', text:'Avec plaisir. Sovon vous contacte très vite, et je vous envoie un rappel par SMS avant jeudi.'}
+  ]}
+};
+TX.es = {
+  listings:{
+    L1:{d:'Un buque insignia Grande con pocas horas de motor, con el camarote del propietario a proa ocupando todo el ancho y un garaje lo bastante grande para un bote auxiliar y una moto de agua. Los estabilizadores de velocidad cero la mantienen estable fondeada, y el flybridge está pensado tanto para recibir invitados como para navegar.',
+      f:['Estabilizadores de velocidad cero','Camarote principal a proa a toda manga','Garaje para bote auxiliar y moto de agua','Detallado completo y carenado recientes (2024)','Wi-Fi Starlink a bordo','Generador redundante, 2x 27 kW']},
+    L2:{d:'Un 74 pies bien cuidado, con un salón luminoso de planta abierta y una plataforma de baño hidráulica que convierte la bañera de popa en un beach club. Único propietario desde nuevo, con mantenimiento estricto y registros completos.',
+      f:['Plataforma de baño hidráulica','Único propietario desde nuevo','Historial de mantenimiento completo disponible','Bar y parrilla en el flybridge','Iluminación subacuática','Toldos y lonas sustituidos recientemente']},
+    L3:{d:'Prácticamente nuevo — menos de 250 horas de motor — con el beach club X-Class a popa y un sky lounge que se abre por completo al flybridge. Aún bajo garantía del fabricante.',
+      f:['Bajo garantía del fabricante','Beach club con amurada plegable','Sky lounge, cristales de apertura total','Camarote del capitán a proa','Estabilización giroscópica Seakeeper','Entregado con paquete electrónico completo']},
+    L4:{d:'Un Perseo de diseño vanguardista, con los característicos acabados en caoba Riva en todo el barco. Inspección del comprador completada y financiación confirmada — cierre programado, pendiente de los últimos trámites de titularidad.',
+      f:['Ebanistería interior característica en caoba','Inspección realizada, sin hallazgos relevantes','Financiación confirmada','Revisión reciente de ambos motores principales','Bote auxiliar Riva a medida incluido']},
+    L5:{d:'Vendido tras solo 6 días de comercialización, en cuanto el sistema de IA captó y cualificó la consulta ganadora en minutos. La sincronización del anuncio todavía está poniéndose al día en una plataforma — ver limpieza de embarcaciones vendidas.',
+      f:['Venta cerrada en 6 días','Varada y pintura de fondo recientes','Historial de mantenimiento bien documentado']}
+  },
+  visitors:[
+    {company:'Anchor Harbor Capital', contact:'Probable: J. Reddington, socio director', pages:'Vio el Princess X95 dos veces, descargó la ficha técnica', identified:'hace 3 h', status:'Transferido al SDR de IA'},
+    {company:'Sin identificar — IP residencial, Palm Beach', contact:'—', pages:'Vio 2 anuncios, 40 s de media', identified:'hace 6 h', status:'Por debajo del umbral — sin acción'},
+    {company:'Meridian Capital Advisors', contact:'Probable: S. Kwan, socio principal', pages:'Vio el Riva 76 y la página de financiación', identified:'ayer', status:'Pendiente de revisión del corredor'},
+    {company:'Sin identificar — red de operador móvil', contact:'—', pages:'Solo vio la página de inicio', identified:'ayer', status:'Por debajo del umbral — sin acción'},
+    {company:'Blue Horizon Family Office', contact:'Probable: A. Devereux', pages:'Vio el Azimut Grande 27M, volvió 3 veces', identified:'hace 2 días', status:'Transferido al SDR de IA'}
+  ],
+  threads:{
+    whatsapp:{
+      w1:{time:'hace 11 min', m:['¿El Grande 27M sigue disponible para una visita este sábado?','Sí, está disponible. Puedo reservarle las 10:00 o las 14:00, ¿qué le viene mejor?','Las 14:00 me viene bien. ¿Podemos ver también la sala de máquinas esta vez?'],
+        draft:'Confirmado para el sábado a las 14:00 — tendré la sala de máquinas abierta y el informe de inspección listo para revisar en el muelle.'},
+      w2:{time:'hace 2 días', m:['Nos encantó la prueba de mar. Enviaremos la oferta a través de nuestro abogado mañana.','Fantástico — marcaré el expediente para poder tramitarlo rápido en cuanto llegue.']},
+      w3:{time:'hace 6 días', m:['Nos decidimos por otro barco de 90 pies con menos horas de motor. Gracias por su tiempo.'],
+        draft:'Lo entiendo perfectamente — gracias por avisarnos. Le mantendré en la lista si aparece algo más cercano a lo que busca.'}
+    },
+    sms:{
+      s1:{time:'hace 38 min', m:['La preaprobación de la financiación acaba de confirmarse. ¿Podemos fijar una prueba de mar la próxima semana?'],
+        draft:'¡Buenas noticias! Tengo el martes o el jueves por la mañana libres para una prueba de mar, dígame qué le viene bien y lo confirmo con el capitán.'},
+      s2:{time:'ayer', m:['¡Oferta aceptada de nuestra parte — muy contentos!','¡Felicidades! Los documentos de cierre saldrán hoy.']},
+      s3:{time:'hace 5 días', m:['Nuestro presupuesto cambió — ahora buscamos por debajo de 1,5 M$, este queda fuera de nuestro rango.'],
+        draft:'Entendido, gracias por la actualización — le avisaré si aparece algo en ese rango.'}
+    },
+    call:{
+      c1:{time:'hace 1 h', m:['(Llamada, 6 min) Preguntó por el historial de ingresos por charter y la transferencia de la garantía del casco.']},
+      c2:{time:'hace 3 días', m:['(Llamada, 14 min) Aceptó verbalmente el precio de venta, pendiente de la inspección.']},
+      c3:{time:'la semana pasada', m:['(Llamada, 3 min) El barco ya estaba vendido cuando llamaron — decepcionado de que siguiera apareciendo como disponible.'],
+        draft:'Disculpe la confusión — ese anuncio debería haberse retirado antes. Con gusto le muestro dos barcos comparables que estarán disponibles próximamente.'}
+    },
+    website:{
+      we1:{time:'hace 27 min', m:['Solicitó la ficha técnica y preguntó si el vendedor consideraría aceptar como parte de pago un 46 pies de 2019.'],
+        draft:'Le envío ahora la ficha técnica completa — el vendedor está abierto a hablar de un cambio, encantado de organizar una llamada esta semana para hablar de números.'},
+      we2:{time:'hace 4 días', m:['Confirmado — seguimos adelante con el contrato de compraventa.']},
+      we3:{time:'hace 1 semana', m:['Decidimos alquilar en charter una temporada antes de comprar — todavía no estamos listos.'],
+        draft:'Tiene sentido — una temporada de charter es una forma inteligente de probar el tamaño. Le contactaré de nuevo hacia el final de temporada.'}
+    },
+    instagram:{
+      ig1:{time:'hace 19 min', m:['me encantan las fotos del flybridge 😍 ¿hay algún video de recorrido?'],
+        draft:'Me alegra que lo pregunte — le envío ahora el video completo de recorrido y las imágenes de dron. Encantado de organizar una visita privada cuando le convenga.'},
+      ig2:{time:'hace 3 días', m:['Acabo de hablar con mi corredor — seguimos adelante de nuestra parte, ¡gracias!']},
+      ig3:{time:'hace 5 días', m:['Barco precioso pero fuera de nuestro rango por ahora — seguiré la página para futuros anuncios.'],
+        draft:'Gracias por decirlo — estaré atento y le etiquetaré si aparece algo más cercano a su rango.'}
+    },
+    email:{
+      e1:{time:'hace 44 min', m:['¿Podría enviarme el paquete completo de documentación — historial de inspecciones, registros de mantenimiento y título? Lo revisaré con mi corredor esta semana.'],
+        draft:'Adjunto ahora el paquete completo — historial de inspecciones, registros de mantenimiento y título limpio. Encantado de hacer una llamada con su corredor si es útil.'},
+      e2:{time:'hace 2 días', m:['Confirmación de transferencia adjunta — gracias por hacer esto tan fácil.']},
+      e3:{time:'hace 1 semana', m:['Decidimos esperar este año por el presupuesto — le contactaremos de nuevo la próxima temporada.'],
+        draft:'Totalmente comprensible — le contactaré de nuevo antes de la próxima temporada, por si algo cambia.'}
+    },
+    ai_sdr:{
+      a1:{time:'hace 2 h', m:[],
+        draft:'Hola, Sr. Delacroix — noté que pasó un tiempo viendo el anuncio del Princess X95. Ha tenido mucho interés este mes; encantado de enviarle la disponibilidad actual para una visita privada si le resulta útil.'},
+      a2:{time:'ayer', m:['Hola, Sr. Castellano — le escribo por el Sunseeker 74 que vio dos veces esta semana. Hay disponibilidad para una prueba de mar el jueves o el viernes, ¿le viene bien alguno?','El viernes podría funcionar, ¿a qué hora?'],
+        draft:'El viernes va bien — tengo las 10:00 o las 13:00 libres, cualquiera está bien, confirmaré con el capitán en cuanto elija la hora.'},
+      a3:{time:'hace 3 días', m:['Hola, Sr. Osei — vi que estaba comparando el Riva 76 con un par de anuncios similares. ¿Le envío una ficha comparativa?','No, gracias, decidimos otra opción. Por favor, retíreme de los seguimientos.']}
+    }
+  },
+  sdrChat:{visitor:'D. Ferreira', messages:[
+    {from:'bot', text:'Hola, gracias por visitar Meridian Yacht Sales. Soy el asistente virtual aquí. ¿Le interesa algún barco en concreto hoy?'},
+    {from:'visitor', text:'si el sunseeker 74'},
+    {from:'bot', text:'Buena elección. El Sunseeker 74 “Isla Mar” es un modelo de 2019, 74 pies, publicado en 2.150.000 $. Único propietario, historial de mantenimiento completo y plataforma de baño hidráulica. ¿Quiere la ficha técnica completa?'},
+    {from:'visitor', text:'si por favor, y sigue disponible?'},
+    {from:'bot', text:'Sigue disponible, sin ofertas en curso. Le envío la ficha técnica ahora. ¿Me da su correo?'},
+    {from:'visitor', text:'d.ferreira@email.com'},
+    {from:'bot', text:'Enviada. ¿Algo más, financiación, parte de pago, o le gustaría verla en persona?'},
+    {from:'visitor', text:'puedo hablar con alguien de financiacion'},
+    {from:'bot', text:'Claro. Le pongo en contacto con Sovon, el corredor a cargo, ahora mismo. Le llamará dentro de una hora. ¿Le reservo también una visita esta semana ya que estamos?'},
+    {from:'visitor', text:'si, el jueves por la tarde me viene bien'},
+    {from:'bot', text:'Jueves por la tarde, anotado. Tengo las 14:00 libres en el puerto. Confirmo con Sovon y le mando una invitación de calendario. ¿Algo más antes de despedirme?'},
+    {from:'visitor', text:'no, eso es todo, gracias'},
+    {from:'bot', text:'Un placer. Sovon se pondrá en contacto pronto, y le mandaré un recordatorio por mensaje antes del jueves.'}
+  ]}
+};
+TX.it = {
+  listings:{
+    L1:{d:'Un ammiraglio Grande con poche ore motore, con la suite armatoriale a tutta larghezza a prua e un garage abbastanza grande per un tender e un jet ski. Gli stabilizzatori a velocità zero la mantengono stabile all’ancora, e il flybridge è pensato tanto per intrattenere quanto per navigare.',
+      f:['Stabilizzatori a velocità zero','Suite armatoriale a tutta larghezza a prua','Garage per tender e jet ski','Lucidatura completa e carenatura recenti (2024)','Wi-Fi Starlink a bordo','Generatore ridondante, 2x 27 kW']},
+    L2:{d:'Un 74 piedi ben tenuto, con un salone luminoso a pianta aperta e una piattaforma di poppa idraulica che trasforma il pozzetto in un beach club. Unico proprietario dal nuovo, con manutenzione rigorosa e documentazione completa.',
+      f:['Piattaforma di poppa idraulica','Unico proprietario dal nuovo','Documentazione di manutenzione completa disponibile','Bar e grill sul flybridge','Illuminazione subacquea','Tende e teli recentemente sostituiti']},
+    L3:{d:'Praticamente nuovo — meno di 250 ore motore — con il beach club X-Class a poppa e un sky lounge che si apre completamente sul flybridge. Ancora in garanzia del cantiere.',
+      f:['In garanzia del cantiere','Beach club con murata ribaltabile','Sky lounge, vetrate ad apertura totale','Cabina del capitano a prua','Stabilizzazione giroscopica Seakeeper','Consegnato con pacchetto elettronico completo']},
+    L4:{d:'Un Perseo dal design deciso, con le caratteristiche finiture in mogano Riva su tutta la barca. Perizia dell’acquirente completata e finanziamento confermato — chiusura programmata, in attesa degli ultimi adempimenti sul titolo.',
+      f:['Falegnameria interna caratteristica in mogano','Perizia effettuata, nessuna criticità rilevante','Finanziamento confermato','Revisione motore recente su entrambi i motori principali','Tender Riva su misura incluso']},
+    L5:{d:'Venduto dopo soli 6 giorni di commercializzazione, non appena il sistema IA ha intercettato e qualificato la richiesta vincente in pochi minuti. La sincronizzazione dell’annuncio è ancora in corso su una piattaforma — vedi pulizia annunci venduti.',
+      f:['Vendita conclusa in 6 giorni','Alaggio e pittura antivegetativa recenti','Storico di manutenzione ben documentato']}
+  },
+  visitors:[
+    {company:'Anchor Harbor Capital', contact:'Probabile: J. Reddington, socio amministratore', pages:'Ha visto il Princess X95 due volte, scaricato la scheda tecnica', identified:'3 h fa', status:'Passato all’SDR IA'},
+    {company:'Non identificato — IP residenziale, Palm Beach', contact:'—', pages:'Ha visto 2 annunci, 40 s in media', identified:'6 h fa', status:'Sotto la soglia — nessuna azione'},
+    {company:'Meridian Capital Advisors', contact:'Probabile: S. Kwan, socio', pages:'Ha visto il Riva 76 e la pagina finanziamento', identified:'ieri', status:'In attesa di revisione del broker'},
+    {company:'Non identificato — rete di un operatore mobile', contact:'—', pages:'Ha visto solo la homepage', identified:'ieri', status:'Sotto la soglia — nessuna azione'},
+    {company:'Blue Horizon Family Office', contact:'Probabile: A. Devereux', pages:'Ha visto l’Azimut Grande 27M, tornato 3 volte', identified:'2 giorni fa', status:'Passato all’SDR IA'}
+  ],
+  threads:{
+    whatsapp:{
+      w1:{time:'11 min fa', m:['Il Grande 27M è ancora disponibile per una visita questo sabato?','Sì, è disponibile. Posso bloccare le 10 o le 14, cosa preferisce?','Le 14 vanno bene. Possiamo vedere anche la sala macchine questa volta?'],
+        draft:'Confermato per sabato alle 14 — terrò la sala macchine aperta e il rapporto della perizia pronto da consultare in banchina.'},
+      w2:{time:'2 giorni fa', m:['La prova in mare ci è piaciuta molto. Invieremo l’offerta tramite il nostro avvocato domani.','Fantastico — segnalo la pratica così potremo gestirla rapidamente non appena arriva.']},
+      w3:{time:'6 giorni fa', m:['Abbiamo scelto un altro 90 piedi con meno ore motore. Grazie per il tempo dedicato.'],
+        draft:'Capisco perfettamente — grazie per averci avvisato. La terrò in lista se dovesse arrivare qualcosa più vicino alle sue esigenze.'}
+    },
+    sms:{
+      s1:{time:'38 min fa', m:['La pre-approvazione del finanziamento è appena arrivata. Possiamo fissare una prova in mare la prossima settimana?'],
+        draft:'Ottima notizia — ho martedì o giovedì mattina liberi per una prova in mare, fammi sapere cosa preferisci e confermo con il capitano.'},
+      s2:{time:'ieri', m:['Offerta accettata da parte nostra — siamo entusiasti!','Congratulazioni — i documenti di chiusura partono oggi.']},
+      s3:{time:'5 giorni fa', m:['Il nostro budget è cambiato — ora cerchiamo sotto 1,5 milioni di dollari, questo è fuori portata per noi.'],
+        draft:'Capito, grazie per l’aggiornamento — ti avviserò se arriva qualcosa in quella fascia.'}
+    },
+    call:{
+      c1:{time:'1 h fa', m:['(Chiamata, 6 min) Ha chiesto lo storico dei ricavi da charter e il trasferimento della garanzia sullo scafo.']},
+      c2:{time:'3 giorni fa', m:['(Chiamata, 14 min) Ha accettato verbalmente il prezzo richiesto, in attesa della perizia.']},
+      c3:{time:'la settimana scorsa', m:['(Chiamata, 3 min) La barca era già venduta al momento della chiamata — deluso che fosse ancora mostrata come disponibile.'],
+        draft:'Ci scusiamo per l’inconveniente — quell’annuncio andava rimosso prima. Sarei felice di mostrarle due barche comparabili che stanno per diventare disponibili.'}
+    },
+    website:{
+      we1:{time:'27 min fa', m:['Ha chiesto la scheda tecnica e se il venditore considererebbe una permuta con un 46 piedi del 2019.'],
+        draft:'Le invio subito la scheda tecnica completa — il venditore è aperto a discutere una permuta, sarei felice di organizzare una chiamata questa settimana per parlare di numeri.'},
+      we2:{time:'4 giorni fa', m:['Confermato — procediamo con il contratto di acquisto.']},
+      we3:{time:'1 settimana fa', m:['Abbiamo deciso di noleggiare a charter per una stagione prima di acquistare — non siamo ancora pronti.'],
+        draft:'Ha senso — una stagione di charter è un modo intelligente per testare la dimensione. La ricontatterò verso la fine della stagione.'}
+    },
+    instagram:{
+      ig1:{time:'19 min fa', m:['adoro le foto del flybridge 😍 c’è un video di presentazione da qualche parte?'],
+        draft:'Felice che lo chieda — le invio subito il video completo e le riprese col drone. Sarei felice di organizzare una visita privata quando preferisce.'},
+      ig2:{time:'3 giorni fa', m:['Ho appena parlato con il mio broker — andiamo avanti da parte nostra, grazie!']},
+      ig3:{time:'5 giorni fa', m:['Barca splendida ma fuori dalla nostra portata per ora — continuo a seguire la pagina per i prossimi annunci.'],
+        draft:'Grazie per averlo detto — terrò d’occhio e ti taggherò se dovesse arrivare qualcosa più vicino al tuo budget.'}
+    },
+    email:{
+      e1:{time:'44 min fa', m:['Potrebbe inviarmi il pacchetto completo della documentazione — storico delle perizie, registro di manutenzione e titolo di proprietà? Lo esaminerò con il mio broker questa settimana.'],
+        draft:'Allego ora il pacchetto completo — storico delle perizie, registro di manutenzione e titolo di proprietà pulito. Sarei felice di fare una chiamata con il suo broker se utile.'},
+      e2:{time:'2 giorni fa', m:['Conferma del bonifico in allegato — grazie per aver reso tutto così semplice.']},
+      e3:{time:'1 settimana fa', m:['Abbiamo deciso di aspettare quest’anno per il budget — la ricontatteremo la prossima stagione.'],
+        draft:'Del tutto comprensibile — la ricontatterò prima della prossima stagione, nel caso qualcosa cambi.'}
+    },
+    ai_sdr:{
+      a1:{time:'2 h fa', m:[],
+        draft:'Buongiorno Sig. Delacroix — ho notato che ha trascorso del tempo sull’annuncio del Princess X95. Ha ricevuto molto interesse questo mese; sarei felice di inviarle la disponibilità attuale per una visita privata se utile.'},
+      a2:{time:'ieri', m:['Buongiorno Sig. Castellano — la contatto in merito al Sunseeker 74 che ha visto due volte questa settimana. C’è disponibilità per una prova in mare giovedì o venerdì, le va bene uno dei due?','Venerdì potrebbe andare, a che ora?'],
+        draft:'Venerdì va bene — ho le 10 o le 13 libere, entrambe vanno bene, confermerò con il capitano non appena scegli un orario.'},
+      a3:{time:'3 giorni fa', m:['Buongiorno Sig. Osei — ho visto che stava confrontando il Riva 76 con un paio di annunci simili. Vuole che le invii una scheda comparativa?','No grazie, abbiamo scelto un’altra direzione. La prego di rimuovermi dai follow-up.']}
+    }
+  },
+  sdrChat:{visitor:'D. Ferreira', messages:[
+    {from:'bot', text:'Ciao, grazie per essere passato da Meridian Yacht Sales. Sono l’assistente virtuale qui. Ti interessa una barca in particolare oggi?'},
+    {from:'visitor', text:'si il sunseeker 74'},
+    {from:'bot', text:'Ottima scelta. Il Sunseeker 74 “Isla Mar” è un modello del 2019, 74 piedi, in vendita a 2.150.000 $. Unico proprietario, documentazione di manutenzione completa e piattaforma di poppa idraulica. Vuoi la scheda tecnica completa?'},
+    {from:'visitor', text:'si grazie, ed è ancora disponibile?'},
+    {from:'bot', text:'Ancora disponibile, nessuna offerta in corso. Ti mando subito la scheda tecnica. Mi lasci la tua email?'},
+    {from:'visitor', text:'d.ferreira@email.com'},
+    {from:'bot', text:'Inviata. Altro, finanziamento, permuta, o vuoi vederla di persona?'},
+    {from:'visitor', text:'posso parlare con qualcuno per il finanziamento'},
+    {from:'bot', text:'Certo. Ti metto in contatto con Sovon, il broker responsabile, subito. Ti chiamerà entro un’ora. Ti prenoto anche una visita questa settimana già che ci siamo?'},
+    {from:'visitor', text:'si, giovedì pomeriggio va bene'},
+    {from:'bot', text:'Giovedì pomeriggio, segnato. Ho le 14 libere in banchina. Confermo con Sovon e ti mando un invito sul calendario. Altro prima di salutarci?'},
+    {from:'visitor', text:'no è tutto, grazie'},
+    {from:'bot', text:'Di niente. Sovon ti contatterà a breve, e ti mando un promemoria via messaggio prima di giovedì.'}
+  ]}
+};
+function listingTX(id){ const d = TX[state.lang] && TX[state.lang].listings && TX[state.lang].listings[id]; return d || TX.en.listings[id]; }
+function threadTX(channelId, threadId){ const d = TX[state.lang] && TX[state.lang].threads[channelId] && TX[state.lang].threads[channelId][threadId]; return d || (TX.en.threads[channelId] && TX.en.threads[channelId][threadId]) || {m:[]}; }
+function visitorTX(i){ const arr = TX[state.lang] && TX[state.lang].visitors; return (arr && arr[i]) || TX.en.visitors[i]; }
+function sdrChatTX(){ return (TX[state.lang] && TX[state.lang].sdrChat) || TX.en.sdrChat; }
+
+/* ============================= STATE ============================= */
+function loadLang(){ try{ const v = localStorage.getItem('binnacle_lang'); return (v && UI[v]!==undefined) ? v : 'en'; }catch(e){ return 'en'; } }
+function saveLang(l){ try{ localStorage.setItem('binnacle_lang', l); }catch(e){} }
+
+let state = {range:'month', lang:loadLang(), view:'dashboard', channelId:null, threadId:null, listingId:null, sortCol:'inquiries', sortDir:'desc',
+  cleanupFixed:{}, sentMessages:{}, loading:false};
+
+function scale(n){return Math.round(n * RANGE_FACTOR[state.range]);}
+
+function skeletonHTML(){
+  return `
+  <div class="kpi-grid" aria-hidden="true">
+    <div class="skel skel-kpi"></div><div class="skel skel-kpi"></div><div class="skel skel-kpi"></div>
+  </div>
+  <div class="skel skel-panel" aria-hidden="true"></div>
+  <div class="skel skel-panel" aria-hidden="true"></div>
+  <div class="skel skel-panel" aria-hidden="true"></div>`;
+}
+
+/* ============================= CHROME (header/footer, redrawn on language change) ============================= */
+function applyChrome(){
+  document.documentElement.lang = state.lang;
+  document.getElementById('tagline').textContent = t('brandTagline');
+  document.getElementById('demoTag').textContent = t('sampleTag');
+  document.getElementById('footerNote').innerHTML = t('footerNote');
+  document.getElementById('ctaTopText').textContent = t('bookCall');
+  document.getElementById('ctaBottomText').textContent = t('bookCall');
+  document.getElementById('analyticsNavText').textContent = t('analyticsNavLabel');
+  document.getElementById('trustGdprText').textContent = t('trustGdpr');
+  document.getElementById('trustSocText').textContent = t('trustSoc');
+  document.getElementById('langGroup').setAttribute('aria-label', t('languageAria'));
+  document.getElementById('rangeGroup').setAttribute('aria-label', t('dateRangeAria'));
+  document.getElementById('refreshBtn').setAttribute('aria-label', t('refreshAria'));
+  const rangeText = {month:t('rangeMonth'), '30d':t('range30'), quarter:t('rangeQuarter')};
+  document.querySelectorAll('[data-range]').forEach(b=>{ b.textContent = rangeText[b.dataset.range]; b.classList.toggle('active', b.dataset.range===state.range); });
+  document.querySelectorAll('[data-lang]').forEach(b=>{ b.classList.toggle('active', b.dataset.lang===state.lang); });
+  setLastUpdated();
+}
+function setLastUpdated(){
+  const el = document.getElementById('lastUpdated');
+  if(el) el.textContent = t('updated') + ' ' + new Date().toLocaleTimeString(LOCALE_MAP[state.lang]||'en-US', {hour:'numeric', minute:'2-digit'});
+}
+
+/* ============================= RENDER ============================= */
+function renderApp(){
+  const app = document.getElementById('app');
+  if(state.loading){
+    document.getElementById('statusLine').textContent = t('refreshing');
+    app.innerHTML = skeletonHTML();
+    return;
+  }
+  document.getElementById('statusLine').textContent =
+    state.range==='month' ? t('statusMonth') :
+    state.range==='30d' ? t('status30') : t('statusQuarter');
+  document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active', b.dataset.range===state.range));
+
+  if(state.view==='dashboard'){ app.innerHTML = dashboardHTML(); bindDashboard(); }
+  else if(state.view==='channel'){ app.innerHTML = channelViewHTML(state.channelId); bindChannelView(); }
+  else if(state.view==='thread'){ app.innerHTML = threadViewHTML(state.channelId, state.threadId); bindThreadView(); }
+  else if(state.view==='listing'){ app.innerHTML = listingViewHTML(state.listingId); bindListingView(); }
+  else if(state.view==='analytics'){ app.innerHTML = analyticsPageHTML(); bindListingView(); }
+}
+function navigate(fn){ fn(); window.scrollTo({top:0}); renderApp(); }
+
+function dashboardHTML(){
+  const inquiries = scale(118), commission = scale(184000), trend = state.range==='quarter' ? '+31%' : '+12%';
+  const needsAttention = LISTINGS.filter(l=>l.platforms.boattrader==='critical' && !state.cleanupFixed[l.id]).length;
+  return `
+  <div class="kpi-grid">
+    <div class="kpi-tile">
+      <div class="kpi-label">${t('kpiInquiries')}</div>
+      <div class="kpi-value">${inquiries}</div>
+      <div class="kpi-trend">&#8593; ${trend} ${t('trendPrefix')}</div>
+    </div>
+    <div class="kpi-tile ok">
+      <div class="kpi-label">${t('kpiCommission')}</div>
+      <div class="kpi-value">$${commission.toLocaleString('en-US')}</div>
+      <div class="kpi-trend">&#8593; ${trend} ${t('trendPrefix')}</div>
+    </div>
+    <button class="kpi-tile clickable ${needsAttention>0 ? 'alert' : 'ok'}" data-scrollto="cleanup-panel">
+      <div class="kpi-label">${t('kpiAttention')}</div>
+      <div class="kpi-value">${needsAttention}</div>
+      ${needsAttention>0
+        ? `<div class="kpi-action">&#8595; ${t('kpiAttentionAction')}</div>`
+        : `<div class="kpi-trend">&#10003; ${t('kpiClear')}</div>`}
+    </button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelChannelTitle')}</div><div class="panel-sub">${t('panelChannelSub')}</div></div></div>
+    ${channelPanelHTML()}
+  </div>
+
+  <div class="panel" id="cleanup-panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelCleanupTitle')}</div><div class="panel-sub">${t('panelCleanupSub')}</div></div></div>
+    ${cleanupHTML()}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelListingsTitle')}</div><div class="panel-sub">${t('panelListingsSub')}</div></div></div>
+    ${funnelHTML()}
+    ${listingsTableHTML()}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelDealTitle')}</div><div class="panel-sub">${t('panelDealSub')}</div></div></div>
+    ${kanbanHTML()}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelResponseTitle')}</div><div class="panel-sub">${t('panelResponseSub')}</div></div></div>
+    ${responseSpeedHTML()}
+    <div class="panel-foot-stat"><span>${t('outsideHours')}</span><span class="mono">38%</span></div>
+  </div>`;
+}
+
+function responseSpeedHTML(){
+  const rows = [
+    {label:'YachtWorld', mins:4, max:45}, {label:'Rightboat', mins:2, max:45},
+    {label:'Boat Trader', mins:41, max:45}, {label:t('platOwnSite'), mins:6, max:45},
+    {label:t('platPhoneWA'), mins:3, max:45}
+  ];
+  return rows.map(r=>`
+    <div class="bar-row">
+      <div class="bar-label">${r.label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100, r.mins/r.max*100)}%"></div></div>
+      <div class="bar-value">${r.mins} ${t('unitMin')}</div>
+    </div>`).join('');
+}
+
+function cleanupHTML(){
+  const l5 = LISTINGS.find(l=>l.id==='L5');
+  const l4 = LISTINGS.find(l=>l.id==='L4');
+  const rows = [];
+  const l5fixed = state.cleanupFixed['L5'];
+  rows.push(cleanupRow(l5, '6', l5fixed));
+  rows.push(cleanupRow(l4, '2', false));
+  return rows.join('') || `<div class="empty-note">${t('emptyCleanup')}</div>`;
+}
+function cleanupRow(listing, daysAgo, fixed){
+  const bt = fixed ? 'good' : listing.platforms.boattrader;
+  const chip = (label, level)=>{
+    const cls = level==='good' ? 'good' : level==='warning' ? 'warning' : 'critical';
+    const text = level==='good' ? `${label} ✓ ${t('cleared')}` : level==='warning' ? `${label} ${t('checking')}` : `${label} ${t('stillLive')}`;
+    return `<span class="chip ${cls}">${text}</span>`;
+  };
+  const needsAction = bt==='critical';
+  const meta = stageLabel(listing.stage) + ' ' + daysAgo + ' ' + t('daysAgo');
+  return `<div class="cleanup-row">
+    <div>
+      <button class="listing-link cleanup-name" data-listing="${listing.id}">${listing.name}</button>
+      <div class="cleanup-meta">${meta}</div>
+      <div class="platform-chips">${chip('YachtWorld',listing.platforms.yachtworld)}${chip('Rightboat',listing.platforms.rightboat)}${chip('Boat Trader',bt)}</div>
+    </div>
+    ${needsAction ? `<button class="fix-btn" data-fix="${listing.id}">${t('markFixed')}</button>` : ''}
+  </div>`;
+}
+
+function funnelHTML(){
+  const steps = [{k:'Inquiry', n:scale(118)}, {k:'Qualified', n:scale(76)}, {k:'Showing', n:scale(34)}, {k:'Offer', n:scale(9)}];
+  return `<div class="funnel-row">${steps.map(s=>`<div class="funnel-step"><div class="n mono">${s.n}</div><div class="l">${stageLabel(s.k)}</div></div>`).join('')}</div>`;
+}
+
+function listingsTableHTML(){
+  const cols = [{k:'name',l:t('colListing')},{k:'inquiries',l:t('colInquiries')},{k:'avgResp',l:t('colAvgResp')},{k:'stage',l:t('colStage')},{k:'dom',l:t('colDom')}];
+  let rows = [...LISTINGS];
+  rows.sort((a,b)=>{
+    let av=a[state.sortCol], bv=b[state.sortCol];
+    if(typeof av==='string' && !isNaN(parseFloat(av))) {av=parseFloat(av); bv=parseFloat(bv);}
+    if(av<bv) return state.sortDir==='asc'?-1:1;
+    if(av>bv) return state.sortDir==='asc'?1:-1;
+    return 0;
+  });
+  return `<div class="table-wrap"><table>
+    <thead><tr>${cols.map(c=>`<th data-sort="${c.k}">${c.l}${state.sortCol===c.k?(state.sortDir==='asc'?' ↑':' ↓'):''}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(r=>{
+      const m = stageMeta(r.stage);
+      return `<tr><td class="name"><button class="listing-link" data-listing="${r.id}">${r.name}</button></td><td class="mono">${r.inquiries}</td><td class="mono">${r.avgResp}</td><td><span class="stage-pill" style="color:${m.c};background:${m.s}">${stageLabel(r.stage)}</span></td><td class="mono">${r.dom}</td></tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+function kanbanHTML(){
+  return `<div class="kanban">${DEALS.map(d=>{
+    const m = stageMeta(d.stage);
+    return `
+    <div class="kanban-col" style="border-top:3px solid ${m.c}">
+      <div class="kanban-head"><span class="t"><span class="kanban-dot" style="background:${m.c}"></span>${stageLabel(d.stage)}</span><span class="c" style="color:${m.c}">${d.count}</span></div>
+      ${d.chips.map(c=>{const [name,rest]=c.split(' — ');return `<div class="deal-chip"><b>${name}</b>${rest}</div>`;}).join('')}
+      ${d.stage==='Qualified' ? `<div class="followup-badge">${t('followups')}</div>` : ''}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function channelPanelHTML(){
+  return CHANNELS.map(ch=>{
+    const c = scale(ch.base.closed), i = scale(ch.base.interested), u = scale(ch.base.churned);
+    const total = c+i+u;
+    const pct = n => total ? (n/total*100) : 0;
+    return `<button class="channel-row" data-channel="${ch.id}">
+      <div class="channel-name"><span class="channel-ico ${ch.iconClass||''}" style="--c:${ch.color||''}">${iconSvg(ch.icon)}</span>${channelName(ch.id)}</div>
+      <div class="channel-count">${scale(ch.base.count)}<span class="u">${t(ch.countLabelKey || 'countLabelInquiries')}</span></div>
+      <div class="channel-count">${ch.replyValue} ${t(ch.replyUnit)}<span class="u">${t('avgReplyLabel')}</span></div>
+      <div>
+        <div class="split-bar">
+          <div style="width:${pct(c)}%; background:var(--status-good)"></div>
+          <div style="width:${pct(i)}%; background:var(--status-info)"></div>
+          <div style="width:${pct(u)}%; background:var(--status-neutral)"></div>
+        </div>
+        <div class="split-legend">
+          <span><i class="dot" style="background:var(--status-good)"></i>${c} ${t('statusClosed').toLowerCase()}</span>
+          <span><i class="dot" style="background:var(--status-info)"></i>${i} ${t('statusStillInterested').toLowerCase()}</span>
+          <span><i class="dot" style="background:var(--status-neutral)"></i>${u} ${t('statusChurned').toLowerCase()}</span>
+        </div>
+      </div>
+      <span class="chev">&#8250;</span>
+    </button>`;
+  }).join('');
+}
+
+function iconSvg(name){return `<svg width="17" height="17" viewBox="0 0 28 28" fill="none">${ICONS[name]}</svg>`;}
+
+/* ============================= CHART HELPERS (inline SVG, theme-token colored) ============================= */
+function trendChartSVG(values, opts){
+  const o = Object.assign({w:520, h:100, color:'var(--accent)', fill:true, labels:[], fmt:(v)=>v}, opts||{});
+  const max = Math.max(...values) * 1.15, min = Math.min(0, Math.min(...values) * 0.9);
+  const span = (max-min) || 1;
+  const stepX = o.w/(values.length-1 || 1);
+  const y = v => o.h - ((v-min)/span)*o.h;
+  const pts = values.map((v,i)=>[i*stepX, y(v)]);
+  const path = pts.map((p,i)=>(i===0?'M':'L')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const areaPath = `${path} L${o.w},${o.h} L0,${o.h} Z`;
+  const last = pts[pts.length-1];
+  const labelsRow = o.labels.length ? `<div style="display:flex; justify-content:space-between; margin-top:4px;">${o.labels.map(l=>`<span style="font-size:10.5px; color:var(--ink-muted)">${l}</span>`).join('')}</div>` : '';
+  return `<div>
+    <svg viewBox="0 0 ${o.w} ${o.h+14}" width="100%" style="overflow:visible; display:block;">
+      ${o.fill?`<path d="${areaPath}" fill="${o.color}" opacity=".12"/>`:''}
+      <path d="${path}" fill="none" stroke="${o.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${last[0]}" cy="${last[1]}" r="4" fill="${o.color}" stroke="var(--surface)" stroke-width="2"/>
+    </svg>
+    ${labelsRow}
+  </div>`;
+}
+
+function hBarChartSVG(items, opts){
+  const o = Object.assign({w:600, barH:22, gap:14, labelW:150}, opts||{});
+  const max = Math.max(...items.map(i=>i.value)) * 1.08 || 1;
+  const h = items.length*(o.barH+o.gap) - o.gap;
+  const chartW = o.w-o.labelW-46;
+  const rows = items.map((it,i)=>{
+    const yy = i*(o.barH+o.gap);
+    const bw = Math.max((it.value/max)*chartW, 3);
+    return `
+      <text x="0" y="${yy+o.barH*0.68}" font-size="12.5" fill="var(--ink-secondary)">${it.label}</text>
+      <rect x="${o.labelW}" y="${yy}" width="${chartW}" height="${o.barH}" rx="5" fill="var(--surface-alt)"/>
+      <rect x="${o.labelW}" y="${yy}" width="${bw}" height="${o.barH}" rx="5" fill="${it.color}"/>
+      <text x="${o.labelW+bw+8}" y="${yy+o.barH*0.68}" font-size="12" font-family="var(--font-mono)" fill="var(--ink)">${it.value}</text>`;
+  }).join('');
+  return `<svg viewBox="0 0 ${o.w} ${h}" width="100%">${rows}</svg>`;
+}
+
+function groupedBarSVG(categories, seriesPrev, seriesCurr, opts){
+  const o = Object.assign({w:600, h:180}, opts||{});
+  const max = Math.max(...seriesCurr, ...seriesPrev) * 1.2 || 1;
+  const groupW = o.w/categories.length;
+  const barW = Math.min(groupW*0.26, 30);
+  const baseline = o.h-22;
+  const bars = categories.map((cat,i)=>{
+    const cx = i*groupW + groupW/2;
+    const hPrev = (seriesPrev[i]/max)*(baseline-14);
+    const hCurr = (seriesCurr[i]/max)*(baseline-14);
+    return `
+      <rect x="${(cx-barW-4).toFixed(1)}" y="${(baseline-hPrev).toFixed(1)}" width="${barW}" height="${hPrev.toFixed(1)}" rx="3" fill="var(--ink-muted)" opacity=".55"/>
+      <rect x="${(cx+4).toFixed(1)}" y="${(baseline-hCurr).toFixed(1)}" width="${barW}" height="${hCurr.toFixed(1)}" rx="3" fill="var(--accent)"/>
+      <text x="${(cx-barW-4+barW/2).toFixed(1)}" y="${(baseline-hPrev-6).toFixed(1)}" font-size="10" font-family="var(--font-mono)" fill="var(--ink-muted)" text-anchor="middle">${seriesPrev[i]}</text>
+      <text x="${(cx+4+barW/2).toFixed(1)}" y="${(baseline-hCurr-6).toFixed(1)}" font-size="10.5" font-weight="700" font-family="var(--font-mono)" fill="var(--ink)" text-anchor="middle">${seriesCurr[i]}</text>
+      <text x="${cx.toFixed(1)}" y="${baseline+16}" font-size="11.5" fill="var(--ink-secondary)" text-anchor="middle">${cat}</text>`;
+  }).join('');
+  return `<svg viewBox="0 0 ${o.w} ${o.h}" width="100%">
+    <line x1="0" y1="${baseline}" x2="${o.w}" y2="${baseline}" stroke="var(--border-strong)" stroke-width="1"/>
+    ${bars}
+  </svg>`;
+}
+
+function buyerLabel(t_){ return t_.buyer + (t_.buyerTag ? ' ' + t(t_.buyerTag) : ''); }
+
+function channelViewHTML(channelId){
+  const ch = CHANNELS.find(c=>c.id===channelId);
+  if(!ch){
+    return `<button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+    <div class="panel"><div class="empty-note">${t('channelNotFound')}</div></div>`;
+  }
+  if(ch.kind==='visitors'){
+    return `
+    <button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+    <div class="panel">
+      <div class="panel-head"><div><div class="panel-title">${channelName(ch.id)}</div>
+      <div class="panel-sub">${t('deanonSub')}</div></div></div>
+      <div class="channel-intro">
+        <h3>${t('deanonWhatTitle')}</h3>
+        <p>${t('deanonWhatBody')}</p>
+        <ul class="capability-list">
+          <li>${t('deanonCap1')}</li><li>${t('deanonCap2')}</li><li>${t('deanonCap3')}</li><li>${t('deanonCap4')}</li>
+        </ul>
+      </div>
+      <div class="visitor-row head"><div>${t('visResolved')}</div><div>${t('visContact')}</div><div>${t('visConfidence')}</div><div>${t('visActivity')}</div><div>${t('visStatus')}</div></div>
+      ${VISITORS.map((v,i)=>{
+        const vx = visitorTX(i);
+        const level = v.confidence>=80?'high':v.confidence>=50?'med':'low';
+        return `<div class="visitor-row">
+          <div>${vx.company}</div><div>${vx.contact}</div>
+          <div class="conf ${level}">${v.confidence}%</div>
+          <div>${vx.pages}</div>
+          <div>${vx.status}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+  const threads = THREADS[channelId] || [];
+  if(ch.id==='ai_sdr'){ return aiSdrPageHTML(ch, threads); }
+  return `
+  <button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${channelName(ch.id)}</div><div class="panel-sub">${threads.length} ${t('conversationsPeriod')}</div></div></div>
+    ${threads.map(th=>{
+      const tx = threadTX(channelId, th.id);
+      return `
+      <div class="thread-list-item" data-thread="${th.id}">
+        <div>
+          <div class="tli-buyer">${buyerLabel(th)}</div>
+          <div class="tli-meta">${th.listing} &middot; ${tx.time||''}</div>
+          <div class="tli-preview">${threadPreview(th, tx)}</div>
+        </div>
+        <span class="status-pill ${th.pendingFirstTouch ? 'pending' : th.status}">${th.pendingFirstTouch ? t('statusDraftPending') : statusLabel(th.status)}</span>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function aiSdrPageHTML(ch, threads){
+  const chat = sdrChatTX();
+  const chatLangLine = `${t('langEN')} 64% · ${t('langES')} 17% · ${t('langFR')} 11% · ${t('langIT')} 8%`;
+  const callLangLine = `${t('langEN')} 58% · ${t('langIT')} 19% · ${t('langFR')} 14% · ${t('langES')} 9%`;
+  return `
+  <button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${channelName(ch.id)}</div></div></div>
+    <div class="channel-intro">
+      <h3>${t('sdrWhatTitle')}</h3>
+      <p>${t('sdrWhatBody')}</p>
+      <ul class="capability-list">
+        <li>${t('sdrCap1')}</li><li>${t('sdrCap2')}</li><li>${t('sdrCap3')}</li><li>${t('sdrCap4')}</li>
+        <li>${t('sdrCap5')}</li><li>${t('sdrCap6')}</li><li>${t('sdrCap7')}</li><li>${t('sdrCap8')}</li><li>${t('sdrCap9')}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('chatAnalyticsTitle')}</div><div class="panel-sub">${t('chatAnalyticsSub')}</div></div></div>
+    <div class="perf-row">
+      <div class="perf-item"><div class="l">${t('chatConversations')}</div><div class="v">${scale(96)}</div></div>
+      <div class="perf-item"><div class="l">${t('chatResolved')}</div><div class="v">71%</div></div>
+      <div class="perf-item"><div class="l">${t('chatAppts')}</div><div class="v">${scale(14)}</div></div>
+      <div class="perf-item"><div class="l">${t('chatSpecSheets')}</div><div class="v">${scale(38)}</div></div>
+    </div>
+    <div class="panel-foot-stat"><span>${t('chatByLanguage')}</span><span class="lang-split">${chatLangLine}</span></div>
+    <div class="panel-head" style="margin-top:18px"><div class="panel-title" style="font-size:13px">${t('chatTopQuestionsTitle')}</div></div>
+    <ul class="feature-list quotes">${t('chatTopQuestions').map(q=>`<li>${q}</li>`).join('')}</ul>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('sdrChatTitle')}</div><div class="panel-sub">${t('sdrChatSub')}</div></div></div>
+    <div class="msg-log">
+      ${chat.messages.map(m=>`<div class="msg ${m.from==='visitor'?'buyer':'broker'}">${m.text}</div>`).join('')}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('callAnalyticsTitle')}</div><div class="panel-sub">${t('callAnalyticsSub')}</div></div></div>
+    <div class="perf-row">
+      <div class="perf-item"><div class="l">${t('callsHandled')}</div><div class="v">${scale(58)}</div></div>
+      <div class="perf-item"><div class="l">${t('callAvgLength')}</div><div class="v">3:40</div></div>
+      <div class="perf-item"><div class="l">${t('callTransferred')}</div><div class="v">22%</div></div>
+      <div class="perf-item"><div class="l">${t('chatAppts')}</div><div class="v">${scale(9)}</div></div>
+      <div class="perf-item"><div class="l">${t('callAfterHours')}</div><div class="v">34%</div></div>
+      <div class="perf-item"><div class="l">${t('callMissed')}</div><div class="v" style="color:var(--status-good)">0</div></div>
+    </div>
+    <div class="panel-foot-stat"><span>${t('chatByLanguage')}</span><span class="lang-split">${callLangLine}</span></div>
+    <div class="panel-head" style="margin-top:18px"><div class="panel-title" style="font-size:13px">${t('callTopReasonsTitle')}</div></div>
+    <ul class="feature-list quotes">${t('callTopReasons').map(q=>`<li>${q}</li>`).join('')}</ul>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('sdrOutboundTitle')}</div><div class="panel-sub">${threads.length} ${t('conversationsPeriod')}</div></div></div>
+    ${threads.map(th=>{
+      const tx = threadTX(ch.id, th.id);
+      return `
+      <div class="thread-list-item" data-thread="${th.id}">
+        <div>
+          <div class="tli-buyer">${buyerLabel(th)}</div>
+          <div class="tli-meta">${th.listing} &middot; ${tx.time||''}</div>
+          <div class="tli-preview">${threadPreview(th, tx)}</div>
+        </div>
+        <span class="status-pill ${th.pendingFirstTouch ? 'pending' : th.status}">${th.pendingFirstTouch ? t('statusDraftPending') : statusLabel(th.status)}</span>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+function threadPreview(th, tx){
+  if(!th.messages.length) return t('noMessagesYet');
+  const lastFrom = th.messages[th.messages.length-1].from;
+  const lastText = tx.m[tx.m.length-1] || '';
+  return (lastFrom==='buyer' ? '' : (lastFrom==='ai' ? t('aiSdrPrefix')+' ' : t('youPrefix')+' ')) + lastText;
+}
+
+function threadViewHTML(channelId, threadId){
+  const ch = CHANNELS.find(c=>c.id===channelId);
+  const th = (THREADS[channelId]||[]).find(x=>x.id===threadId);
+  if(!ch || !th){
+    return `<button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+    <div class="panel"><div class="empty-note">${t('threadNotFound')}</div></div>`;
+  }
+  const tx = threadTX(channelId, threadId);
+  const clockTimes = (MSG_TIMES[channelId] && MSG_TIMES[channelId][threadId]) || [];
+  const sentKey = channelId+':'+threadId;
+  const justSent = state.sentMessages[sentKey];
+  return `
+  <button class="back-btn" data-back="channel">&larr; ${t('backTo')} ${channelName(ch.id)}</button>
+  <div class="panel">
+    <div class="panel-head">
+      <div><div class="panel-title">${buyerLabel(th)}</div><div class="panel-sub">${th.listing} &middot; ${channelName(ch.id)}</div></div>
+      <span class="status-pill ${th.status}">${statusLabel(th.status)}</span>
+    </div>
+    <div class="msg-log">
+      ${th.messages.map((m,i)=>`<div class="msg ${m.from==='buyer'?'buyer':'broker'}">${m.from==='ai'?`<b>${t('aiSdrPrefix')}</b> `:''}${tx.m[i]||''}<span class="t">${clockTimes[i]||''}</span></div>`).join('')}
+      ${justSent ? `<div class="msg broker">${justSent}<span class="t">${t('justNow')}</span></div>` : ''}
+    </div>
+    ${draftPanelHTML(th, tx, sentKey, justSent)}
+  </div>`;
+}
+
+function draftPanelHTML(th, tx, sentKey, justSent){
+  if(justSent || th.sentAlready){
+    return `<div class="sent-note">&#10003; ${t('sentToBuyer')} ${justSent?t('justNow'):''}</div>`;
+  }
+  if(th.optedOut){
+    return `<div class="empty-note">${t('optedOutMsg')}</div>`;
+  }
+  if(th.needsManualDraft){
+    return `<div class="draft-box">
+      <div class="draft-label">&#9888; ${t('noDraftTitle')}</div>
+      <p style="margin:0 0 10px;font-size:13px;color:var(--ink-secondary)">${t('noDraftBody')}</p>
+      <textarea id="draftText" placeholder="${t('writePlaceholder')}"></textarea>
+      <div class="draft-actions"><button class="btn primary" data-send="${sentKey}">${t('approveSend')}</button></div>
+    </div>`;
+  }
+  return `<div class="draft-box">
+    <div class="draft-label">&#9998; ${th.pendingFirstTouch ? t('draftFirstTouch') : t('draftSuggestion')}</div>
+    <textarea id="draftText">${tx.draft||''}</textarea>
+    <div class="draft-actions">
+      <button class="btn primary" data-send="${sentKey}">${t('approveSend')}</button>
+      <button class="btn text" data-writeown="1">${t('writeOwnInstead')}</button>
+    </div>
+  </div>`;
+}
+
+function listingViewHTML(listingId){
+  const l = LISTINGS.find(x=>x.id===listingId);
+  if(!l){
+    return `<button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+    <div class="panel"><div class="empty-note">${t('listingNotFound')}</div></div>`;
+  }
+  const lx = listingTX(l.id);
+  const m = stageMeta(l.stage);
+  const chip = (label, level)=>{
+    const cls = level==='good' ? 'good' : level==='warning' ? 'warning' : 'critical';
+    const text = level==='good' ? `${label} ✓ ${t('liveAccurate')}` : level==='warning' ? `${label} ${t('checking')}` : `${label} ${t('stillShowingSold')}`;
+    return `<span class="chip ${cls}">${text}</span>`;
+  };
+  return `
+  <button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+  <div class="panel">
+    <div class="listing-head">
+      <div class="listing-title">
+        <span class="stage-pill" style="color:${m.c};background:${m.s}">${stageLabel(l.stage)}</span>
+        <h2>${l.name}</h2>
+        <div class="sub">${l.builder} &middot; ${l.year} &middot; ${l.location} &middot; MLS# ${l.id}-${l.year}</div>
+      </div>
+      <div class="listing-price">${l.price}<div class="sub" style="text-align:right">${l.loa}</div></div>
+    </div>
+
+    <div class="listing-hero">
+      ${YACHT_SVG}
+      <span class="photo-tag">${t('photoTag')}</span>
+    </div>
+    <div class="gallery-strip">
+      ${[t('galExterior'),t('galSalon'),t('galMaster'),t('galHelm')].map(lbl=>`<div class="gallery-thumb">${iconSvg('camera')}<span>${lbl}</span></div>`).join('')}
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-item"><div class="l">${t('specLOA')}</div><div class="v">${l.loa}</div></div>
+      <div class="spec-item"><div class="l">${t('specBeam')}</div><div class="v">${l.beam}</div></div>
+      <div class="spec-item"><div class="l">${t('specDraft')}</div><div class="v">${l.draft}</div></div>
+      <div class="spec-item"><div class="l">${t('specCabins')}</div><div class="v">${l.cabins}</div></div>
+      <div class="spec-item"><div class="l">${t('specHeads')}</div><div class="v">${l.heads}</div></div>
+      <div class="spec-item"><div class="l">${t('specHull')}</div><div class="v">${l.hull}</div></div>
+      <div class="spec-item"><div class="l">${t('specEngines')}</div><div class="v">${l.engines}</div></div>
+      <div class="spec-item"><div class="l">${t('specYear')}</div><div class="v">${l.year}</div></div>
+    </div>
+
+    <p class="listing-desc">${lx.d}</p>
+
+    <ul class="feature-list">${lx.f.map(f=>`<li>${f}</li>`).join('')}</ul>
+
+    <div class="panel-head"><div class="panel-title" style="font-size:13px">${t('listedOn')}</div></div>
+    <div class="platform-chips" style="margin-bottom:20px">
+      ${chip('YachtWorld', l.platforms.yachtworld)}${chip('Rightboat', l.platforms.rightboat)}${chip('Boat Trader', l.platforms.boattrader)}
+    </div>
+
+    <div class="panel-head"><div class="panel-title" style="font-size:13px">${t('listingPerf')}</div></div>
+    <div class="perf-row">
+      <div class="perf-item"><div class="l">${t('perfInquiries')}</div><div class="v">${l.inquiries}</div></div>
+      <div class="perf-item"><div class="l">${t('perfAvgResp')}</div><div class="v">${l.avgResp}</div></div>
+      <div class="perf-item"><div class="l">${t('perfDom')}</div><div class="v">${l.dom}</div></div>
+      <div class="perf-item"><div class="l">${t('perfStage')}</div><div class="v" style="color:${m.c}">${stageLabel(l.stage)}</div></div>
+    </div>
+  </div>`;
+}
+
+function analyticsPageHTML(){
+  const months = trendMonthLabels();
+  const growthPct = Math.round(((TREND.commission[5]-TREND.commission[0])/TREND.commission[0])*100);
+  const channelItems = CHANNELS.map(ch=>({label:channelName(ch.id), value:scale(ch.base.count), color: ch.color || '#C13584'}))
+    .sort((a,b)=>b.value-a.value);
+  const listingItems = [...LISTINGS].sort((a,b)=>b.inquiries-a.inquiries).map(l=>({label:l.name.split(' — ')[0], value:l.inquiries, color:stageMeta(l.stage).c}));
+  return `
+  <button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('northStarLabel')}</div><div class="panel-sub">${t('northStarSub')}</div></div></div>
+    <div style="display:flex; align-items:baseline; flex-wrap:wrap; margin-bottom:10px;">
+      <span class="northstar-value">$${TREND.commission[5].toLocaleString('en-US')}</span>
+      <span class="northstar-badge">&#8593; +${growthPct}%</span>
+      <span style="font-size:12.5px; color:var(--ink-muted); margin-left:8px;">${t('overMonths')}</span>
+    </div>
+    ${trendChartSVG(TREND.commission, {h:110, labels:months, fmt:v=>'$'+Math.round(v/1000)+'k'})}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('metricsOverTimeTitle')}</div><div class="panel-sub">${t('metricsOverTimeSub')}</div></div></div>
+    <div class="trend-grid">
+      <div class="trend-card">
+        <div class="trend-label">${t('inquiriesTrendLabel')}</div>
+        <div class="trend-value">${TREND.inquiries[5]}</div>
+        ${trendChartSVG(TREND.inquiries, {h:70, w:260, color:'var(--accent)', labels:[months[0],months[5]]})}
+      </div>
+      <div class="trend-card">
+        <div class="trend-label">${t('responseTrendLabel')}</div>
+        <div class="trend-value">${TREND.responseMin[5]} ${t('unitMin')}</div>
+        ${trendChartSVG(TREND.responseMin, {h:70, w:260, color:'var(--status-info)', labels:[months[0],months[5]]})}
+      </div>
+      <div class="trend-card">
+        <div class="trend-label">${t('conversionTrendLabel')}</div>
+        <div class="trend-value">${TREND.conversionPct[5]}%</div>
+        ${trendChartSVG(TREND.conversionPct, {h:70, w:260, color:'var(--status-good)', labels:[months[0],months[5]]})}
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('comparisonTitle')}</div><div class="panel-sub">${t('comparisonSub')}</div></div></div>
+    <div class="chart-legend">
+      <span><i class="sw" style="background:var(--ink-muted); opacity:.55"></i>${t('legendLastMonth')}</span>
+      <span><i class="sw" style="background:var(--accent)"></i>${t('legendThisMonth')}</span>
+    </div>
+    ${groupedBarSVG(STAGE_COMPARE.categories.map(stageLabel), STAGE_COMPARE.lastMonth, STAGE_COMPARE.thisMonth, {h:190})}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('engagementTitle')}</div><div class="panel-sub">${t('engagementSub')}</div></div></div>
+    ${hBarChartSVG(channelItems, {barH:20, gap:12})}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('topListingsTitle')}</div><div class="panel-sub">${t('topListingsSub')}</div></div></div>
+    ${hBarChartSVG(listingItems, {barH:22, gap:14, labelW:170})}
+  </div>`;
+}
+
+/* ============================= EVENT BINDING ============================= */
+function bindListingView(){
+  document.querySelectorAll('[data-back]').forEach(el=>el.addEventListener('click', ()=>{ navigate(()=>{ state.view='dashboard'; }); }));
+}
+function bindDashboard(){
+  document.querySelectorAll('[data-channel]').forEach(el=>el.addEventListener('click', ()=>{
+    navigate(()=>{ state.view='channel'; state.channelId=el.dataset.channel; });
+  }));
+  document.querySelectorAll('[data-listing]').forEach(el=>el.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    navigate(()=>{ state.view='listing'; state.listingId=el.dataset.listing; });
+  }));
+  document.querySelectorAll('[data-fix]').forEach(el=>el.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    state.cleanupFixed[el.dataset.fix]=true; renderApp();
+  }));
+  document.querySelectorAll('[data-scrollto]').forEach(el=>el.addEventListener('click', ()=>{
+    document.getElementById(el.dataset.scrollto)?.scrollIntoView({behavior:'smooth', block:'start'});
+  }));
+  document.querySelectorAll('th[data-sort]').forEach(el=>el.addEventListener('click', ()=>{
+    const col=el.dataset.sort;
+    if(state.sortCol===col) state.sortDir = state.sortDir==='asc'?'desc':'asc';
+    else {state.sortCol=col; state.sortDir='desc';}
+    renderApp();
+  }));
+}
+function bindChannelView(){
+  document.querySelectorAll('[data-back]').forEach(el=>el.addEventListener('click', ()=>{ navigate(()=>{ state.view='dashboard'; }); }));
+  document.querySelectorAll('[data-thread]').forEach(el=>el.addEventListener('click', ()=>{
+    navigate(()=>{ state.view='thread'; state.threadId=el.dataset.thread; });
+  }));
+}
+function bindThreadView(){
+  document.querySelectorAll('[data-back]').forEach(el=>el.addEventListener('click', ()=>{ navigate(()=>{ state.view=el.dataset.back; }); }));
+  const sendBtn = document.querySelector('[data-send]');
+  if(sendBtn) sendBtn.addEventListener('click', ()=>{
+    const text = document.getElementById('draftText').value.trim();
+    if(!text) return;
+    state.sentMessages[sendBtn.dataset.send] = text;
+    renderApp();
+  });
+  const writeOwn = document.querySelector('[data-writeown]');
+  if(writeOwn) writeOwn.addEventListener('click', ()=>{
+    document.getElementById('draftText').value='';
+    document.getElementById('draftText').focus();
+  });
+}
+
+/* ============================= INIT ============================= */
+document.querySelectorAll('[data-range]').forEach(b=>b.addEventListener('click', ()=>{ state.range=b.dataset.range; renderApp(); }));
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click', ()=>{
+  state.lang=b.dataset.lang; saveLang(state.lang); applyChrome(); renderApp();
+}));
+document.getElementById('analyticsNavBtn')?.addEventListener('click', ()=>{ navigate(()=>{ state.view='analytics'; }); });
+document.getElementById('refreshBtn')?.addEventListener('click', (e)=>{
+  const btn = e.currentTarget;
+  if(state.loading) return;
+  btn.classList.add('spinning');
+  state.loading = true; renderApp();
+  setTimeout(()=>{
+    state.loading = false;
+    setLastUpdated();
+    renderApp();
+    btn.classList.remove('spinning');
+  }, 550);
+});
+
+applyChrome();
+renderApp();
+</script>
+
