@@ -112,6 +112,24 @@
   .trust-badge{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; color:var(--ink-muted); border:1px solid var(--border); border-radius:999px; padding:5px 12px;}
   .trust-badge svg{width:13px; height:13px; flex:none;}
 
+  /* section nav */
+  .section-nav{display:flex; gap:4px; overflow-x:auto; -webkit-overflow-scrolling:touch; padding:4px; background:var(--surface-alt); border-radius:999px; margin-bottom:18px; scrollbar-width:none;}
+  .section-nav::-webkit-scrollbar{display:none;}
+  .section-tab{
+    display:inline-flex; align-items:center; gap:7px; background:none; color:var(--ink-secondary); flex:none;
+    border:none; font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px; white-space:nowrap; cursor:pointer;
+  }
+  .section-tab svg{width:15px; height:15px; flex:none;}
+  .section-tab:hover{color:var(--ink);}
+  .section-tab.active{background:var(--accent); color:var(--accent-ink);}
+
+  /* donut chart */
+  .donut-wrap{display:flex; align-items:center; gap:22px; flex-wrap:wrap;}
+  .donut-legend{display:flex; flex-direction:column; gap:8px; font-size:13px;}
+  .donut-legend .row{display:flex; align-items:center; gap:8px;}
+  .donut-legend .dot{width:10px; height:10px; border-radius:50%; flex:none;}
+  .donut-legend .val{font-family:var(--font-mono); font-weight:600; margin-left:auto; padding-left:14px;}
+
   /* analytics charts */
   .northstar-value{font-family:var(--font-mono); font-size:clamp(32px,5vw,44px); font-weight:600; letter-spacing:-.01em;}
   .northstar-badge{display:inline-flex; align-items:center; gap:5px; font-size:13px; font-weight:700; color:var(--status-good); background:var(--status-good-soft); border-radius:999px; padding:4px 12px; margin-left:10px;}
@@ -199,6 +217,7 @@
   .kanban{display:grid; grid-template-columns:repeat(5,1fr); gap:10px;}
   @media (max-width:900px){.kanban{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:520px){.kanban{grid-template-columns:1fr;}}
+  @media (max-width:600px){.section-nav{justify-content:flex-start;} .section-tab{padding:8px 13px; font-size:12.5px;} .donut-wrap{gap:16px;}}
   .kanban-col{background:var(--surface-alt); border-radius:var(--radius-sm); padding:10px;}
   .kanban-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
   .kanban-head .t{font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-secondary);}
@@ -338,7 +357,7 @@
           <path d="M20 20 L27 13 L22 22 L13 27 Z" fill="currentColor"/>
         </svg>
         <div class="brand-text">
-          <h1>Meridian Yacht Sales</h1>
+          <h1 id="companyNameHeading">Meridian Yacht Sales</h1>
           <p id="tagline">Fort Lauderdale, FL &middot; Managing Broker plan</p>
         </div>
       </div>
@@ -402,6 +421,23 @@
 </div>
 
 <script>
+/* ============================= WHITE-LABEL: COMPANY NAME (from URL) =============================
+   Same file serves every prospect — no per-business copy, no build step, no hosting cost per link.
+   Append ?company=Some+Yacht+Group to the shared URL and this file swaps the name in at load time.
+   Example outreach link: https://your-artifact-url/?company=Anchor%20Bay%20Yachts                  */
+const DEFAULT_COMPANY_NAME = 'Meridian Yacht Sales';
+const COMPANY_NAME = (() => {
+  try {
+    const raw = new URLSearchParams(window.location.search).get('company');
+    return raw && raw.trim() ? raw.trim() : DEFAULT_COMPANY_NAME;
+  } catch (e) { return DEFAULT_COMPANY_NAME; }
+})();
+document.addEventListener('DOMContentLoaded', () => {
+  const h = document.getElementById('companyNameHeading');
+  if (h) h.textContent = COMPANY_NAME;
+  document.title = COMPANY_NAME;
+});
+
 /* ============================= ICONS / ILLUSTRATIONS ============================= */
 const ICONS = {
   chat:'<path d="M6 8h16v10H12l-5 4v-4H6z" fill="currentColor"/>',
@@ -411,7 +447,13 @@ const ICONS = {
   radar:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="14" r="5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M14 14 L21 8" stroke="currentColor" stroke-width="1.8"/><circle cx="14" cy="14" r="1.6" fill="currentColor"/>',
   bot:'<rect x="7" y="10" width="14" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="11.5" cy="15.5" r="1.4" fill="currentColor"/><circle cx="16.5" cy="15.5" r="1.4" fill="currentColor"/><path d="M14 10V6m-3 0h6" stroke="currentColor" stroke-width="1.6"/>',
   mail:'<rect x="5" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M6 9l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.7"/>',
-  camera:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="14" cy="14" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/>'
+  camera:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="14" cy="14" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/>',
+  grid:'<rect x="5" y="5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="15" y="5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="5" y="15" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="15" y="15" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/>',
+  channels:'<circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="20" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="14" cy="20" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 9.5 12.5 17.5M17.5 9.5 15.5 17.5" stroke="currentColor" stroke-width="1.4"/>',
+  listings:'<rect x="5" y="6" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 11h11M8.5 15h11M8.5 19h6" stroke="currentColor" stroke-width="1.5"/>',
+  pipeline:'<path d="M5 8h18M5 14h18M5 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="9" cy="8" r="2" fill="currentColor"/><circle cx="17" cy="14" r="2" fill="currentColor"/><circle cx="12" cy="20" r="2" fill="currentColor"/>',
+  clock:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M14 9v5l4 2.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+  chart:'<path d="M6 21V13M14 21V6M22 21v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
 };
 
 const YACHT_SVG = `<svg viewBox="0 0 300 130" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -598,6 +640,9 @@ const UI = {
     panelListingsTitle:'Listings & pipeline', panelListingsSub:'Inquiry → Qualified → Showing → Offer, this period',
     panelDealTitle:'Deal pipeline', panelDealSub:'Every active buyer conversation, by stage',
     panelResponseTitle:'Response speed', panelResponseSub:'Average first reply, by listing platform',
+    secOverview:'Overview', secChannels:'Channels', secListings:'Listings', secPipeline:'Pipeline', secResponse:'Response', secAnalytics:'Analytics',
+    donutStatusTitle:'Inquiries by outcome', donutStatusSub:'Every inbound inquiry this period, across all channels', donutTotalLabel:'Total',
+    donutPipelineTitle:'Deals by stage', donutPipelineSub:'Every active buyer conversation, by stage', donutDealsLabel:'Deals',
     outsideHours:'Answered outside working hours',
     colListing:'Listing', colInquiries:'Inquiries', colAvgResp:'Avg. response', colStage:'Stage', colDom:'Days on market',
     markFixed:'Mark fixed', cleared:'cleared', checking:'checking', stillLive:'still live', daysAgo:'days ago',
@@ -695,6 +740,9 @@ UI.fr = {
   panelListingsTitle:'Annonces et pipeline', panelListingsSub:'Demande → Qualifié → Visite → Offre, sur cette période',
   panelDealTitle:'Pipeline des transactions', panelDealSub:'Chaque conversation acheteur active, par étape',
   panelResponseTitle:'Vitesse de réponse', panelResponseSub:'Premier temps de réponse moyen, par plateforme d’annonce',
+  secOverview:'Vue d’ensemble', secChannels:'Canaux', secListings:'Annonces', secPipeline:'Pipeline', secResponse:'Réponse', secAnalytics:'Analytique',
+  donutStatusTitle:'Demandes par résultat', donutStatusSub:'Chaque demande entrante sur cette période, tous canaux confondus', donutTotalLabel:'Total',
+  donutPipelineTitle:'Transactions par étape', donutPipelineSub:'Chaque conversation acheteur active, par étape', donutDealsLabel:'Transactions',
   outsideHours:'Répondu hors des heures de bureau',
   colListing:'Annonce', colInquiries:'Demandes', colAvgResp:'Réponse moy.', colStage:'Étape', colDom:'Jours sur le marché',
   markFixed:'Marquer comme corrigé', cleared:'nettoyé', checking:'vérification', stillLive:'encore visible', daysAgo:'jours',
@@ -791,6 +839,9 @@ UI.es = {
   panelListingsTitle:'Anuncios y pipeline', panelListingsSub:'Consulta → Cualificado → Visita → Oferta, en este período',
   panelDealTitle:'Pipeline de operaciones', panelDealSub:'Cada conversación activa con un comprador, por etapa',
   panelResponseTitle:'Velocidad de respuesta', panelResponseSub:'Tiempo medio de primera respuesta, por plataforma de anuncio',
+  secOverview:'Resumen', secChannels:'Canales', secListings:'Anuncios', secPipeline:'Pipeline', secResponse:'Respuesta', secAnalytics:'Analítica',
+  donutStatusTitle:'Consultas por resultado', donutStatusSub:'Cada consulta recibida en este período, en todos los canales', donutTotalLabel:'Total',
+  donutPipelineTitle:'Operaciones por etapa', donutPipelineSub:'Cada conversación activa con un comprador, por etapa', donutDealsLabel:'Operaciones',
   outsideHours:'Respondido fuera del horario laboral',
   colListing:'Anuncio', colInquiries:'Consultas', colAvgResp:'Resp. media', colStage:'Etapa', colDom:'Días en el mercado',
   markFixed:'Marcar como corregido', cleared:'resuelto', checking:'verificando', stillLive:'aún visible', daysAgo:'días',
@@ -887,6 +938,9 @@ UI.it = {
   panelListingsTitle:'Annunci e pipeline', panelListingsSub:'Richiesta → Qualificato → Visita → Offerta, in questo periodo',
   panelDealTitle:'Pipeline delle trattative', panelDealSub:'Ogni conversazione attiva con un acquirente, per fase',
   panelResponseTitle:'Velocità di risposta', panelResponseSub:'Tempo medio di prima risposta, per piattaforma di annuncio',
+  secOverview:'Panoramica', secChannels:'Canali', secListings:'Annunci', secPipeline:'Pipeline', secResponse:'Risposta', secAnalytics:'Analitica',
+  donutStatusTitle:'Richieste per esito', donutStatusSub:'Ogni richiesta in ingresso in questo periodo, su tutti i canali', donutTotalLabel:'Totale',
+  donutPipelineTitle:'Trattative per fase', donutPipelineSub:'Ogni conversazione attiva con un acquirente, per fase', donutDealsLabel:'Trattative',
   outsideHours:'Risposto fuori dall’orario di lavoro',
   colListing:'Annuncio', colInquiries:'Richieste', colAvgResp:'Risposta media', colStage:'Fase', colDom:'Giorni sul mercato',
   markFixed:'Segna come risolto', cleared:'risolto', checking:'in verifica', stillLive:'ancora visibile', daysAgo:'giorni fa',
@@ -1054,7 +1108,7 @@ const TX = {
       }
     },
     sdrChat:{visitor:'D. Ferreira', messages:[
-      {from:'bot', text:'Hi, thanks for stopping by Meridian Yacht Sales. I’m the virtual assistant here. Are you looking into a specific yacht today?'},
+      {from:'bot', text:'Hi, thanks for stopping by '+COMPANY_NAME+'. I’m the virtual assistant here. Are you looking into a specific yacht today?'},
       {from:'visitor', text:'yeah the sunseeker 74'},
       {from:'bot', text:'Great choice. The Sunseeker 74 “Isla Mar” is a 2019 model, 74 feet, listed at $2,150,000. She’s a single owner boat with full service records and a hydraulic swim platform. Want the full spec sheet?'},
       {from:'visitor', text:'yes please, and is she still available?'},
@@ -1150,7 +1204,7 @@ TX.fr = {
     }
   },
   sdrChat:{visitor:'D. Ferreira', messages:[
-    {from:'bot', text:'Bonjour, merci de votre visite chez Meridian Yacht Sales. Je suis l’assistant virtuel ici. Vous vous intéressez à un bateau en particulier aujourd’hui ?'},
+    {from:'bot', text:'Bonjour, merci de votre visite chez '+COMPANY_NAME+'. Je suis l’assistant virtuel ici. Vous vous intéressez à un bateau en particulier aujourd’hui ?'},
     {from:'visitor', text:'oui le sunseeker 74'},
     {from:'bot', text:'Excellent choix. Le Sunseeker 74 « Isla Mar » est un modèle 2019, 74 pieds, affiché à 2 150 000 $. Propriétaire unique, historique d’entretien complet et plateforme de bain hydraulique. Vous voulez la fiche technique complète ?'},
     {from:'visitor', text:'oui merci, et elle est toujours disponible ?'},
@@ -1245,7 +1299,7 @@ TX.es = {
     }
   },
   sdrChat:{visitor:'D. Ferreira', messages:[
-    {from:'bot', text:'Hola, gracias por visitar Meridian Yacht Sales. Soy el asistente virtual aquí. ¿Le interesa algún barco en concreto hoy?'},
+    {from:'bot', text:'Hola, gracias por visitar '+COMPANY_NAME+'. Soy el asistente virtual aquí. ¿Le interesa algún barco en concreto hoy?'},
     {from:'visitor', text:'si el sunseeker 74'},
     {from:'bot', text:'Buena elección. El Sunseeker 74 “Isla Mar” es un modelo de 2019, 74 pies, publicado en 2.150.000 $. Único propietario, historial de mantenimiento completo y plataforma de baño hidráulica. ¿Quiere la ficha técnica completa?'},
     {from:'visitor', text:'si por favor, y sigue disponible?'},
@@ -1340,7 +1394,7 @@ TX.it = {
     }
   },
   sdrChat:{visitor:'D. Ferreira', messages:[
-    {from:'bot', text:'Ciao, grazie per essere passato da Meridian Yacht Sales. Sono l’assistente virtuale qui. Ti interessa una barca in particolare oggi?'},
+    {from:'bot', text:'Ciao, grazie per essere passato da '+COMPANY_NAME+'. Sono l’assistente virtuale qui. Ti interessa una barca in particolare oggi?'},
     {from:'visitor', text:'si il sunseeker 74'},
     {from:'bot', text:'Ottima scelta. Il Sunseeker 74 “Isla Mar” è un modello del 2019, 74 piedi, in vendita a 2.150.000 $. Unico proprietario, documentazione di manutenzione completa e piattaforma di poppa idraulica. Vuoi la scheda tecnica completa?'},
     {from:'visitor', text:'si grazie, ed è ancora disponibile?'},
@@ -1364,8 +1418,17 @@ function sdrChatTX(){ return (TX[state.lang] && TX[state.lang].sdrChat) || TX.en
 function loadLang(){ try{ const v = localStorage.getItem('binnacle_lang'); return (v && UI[v]!==undefined) ? v : 'en'; }catch(e){ return 'en'; } }
 function saveLang(l){ try{ localStorage.setItem('binnacle_lang', l); }catch(e){} }
 
-let state = {range:'month', lang:loadLang(), view:'dashboard', channelId:null, threadId:null, listingId:null, visitorIndex:null, sortCol:'inquiries', sortDir:'desc',
+let state = {range:'month', lang:loadLang(), view:'dashboard', section:'overview', channelId:null, threadId:null, listingId:null, visitorIndex:null, sortCol:'inquiries', sortDir:'desc',
   cleanupFixed:{}, sentMessages:{}, loading:false};
+
+const SECTIONS = [
+  {id:'overview', icon:'grid', labelKey:'secOverview'},
+  {id:'channels', icon:'channels', labelKey:'secChannels'},
+  {id:'listings', icon:'listings', labelKey:'secListings'},
+  {id:'pipeline', icon:'pipeline', labelKey:'secPipeline'},
+  {id:'response', icon:'clock', labelKey:'secResponse'},
+  {id:'analytics', icon:'chart', labelKey:'secAnalytics'}
+];
 
 function scale(n){return Math.round(n * RANGE_FACTOR[state.range]);}
 
@@ -1421,14 +1484,33 @@ function renderApp(){
   else if(state.view==='channel'){ app.innerHTML = channelViewHTML(state.channelId); bindChannelView(); }
   else if(state.view==='thread'){ app.innerHTML = threadViewHTML(state.channelId, state.threadId); bindThreadView(); }
   else if(state.view==='listing'){ app.innerHTML = listingViewHTML(state.listingId); bindListingView(); }
-  else if(state.view==='analytics'){ app.innerHTML = analyticsPageHTML(); bindListingView(); }
   else if(state.view==='visitor'){ app.innerHTML = visitorViewHTML(state.visitorIndex); bindThreadView(); }
 }
 function navigate(fn){ fn(); window.scrollTo({top:0}); renderApp(); }
 
+function sectionNavHTML(){
+  return `<div class="section-nav" role="tablist">${SECTIONS.map(s=>`
+    <button class="section-tab ${state.section===s.id?'active':''}" data-section="${s.id}" role="tab" aria-selected="${state.section===s.id}">
+      ${iconSvg(s.icon)}<span>${t(s.labelKey)}</span>
+    </button>`).join('')}</div>`;
+}
+
+const SECTION_RENDERERS = {
+  overview: overviewSectionHTML, channels: channelsSectionHTML, listings: listingsSectionHTML,
+  pipeline: pipelineSectionHTML, response: responseSectionHTML, analytics: analyticsPageHTML
+};
+
 function dashboardHTML(){
+  const fn = SECTION_RENDERERS[state.section] || overviewSectionHTML;
+  return `${sectionNavHTML()}${fn()}`;
+}
+
+function overviewSectionHTML(){
   const inquiries = scale(118), commission = scale(184000), trend = state.range==='quarter' ? '+31%' : '+12%';
   const needsAttention = LISTINGS.filter(l=>l.platforms.boattrader==='critical' && !state.cleanupFixed[l.id]).length;
+  const closed = CHANNELS.reduce((s,ch)=>s+scale(ch.base.closed),0);
+  const interested = CHANNELS.reduce((s,ch)=>s+scale(ch.base.interested),0);
+  const churned = CHANNELS.reduce((s,ch)=>s+scale(ch.base.churned),0);
   return `
   <div class="kpi-grid">
     <div class="kpi-tile">
@@ -1441,7 +1523,7 @@ function dashboardHTML(){
       <div class="kpi-value">$${commission.toLocaleString('en-US')}</div>
       <div class="kpi-trend">&#8593; ${trend} ${t('trendPrefix')}</div>
     </div>
-    <button class="kpi-tile clickable ${needsAttention>0 ? 'alert' : 'ok'}" data-scrollto="cleanup-panel">
+    <button class="kpi-tile clickable ${needsAttention>0 ? 'alert' : 'ok'}" data-scrollto="cleanup-panel" data-scrollto-section="listings">
       <div class="kpi-label">${t('kpiAttention')}</div>
       <div class="kpi-value">${needsAttention}</div>
       ${needsAttention>0
@@ -1451,10 +1533,30 @@ function dashboardHTML(){
   </div>
 
   <div class="panel">
-    <div class="panel-head"><div><div class="panel-title">${t('panelChannelTitle')}</div><div class="panel-sub">${t('panelChannelSub')}</div></div></div>
-    ${channelPanelHTML()}
+    <div class="panel-head"><div><div class="panel-title">${t('donutStatusTitle')}</div><div class="panel-sub">${t('donutStatusSub')}</div></div></div>
+    ${donutChartSVG([
+      {label:t('statusClosed'), value:closed, color:'var(--status-good)'},
+      {label:t('statusStillInterested'), value:interested, color:'var(--status-info)'},
+      {label:t('statusChurned'), value:churned, color:'var(--status-neutral)'}
+    ], {centerValue:closed+interested+churned, centerLabel:t('donutTotalLabel')})}
   </div>
 
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelListingsTitle')}</div><div class="panel-sub">${t('panelListingsSub')}</div></div></div>
+    ${funnelHTML()}
+  </div>`;
+}
+
+function channelsSectionHTML(){
+  return `
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelChannelTitle')}</div><div class="panel-sub">${t('panelChannelSub')}</div></div></div>
+    ${channelPanelHTML()}
+  </div>`;
+}
+
+function listingsSectionHTML(){
+  return `
   <div class="panel" id="cleanup-panel">
     <div class="panel-head"><div><div class="panel-title">${t('panelCleanupTitle')}</div><div class="panel-sub">${t('panelCleanupSub')}</div></div></div>
     ${cleanupHTML()}
@@ -1464,13 +1566,26 @@ function dashboardHTML(){
     <div class="panel-head"><div><div class="panel-title">${t('panelListingsTitle')}</div><div class="panel-sub">${t('panelListingsSub')}</div></div></div>
     ${funnelHTML()}
     ${listingsTableHTML()}
+  </div>`;
+}
+
+function pipelineSectionHTML(){
+  const dealItems = DEALS.map(d=>({label:stageLabel(d.stage), value:d.count, color:stageMeta(d.stage).c}));
+  const totalDeals = dealItems.reduce((s,d)=>s+d.value,0);
+  return `
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('donutPipelineTitle')}</div><div class="panel-sub">${t('donutPipelineSub')}</div></div></div>
+    ${donutChartSVG(dealItems, {centerValue:totalDeals, centerLabel:t('donutDealsLabel')})}
   </div>
 
   <div class="panel">
     <div class="panel-head"><div><div class="panel-title">${t('panelDealTitle')}</div><div class="panel-sub">${t('panelDealSub')}</div></div></div>
     ${kanbanHTML()}
-  </div>
+  </div>`;
+}
 
+function responseSectionHTML(){
+  return `
   <div class="panel">
     <div class="panel-head"><div><div class="panel-title">${t('panelResponseTitle')}</div><div class="panel-sub">${t('panelResponseSub')}</div></div></div>
     ${responseSpeedHTML()}
@@ -1644,6 +1759,35 @@ function groupedBarSVG(categories, seriesPrev, seriesCurr, opts){
     <line x1="0" y1="${baseline}" x2="${o.w}" y2="${baseline}" stroke="var(--border-strong)" stroke-width="1"/>
     ${bars}
   </svg>`;
+}
+
+function donutChartSVG(items, opts){
+  const o = Object.assign({size:150, thickness:20, centerLabel:'', centerValue:''}, opts||{});
+  const total = items.reduce((s,it)=>s+it.value, 0) || 1;
+  const r = o.size/2 - o.thickness/2;
+  const c = o.size/2;
+  const circumference = 2*Math.PI*r;
+  let offset = 0;
+  const segs = items.filter(it=>it.value>0).map(it=>{
+    const frac = it.value/total;
+    const dash = frac*circumference;
+    const seg = `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${it.color}" stroke-width="${o.thickness}"
+      stroke-dasharray="${dash.toFixed(2)} ${(circumference-dash).toFixed(2)}" stroke-dashoffset="${(-offset).toFixed(2)}"
+      transform="rotate(-90 ${c} ${c})"/>`;
+    offset += dash;
+    return seg;
+  }).join('');
+  const legend = items.map(it=>`
+    <div class="row"><span class="dot" style="background:${it.color}"></span><span>${it.label}</span><span class="val">${it.value}</span></div>`).join('');
+  return `<div class="donut-wrap">
+    <svg viewBox="0 0 ${o.size} ${o.size}" width="${o.size}" height="${o.size}">
+      <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="var(--surface-alt)" stroke-width="${o.thickness}"/>
+      ${segs}
+      <text x="${c}" y="${c-4}" text-anchor="middle" font-family="var(--font-mono)" font-size="19" font-weight="600" fill="var(--ink)">${o.centerValue}</text>
+      <text x="${c}" y="${c+13}" text-anchor="middle" font-size="10" letter-spacing=".04em" fill="var(--ink-muted)">${(o.centerLabel||'').toUpperCase()}</text>
+    </svg>
+    <div class="donut-legend">${legend}</div>
+  </div>`;
 }
 
 function buyerLabel(t_){ return t_.buyer + (t_.buyerTag ? ' ' + t(t_.buyerTag) : ''); }
@@ -1903,8 +2047,6 @@ function analyticsPageHTML(){
     .sort((a,b)=>b.value-a.value);
   const listingItems = [...LISTINGS].sort((a,b)=>b.inquiries-a.inquiries).map(l=>({label:l.name.split(' — ')[0], value:l.inquiries, color:stageMeta(l.stage).c}));
   return `
-  <button class="back-btn" data-back="dashboard">&larr; ${t('backToDashboard')}</button>
-
   <div class="panel">
     <div class="panel-head"><div><div class="panel-title">${t('northStarLabel')}</div><div class="panel-sub">${t('northStarSub')}</div></div></div>
     <div style="display:flex; align-items:baseline; flex-wrap:wrap; margin-bottom:10px;">
@@ -2010,6 +2152,10 @@ function bindListingView(){
   document.querySelectorAll('[data-back]').forEach(el=>el.addEventListener('click', ()=>{ navigate(()=>{ state.view='dashboard'; }); }));
 }
 function bindDashboard(){
+  document.querySelectorAll('[data-section]').forEach(el=>el.addEventListener('click', ()=>{
+    if(el.dataset.section===state.section) return;
+    navigate(()=>{ state.section=el.dataset.section; });
+  }));
   document.querySelectorAll('[data-channel]').forEach(el=>el.addEventListener('click', ()=>{
     navigate(()=>{ state.view='channel'; state.channelId=el.dataset.channel; });
   }));
@@ -2022,7 +2168,13 @@ function bindDashboard(){
     state.cleanupFixed[el.dataset.fix]=true; renderApp();
   }));
   document.querySelectorAll('[data-scrollto]').forEach(el=>el.addEventListener('click', ()=>{
-    document.getElementById(el.dataset.scrollto)?.scrollIntoView({behavior:'smooth', block:'start'});
+    const targetSection = el.dataset.scrolltoSection;
+    if(targetSection && targetSection!==state.section){
+      navigate(()=>{ state.section=targetSection; });
+      requestAnimationFrame(()=>document.getElementById(el.dataset.scrollto)?.scrollIntoView({behavior:'smooth', block:'start'}));
+    } else {
+      document.getElementById(el.dataset.scrollto)?.scrollIntoView({behavior:'smooth', block:'start'});
+    }
   }));
   document.querySelectorAll('th[data-sort]').forEach(el=>el.addEventListener('click', ()=>{
     const col=el.dataset.sort;
@@ -2061,7 +2213,7 @@ document.querySelectorAll('[data-range]').forEach(b=>b.addEventListener('click',
 document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click', ()=>{
   state.lang=b.dataset.lang; saveLang(state.lang); applyChrome(); renderApp();
 }));
-document.getElementById('analyticsNavBtn')?.addEventListener('click', ()=>{ navigate(()=>{ state.view='analytics'; }); });
+document.getElementById('analyticsNavBtn')?.addEventListener('click', ()=>{ navigate(()=>{ state.view='dashboard'; state.section='analytics'; }); });
 document.getElementById('refreshBtn')?.addEventListener('click', (e)=>{
   const btn = e.currentTarget;
   if(state.loading) return;
