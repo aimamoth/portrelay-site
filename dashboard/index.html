@@ -194,6 +194,23 @@
   .listing-link{background:none; border:none; padding:0; text-align:left; font-family:inherit; font-weight:600; color:var(--ink); cursor:pointer; text-decoration:underline; text-decoration-color:var(--border-strong); text-underline-offset:2px;}
   .listing-link:hover{color:var(--accent); text-decoration-color:var(--accent);}
 
+  /* churn prediction: methodology flow + clickable qualified-by-channel bars */
+  .method-flow{display:flex; flex-wrap:wrap; align-items:stretch; gap:10px;}
+  .method-step{flex:1; min-width:150px; background:var(--surface-alt); border-radius:var(--radius-sm); padding:14px 14px 16px;}
+  .method-step .num{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-family:var(--font-mono); font-size:11.5px; font-weight:700; margin-bottom:8px;}
+  .method-step .st{font-size:13px; font-weight:600; margin-bottom:4px;}
+  .method-step .sd{font-size:12px; color:var(--ink-secondary); line-height:1.5;}
+  .method-arrow{display:flex; align-items:center; color:var(--ink-muted); font-size:16px; flex:none;}
+  @media (max-width:760px){.method-arrow{display:none;} .method-flow{gap:8px;}}
+  .qualified-row{display:grid; grid-template-columns:1.3fr 2fr auto 16px; gap:12px; align-items:center; width:100%; background:none; border:1px solid transparent; padding:9px 8px; border-radius:var(--radius-sm); text-align:left; font-family:inherit; cursor:pointer;}
+  .qualified-row:hover{background:var(--surface-alt); border-color:var(--border);}
+  .qualified-row+.qualified-row{border-top:1px solid var(--border);}
+  .qualified-label{font-size:13px; font-weight:600;}
+  .qualified-bar-track{height:8px; border-radius:5px; background:var(--surface-alt); overflow:hidden;}
+  .qualified-bar-fill{display:block; height:100%; border-radius:5px;}
+  .qualified-value{font-size:13px;}
+  @media (max-width:600px){.qualified-row{grid-template-columns:1fr auto 16px;} .qualified-bar-track{display:none;}}
+
   /* channel panel */
   .channel-row{
     display:grid; grid-template-columns:1.6fr .9fr .9fr 1.4fr 20px; gap:14px; align-items:center;
@@ -384,7 +401,8 @@ const ICONS = {
   listings:'<rect x="5" y="6" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 11h11M8.5 15h11M8.5 19h6" stroke="currentColor" stroke-width="1.5"/>',
   pipeline:'<path d="M5 8h18M5 14h18M5 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="9" cy="8" r="2" fill="currentColor"/><circle cx="17" cy="14" r="2" fill="currentColor"/><circle cx="12" cy="20" r="2" fill="currentColor"/>',
   chart:'<path d="M6 21V13M14 21V6M22 21v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
-  headset:'<path d="M6 16v-3a8 8 0 1 1 16 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><rect x="4" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="19" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M22 23c0 1.5-1.5 2-4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
+  headset:'<path d="M6 16v-3a8 8 0 1 1 16 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><rect x="4" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="19" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M22 23c0 1.5-1.5 2-4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  pulse:'<path d="M4 15h5l3-8 4 16 3-8h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'
 };
 
 const YACHT_SVG = `<svg viewBox="0 0 300 130" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -522,6 +540,35 @@ const OBJECTIONS = [
   {id:'more_boats', count:22, repIds:['r2','r3']},
   {id:'financing_ready', count:14, repIds:['r1','r3']},
   {id:'spouse_decision', count:9, repIds:['r3']}
+];
+
+/* ============================= CHURN PREDICTION (illustrative model outputs) ============================= */
+const CHURN_FEATURES = [
+  {id:'lastReply', pct:28},
+  {id:'replyTimeIncrease', pct:22},
+  {id:'priceObjection', pct:18},
+  {id:'showingNoShow', pct:14},
+  {id:'sentimentTrend', pct:11},
+  {id:'engagementDropoff', pct:7}
+];
+const CHURN_FEATURE_KEY = {
+  lastReply:'churnFeatLastReply', replyTimeIncrease:'churnFeatReplyTime', priceObjection:'churnFeatPriceObjection',
+  showingNoShow:'churnFeatNoShow', sentimentTrend:'churnFeatSentiment', engagementDropoff:'churnFeatEngagement'
+};
+function churnFeatureLabel(id){ return t(CHURN_FEATURE_KEY[id]) || id; }
+
+const CHURN_RISK_BANDS = [
+  {id:'low', count:71},
+  {id:'medium', count:29},
+  {id:'high', count:13}
+];
+const CHURN_RISK_KEY = {low:'churnRiskLow', medium:'churnRiskMedium', high:'churnRiskHigh'};
+const CHURN_RISK_COLOR = {low:'var(--status-good)', medium:'var(--status-warning)', high:'var(--status-critical)'};
+
+const CHURN_FLAGGED = [
+  {id:'f1', name:'K. Meunier', listing:'Princess X95 — Windfall', risk:82, reasonId:'priceObjection'},
+  {id:'f2', name:'D. Park', listing:'Sunseeker 74 — Isla Mar', risk:74, reasonId:'lastReply'},
+  {id:'f3', name:'L. Haddad', listing:'Ferretti 720 — Second Wind', risk:69, reasonId:'showingNoShow'}
 ];
 
 /* ============================= ANALYTICS DATA (illustrative, 6-month trend) ============================= */
@@ -685,7 +732,31 @@ const UI = {
     fieldIndustry:'Industry', fieldContact:'Likely contact', fieldCompanySize:'Company size', fieldVessel:'Vessel on file',
     fieldSignal:'Signal', fieldNote:'Note', fieldActivityOnSite:'Activity on your site',
     vesselUsOnlyNote:'Vessel documentation lookup covers US-flagged vessels only',
-    visitorNotFound:'That visitor record couldn’t be found — it may have moved.'
+    visitorNotFound:'That visitor record couldn’t be found — it may have moved.',
+    panelQualifiedTitle:'Qualified leads by channel', panelQualifiedSub:'Click a channel to see the conversations behind the numbers',
+    secChurn:'Churn Prediction',
+    churnIntro:'AI scores every active buyer conversation for risk of going cold, using the same signals a sharp broker would clock instinctively — just checked automatically, on every deal, every day.',
+    churnKpiAtRisk:'Buyers flagged at-risk', churnKpiLeadTime:'Avg. warning lead time', churnLeadTimeValue:'9 days',
+    churnKpiRecovered:'Recovered after intervention', churnKpiAccuracy:'Model accuracy (validation)',
+    panelMethodologyTitle:'How the model works', panelMethodologySub:'The same pipeline behind every churn score, step by step',
+    churnStepDataTitle:'Data collection', churnStepDataBody:'Pulls every signal from the conversation: reply latency, message sentiment, showing attendance, price objections, and channel engagement.',
+    churnStepFeaturesTitle:'Feature engineering', churnStepFeaturesBody:'Turns raw activity into predictive signals — reply-time trend, engagement decay rate, objection frequency, sentiment slope.',
+    churnStepModelTitle:'Prediction model', churnStepModelBody:'A gradient-boosted classifier trained on this brokerage’s historical won and lost deals outputs a 0–100 churn probability per active buyer.',
+    churnStepValidateTitle:'Validation', churnStepValidateBody:'Backtested against real outcomes from prior periods and scored on precision and recall, so alerts stay trustworthy instead of noisy.',
+    churnStepTriggerTitle:'Early-warning trigger', churnStepTriggerBody:'Buyers crossing the risk threshold get flagged before they go quiet, tagged with the signal driving the score.',
+    churnStepActionTitle:'Recommended action', churnStepActionBody:'AI drafts the specific save play — a pricing conversation, a financing introduction, an alternate listing — for the broker to approve and send.',
+    panelFeatureImportanceTitle:'What drives the churn score', panelFeatureImportanceSub:'Relative weight of each signal in the model’s prediction',
+    panelRiskDistributionTitle:'Active buyers by risk band', panelRiskDistributionSub:'Every open conversation this period, scored low, medium, or high risk', donutActiveLabel:'Active',
+    panelFlaggedTitle:'Flagged this period', panelFlaggedSub:'Buyers the model scored highest risk, and the signal driving it',
+    churnRiskScoreLabel:'risk score', churnTopSignalLabel:'Top signal',
+    panelWhatYouGetTitle:'What you get in return',
+    churnWhatYouGetBody:'Instead of finding out a deal died after the buyer stops replying, you get a ranked list of who’s slipping and why — early enough to still do something about it.',
+    churnCap1:'A risk score refreshed on every new message or missed touchpoint', churnCap2:'The specific reason behind each score, not just a number',
+    churnCap3:'A drafted save play ready for broker approval', churnCap4:'Alerts ranked so you work the biggest deals first',
+    churnCap5:'A model retrained on your own outcomes, not a generic industry average',
+    churnFeatLastReply:'Days since last reply', churnFeatReplyTime:'Reply time increase vs. baseline', churnFeatPriceObjection:'Price objection mentioned',
+    churnFeatNoShow:'Showing no-show', churnFeatSentiment:'Negative sentiment trend', churnFeatEngagement:'Engagement drop-off (site revisits)',
+    churnRiskLow:'Low risk', churnRiskMedium:'Medium risk', churnRiskHigh:'High risk'
   }
 };
 UI.fr = {
@@ -794,7 +865,31 @@ UI.fr = {
   fieldIndustry:'Secteur', fieldContact:'Contact probable', fieldCompanySize:'Taille de l’entreprise', fieldVessel:'Bateau enregistré',
   fieldSignal:'Signal', fieldNote:'Note', fieldActivityOnSite:'Activité sur votre site',
   vesselUsOnlyNote:'La recherche de documentation de bateau ne couvre que les bateaux immatriculés aux États-Unis',
-  visitorNotFound:'Cette fiche visiteur n’a pas pu être trouvée — elle a peut-être été déplacée.'
+  visitorNotFound:'Cette fiche visiteur n’a pas pu être trouvée — elle a peut-être été déplacée.',
+  panelQualifiedTitle:'Prospects qualifiés par canal', panelQualifiedSub:'Cliquez sur un canal pour voir les conversations derrière les chiffres',
+  secChurn:'Prédiction de désistement',
+  churnIntro:'L’IA évalue le risque de désistement de chaque conversation acheteur active, à partir des mêmes signaux qu’un bon courtier repérerait d’instinct — vérifiés automatiquement, sur chaque dossier, chaque jour.',
+  churnKpiAtRisk:'Acheteurs signalés à risque', churnKpiLeadTime:'Délai d’alerte moyen', churnLeadTimeValue:'9 jours',
+  churnKpiRecovered:'Récupérés après intervention', churnKpiAccuracy:'Précision du modèle (validation)',
+  panelMethodologyTitle:'Comment fonctionne le modèle', panelMethodologySub:'Le même pipeline derrière chaque score de désistement, étape par étape',
+  churnStepDataTitle:'Collecte des données', churnStepDataBody:'Récupère chaque signal de la conversation : délai de réponse, ton des messages, présence aux visites, objections sur le prix et engagement par canal.',
+  churnStepFeaturesTitle:'Ingénierie des variables', churnStepFeaturesBody:'Transforme l’activité brute en signaux prédictifs — tendance du délai de réponse, taux de déclin de l’engagement, fréquence des objections, pente du ton.',
+  churnStepModelTitle:'Modèle de prédiction', churnStepModelBody:'Un classificateur à gradient boosté, entraîné sur l’historique des transactions gagnées et perdues de cette agence, calcule une probabilité de désistement de 0 à 100 pour chaque acheteur actif.',
+  churnStepValidateTitle:'Validation', churnStepValidateBody:'Testé rétroactivement sur les résultats réels des périodes précédentes et noté en précision et rappel, pour que les alertes restent fiables et non bruyantes.',
+  churnStepTriggerTitle:'Alerte précoce', churnStepTriggerBody:'Les acheteurs franchissant le seuil de risque sont signalés avant de devenir silencieux, avec le signal à l’origine du score.',
+  churnStepActionTitle:'Action recommandée', churnStepActionBody:'L’IA rédige l’action de sauvetage précise — discussion sur le prix, introduction d’un financement, autre annonce — que le courtier n’a qu’à approuver et envoyer.',
+  panelFeatureImportanceTitle:'Ce qui influence le score de désistement', panelFeatureImportanceSub:'Poids relatif de chaque signal dans la prédiction du modèle',
+  panelRiskDistributionTitle:'Acheteurs actifs par niveau de risque', panelRiskDistributionSub:'Chaque conversation ouverte sur cette période, notée risque faible, moyen ou élevé', donutActiveLabel:'Actifs',
+  panelFlaggedTitle:'Signalés cette période', panelFlaggedSub:'Acheteurs jugés à plus haut risque par le modèle, et le signal en cause',
+  churnRiskScoreLabel:'score de risque', churnTopSignalLabel:'Signal principal',
+  panelWhatYouGetTitle:'Ce que vous obtenez en retour',
+  churnWhatYouGetBody:'Plutôt que de découvrir qu’une affaire est morte une fois que l’acheteur ne répond plus, vous obtenez une liste classée de qui décroche et pourquoi — assez tôt pour encore agir.',
+  churnCap1:'Un score de risque actualisé à chaque message ou contact manqué', churnCap2:'La raison précise derrière chaque score, pas seulement un chiffre',
+  churnCap3:'Une action de sauvetage rédigée, prête pour l’approbation du courtier', churnCap4:'Des alertes classées pour traiter d’abord les affaires les plus importantes',
+  churnCap5:'Un modèle réentraîné sur vos propres résultats, pas une moyenne générique du secteur',
+  churnFeatLastReply:'Jours depuis la dernière réponse', churnFeatReplyTime:'Hausse du délai de réponse vs référence', churnFeatPriceObjection:'Objection sur le prix mentionnée',
+  churnFeatNoShow:'Absence à une visite', churnFeatSentiment:'Tendance de ton négative', churnFeatEngagement:'Baisse d’engagement (retours sur le site)',
+  churnRiskLow:'Risque faible', churnRiskMedium:'Risque moyen', churnRiskHigh:'Risque élevé'
 };
 UI.es = {
   brandTagline:'Fort Lauderdale, FL · Plan Corredor Principal', sampleTag:'Datos de muestra · ilustrativos',
@@ -902,7 +997,31 @@ UI.es = {
   fieldIndustry:'Sector', fieldContact:'Contacto probable', fieldCompanySize:'Tamaño de la empresa', fieldVessel:'Embarcación registrada',
   fieldSignal:'Señal', fieldNote:'Nota', fieldActivityOnSite:'Actividad en su sitio',
   vesselUsOnlyNote:'La búsqueda de documentación de embarcaciones solo cubre embarcaciones abanderadas en EE. UU.',
-  visitorNotFound:'No se pudo encontrar esa ficha de visitante — puede haberse movido.'
+  visitorNotFound:'No se pudo encontrar esa ficha de visitante — puede haberse movido.',
+  panelQualifiedTitle:'Leads cualificados por canal', panelQualifiedSub:'Haga clic en un canal para ver las conversaciones detrás de los números',
+  secChurn:'Predicción de abandono',
+  churnIntro:'La IA puntúa el riesgo de abandono de cada conversación activa con un comprador, usando las mismas señales que un buen corredor detectaría por instinto — comprobadas automáticamente, en cada operación, todos los días.',
+  churnKpiAtRisk:'Compradores marcados en riesgo', churnKpiLeadTime:'Antelación media de la alerta', churnLeadTimeValue:'9 días',
+  churnKpiRecovered:'Recuperados tras la intervención', churnKpiAccuracy:'Precisión del modelo (validación)',
+  panelMethodologyTitle:'Cómo funciona el modelo', panelMethodologySub:'El mismo proceso detrás de cada puntuación de abandono, paso a paso',
+  churnStepDataTitle:'Recopilación de datos', churnStepDataBody:'Recoge cada señal de la conversación: latencia de respuesta, tono de los mensajes, asistencia a visitas, objeciones de precio y actividad por canal.',
+  churnStepFeaturesTitle:'Ingeniería de variables', churnStepFeaturesBody:'Convierte la actividad en bruto en señales predictivas — tendencia del tiempo de respuesta, tasa de caída de la actividad, frecuencia de objeciones, pendiente del tono.',
+  churnStepModelTitle:'Modelo de predicción', churnStepModelBody:'Un clasificador de gradient boosting entrenado con el historial de operaciones ganadas y perdidas de esta agencia calcula una probabilidad de abandono de 0 a 100 para cada comprador activo.',
+  churnStepValidateTitle:'Validación', churnStepValidateBody:'Probado retroactivamente contra resultados reales de períodos anteriores y evaluado por precisión y exhaustividad, para que las alertas sean fiables y no ruido.',
+  churnStepTriggerTitle:'Alerta temprana', churnStepTriggerBody:'Los compradores que superan el umbral de riesgo se marcan antes de quedarse en silencio, con la señal que impulsa la puntuación.',
+  churnStepActionTitle:'Acción recomendada', churnStepActionBody:'La IA redacta la jugada de rescate concreta — una conversación sobre el precio, una introducción a financiación, otro anuncio — para que el corredor la apruebe y la envíe.',
+  panelFeatureImportanceTitle:'Qué impulsa la puntuación de abandono', panelFeatureImportanceSub:'Peso relativo de cada señal en la predicción del modelo',
+  panelRiskDistributionTitle:'Compradores activos por nivel de riesgo', panelRiskDistributionSub:'Cada conversación abierta en este período, puntuada como riesgo bajo, medio o alto', donutActiveLabel:'Activos',
+  panelFlaggedTitle:'Marcados en este período', panelFlaggedSub:'Compradores con mayor riesgo según el modelo, y la señal que lo provoca',
+  churnRiskScoreLabel:'puntuación de riesgo', churnTopSignalLabel:'Señal principal',
+  panelWhatYouGetTitle:'Qué obtiene a cambio',
+  churnWhatYouGetBody:'En vez de descubrir que una operación murió cuando el comprador deja de responder, obtiene una lista ordenada de quién se está enfriando y por qué — con tiempo suficiente para actuar.',
+  churnCap1:'Una puntuación de riesgo actualizada con cada mensaje o contacto perdido', churnCap2:'El motivo concreto detrás de cada puntuación, no solo un número',
+  churnCap3:'Una jugada de rescate redactada, lista para la aprobación del corredor', churnCap4:'Alertas ordenadas para trabajar primero las operaciones más importantes',
+  churnCap5:'Un modelo reentrenado con sus propios resultados, no un promedio genérico del sector',
+  churnFeatLastReply:'Días desde la última respuesta', churnFeatReplyTime:'Aumento del tiempo de respuesta vs. base', churnFeatPriceObjection:'Objeción de precio mencionada',
+  churnFeatNoShow:'Ausencia a una visita', churnFeatSentiment:'Tendencia de tono negativo', churnFeatEngagement:'Caída de actividad (visitas al sitio)',
+  churnRiskLow:'Riesgo bajo', churnRiskMedium:'Riesgo medio', churnRiskHigh:'Riesgo alto'
 };
 UI.it = {
   brandTagline:'Fort Lauderdale, FL · Piano Broker Responsabile', sampleTag:'Dati di esempio · a scopo illustrativo',
@@ -1010,7 +1129,31 @@ UI.it = {
   fieldIndustry:'Settore', fieldContact:'Contatto probabile', fieldCompanySize:'Dimensione azienda', fieldVessel:'Imbarcazione registrata',
   fieldSignal:'Segnale', fieldNote:'Nota', fieldActivityOnSite:'Attività sul tuo sito',
   vesselUsOnlyNote:'La ricerca sulla documentazione dell’imbarcazione copre solo le imbarcazioni battenti bandiera USA',
-  visitorNotFound:'Questa scheda visitatore non è stata trovata — potrebbe essere stata spostata.'
+  visitorNotFound:'Questa scheda visitatore non è stata trovata — potrebbe essere stata spostata.',
+  panelQualifiedTitle:'Lead qualificati per canale', panelQualifiedSub:'Clicca su un canale per vedere le conversazioni dietro i numeri',
+  secChurn:'Previsione abbandono',
+  churnIntro:'L’IA valuta il rischio di abbandono di ogni conversazione attiva con un acquirente, usando gli stessi segnali che un bravo broker noterebbe d’istinto — controllati automaticamente, su ogni trattativa, ogni giorno.',
+  churnKpiAtRisk:'Acquirenti segnalati a rischio', churnKpiLeadTime:'Anticipo medio dell’allerta', churnLeadTimeValue:'9 giorni',
+  churnKpiRecovered:'Recuperati dopo l’intervento', churnKpiAccuracy:'Accuratezza del modello (validazione)',
+  panelMethodologyTitle:'Come funziona il modello', panelMethodologySub:'La stessa pipeline dietro ogni punteggio di abbandono, passo per passo',
+  churnStepDataTitle:'Raccolta dati', churnStepDataBody:'Raccoglie ogni segnale della conversazione: latenza di risposta, tono dei messaggi, presenza alle visite, obiezioni sul prezzo e attività per canale.',
+  churnStepFeaturesTitle:'Feature engineering', churnStepFeaturesBody:'Trasforma l’attività grezza in segnali predittivi — tendenza del tempo di risposta, tasso di calo dell’attività, frequenza delle obiezioni, pendenza del tono.',
+  churnStepModelTitle:'Modello di previsione', churnStepModelBody:'Un classificatore gradient-boosted addestrato sullo storico delle trattative vinte e perse di questa agenzia calcola una probabilità di abbandono da 0 a 100 per ogni acquirente attivo.',
+  churnStepValidateTitle:'Validazione', churnStepValidateBody:'Testato retroattivamente sui risultati reali dei periodi precedenti e valutato su precisione e richiamo, così gli avvisi restano attendibili e non rumorosi.',
+  churnStepTriggerTitle:'Allerta precoce', churnStepTriggerBody:'Gli acquirenti che superano la soglia di rischio vengono segnalati prima di sparire, con il segnale che guida il punteggio.',
+  churnStepActionTitle:'Azione consigliata', churnStepActionBody:'L’IA redige la mossa di recupero specifica — un discorso sul prezzo, un’introduzione al finanziamento, un altro annuncio — che il broker deve solo approvare e inviare.',
+  panelFeatureImportanceTitle:'Cosa determina il punteggio di abbandono', panelFeatureImportanceSub:'Peso relativo di ogni segnale nella previsione del modello',
+  panelRiskDistributionTitle:'Acquirenti attivi per fascia di rischio', panelRiskDistributionSub:'Ogni conversazione aperta in questo periodo, classificata a rischio basso, medio o alto', donutActiveLabel:'Attivi',
+  panelFlaggedTitle:'Segnalati in questo periodo', panelFlaggedSub:'Acquirenti con il rischio più alto secondo il modello, e il segnale che lo determina',
+  churnRiskScoreLabel:'punteggio di rischio', churnTopSignalLabel:'Segnale principale',
+  panelWhatYouGetTitle:'Cosa ottieni in cambio',
+  churnWhatYouGetBody:'Invece di scoprire che una trattativa è morta quando l’acquirente smette di rispondere, ottieni una lista ordinata di chi si sta allontanando e perché — in tempo per agire ancora.',
+  churnCap1:'Un punteggio di rischio aggiornato a ogni messaggio o contatto mancato', churnCap2:'Il motivo preciso dietro ogni punteggio, non solo un numero',
+  churnCap3:'Una mossa di recupero già redatta, pronta per l’approvazione del broker', churnCap4:'Avvisi ordinati per lavorare prima sulle trattative più importanti',
+  churnCap5:'Un modello riaddestrato sui tuoi risultati, non una media generica del settore',
+  churnFeatLastReply:'Giorni dall’ultima risposta', churnFeatReplyTime:'Aumento del tempo di risposta vs base', churnFeatPriceObjection:'Obiezione sul prezzo menzionata',
+  churnFeatNoShow:'Assenza a una visita', churnFeatSentiment:'Tendenza di tono negativo', churnFeatEngagement:'Calo di attività (ritorni sul sito)',
+  churnRiskLow:'Rischio basso', churnRiskMedium:'Rischio medio', churnRiskHigh:'Rischio alto'
 };
 function t(key){ const d = UI[state.lang]; return (d && d[key]!=null) ? d[key] : (UI.en[key]!=null ? UI.en[key] : key); }
 function stageLabel(stage){ return t(STAGE_KEY[stage]) || stage; }
@@ -1466,6 +1609,7 @@ const SECTIONS = [
   {id:'listings', icon:'listings', labelKey:'secListings'},
   {id:'pipeline', icon:'pipeline', labelKey:'secPipeline'},
   {id:'rep_performance', icon:'headset', labelKey:'secRepPerformance'},
+  {id:'churn', icon:'pulse', labelKey:'secChurn'},
   {id:'analytics', icon:'chart', labelKey:'secAnalytics'}
 ];
 
@@ -1513,7 +1657,7 @@ function sectionNavHTML(){
 
 const SECTION_RENDERERS = {
   overview: overviewSectionHTML, channels: channelsSectionHTML, listings: listingsSectionHTML,
-  pipeline: pipelineSectionHTML, rep_performance: repPerformanceSectionHTML, analytics: analyticsPageHTML
+  pipeline: pipelineSectionHTML, rep_performance: repPerformanceSectionHTML, churn: churnSectionHTML, analytics: analyticsPageHTML
 };
 
 function dashboardHTML(){
@@ -1558,9 +1702,27 @@ function overviewSectionHTML(){
   </div>
 
   <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelQualifiedTitle')}</div><div class="panel-sub">${t('panelQualifiedSub')}</div></div></div>
+    ${channelQualifiedHTML()}
+  </div>
+
+  <div class="panel">
     <div class="panel-head"><div><div class="panel-title">${t('panelListingsTitle')}</div><div class="panel-sub">${t('panelListingsSub')}</div></div></div>
     ${funnelHTML()}
   </div>`;
+}
+
+function channelQualifiedHTML(){
+  const items = CHANNELS.map(ch=>({id:ch.id, label:channelName(ch.id), value:scale(ch.base.interested), color:ch.color||'#C13584'}))
+    .sort((a,b)=>b.value-a.value);
+  const max = Math.max(...items.map(i=>i.value)) || 1;
+  return items.map(it=>`
+    <button class="qualified-row" data-channel="${it.id}">
+      <span class="qualified-label">${it.label}</span>
+      <span class="qualified-bar-track"><span class="qualified-bar-fill" style="width:${(it.value/max*100).toFixed(0)}%; background:${it.color}"></span></span>
+      <span class="qualified-value mono">${it.value}</span>
+      <span class="chev">&#8250;</span>
+    </button>`).join('');
 }
 
 function channelsSectionHTML(){
@@ -1699,6 +1861,75 @@ function repViewHTML(repId){
   <div class="panel">
     <div class="panel-head"><div><div class="panel-title">${t('repDetailObjectionsTitle')}</div></div></div>
     ${objectionsListHTML(repObjections)}
+  </div>`;
+}
+
+function churnSectionHTML(){
+  const highBand = CHURN_RISK_BANDS.find(b=>b.id==='high');
+  const medBand = CHURN_RISK_BANDS.find(b=>b.id==='medium');
+  const atRisk = scale(highBand.count) + scale(medBand.count);
+  const featureItems = CHURN_FEATURES.map(f=>({label:churnFeatureLabel(f.id), value:f.pct, color:'var(--accent)'}));
+  const riskItems = CHURN_RISK_BANDS.map(b=>({label:t(CHURN_RISK_KEY[b.id]), value:scale(b.count), color:CHURN_RISK_COLOR[b.id]}));
+  const totalActive = riskItems.reduce((s,r)=>s+r.value,0);
+  const steps = ['churnStepData','churnStepFeatures','churnStepModel','churnStepValidate','churnStepTrigger','churnStepAction'];
+  return `
+  <p style="margin:0 0 16px; font-size:13px; color:var(--ink-secondary); max-width:640px;">${t('churnIntro')}</p>
+
+  <div class="kpi-grid">
+    <div class="kpi-tile alert">
+      <div class="kpi-label">${t('churnKpiAtRisk')}</div>
+      <div class="kpi-value">${atRisk}</div>
+    </div>
+    <div class="kpi-tile">
+      <div class="kpi-label">${t('churnKpiLeadTime')}</div>
+      <div class="kpi-value" style="font-size:22px;">${t('churnLeadTimeValue')}</div>
+    </div>
+    <div class="kpi-tile ok">
+      <div class="kpi-label">${t('churnKpiRecovered')}</div>
+      <div class="kpi-value">31%</div>
+    </div>
+    <div class="kpi-tile ok">
+      <div class="kpi-label">${t('churnKpiAccuracy')}</div>
+      <div class="kpi-value">87%</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelMethodologyTitle')}</div><div class="panel-sub">${t('panelMethodologySub')}</div></div></div>
+    <div class="method-flow">
+      ${steps.map((k,i)=>`
+        <div class="method-step"><span class="num">${i+1}</span><div class="st">${t(k+'Title')}</div><div class="sd">${t(k+'Body')}</div></div>
+        ${i<steps.length-1 ? '<div class="method-arrow">&#8594;</div>' : ''}`).join('')}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelFeatureImportanceTitle')}</div><div class="panel-sub">${t('panelFeatureImportanceSub')}</div></div></div>
+    ${hBarChartSVG(featureItems, {barH:20, gap:12, labelW:190, labelSize:12})}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelRiskDistributionTitle')}</div><div class="panel-sub">${t('panelRiskDistributionSub')}</div></div></div>
+    ${donutChartSVG(riskItems, {centerValue:totalActive, centerLabel:t('donutActiveLabel')})}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelFlaggedTitle')}</div><div class="panel-sub">${t('panelFlaggedSub')}</div></div></div>
+    ${CHURN_FLAGGED.map(f=>`
+      <div class="research-field">
+        <div class="fl">${f.name} &middot; ${f.listing}<span class="us-only-tag" style="border-color:var(--status-critical); color:var(--status-critical);">${f.risk}% ${t('churnRiskScoreLabel')}</span></div>
+        <div class="fv">${t('churnTopSignalLabel')}: ${churnFeatureLabel(f.reasonId)}</div>
+      </div>`).join('')}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelWhatYouGetTitle')}</div></div></div>
+    <div class="channel-intro" style="margin-bottom:0;">
+      <p style="margin:0 0 10px;">${t('churnWhatYouGetBody')}</p>
+      <ul class="capability-list">
+        <li>${t('churnCap1')}</li><li>${t('churnCap2')}</li><li>${t('churnCap3')}</li><li>${t('churnCap4')}</li><li>${t('churnCap5')}</li>
+      </ul>
+    </div>
   </div>`;
 }
 
