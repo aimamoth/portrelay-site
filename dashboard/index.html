@@ -59,35 +59,35 @@
   button{font-family:inherit; color:inherit; cursor:pointer;}
   a{color:inherit;}
   :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px;}
-  .shell{max-width:1280px; margin:0 auto; padding:22px clamp(16px,4vw,32px) 72px;}
+  .shell{max-width:1280px; margin:0 auto; padding:12px clamp(16px,4vw,32px) 56px;}
 
   /* ---------- header (slim, no scroll bulk) ---------- */
   .topbar-slim{
-    display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
-    padding:14px 0 12px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    padding:9px 0 8px;
   }
-  .brand-sm{display:flex; align-items:center; gap:9px; min-width:0;}
-  .brand-mark-sm{width:24px; height:24px; flex:none; color:var(--accent);}
-  .brand-sm h1{font-size:17px; font-weight:600; letter-spacing:.2px; white-space:nowrap;}
+  .brand-sm{display:flex; align-items:center; gap:7px; min-width:0;}
+  .brand-mark-sm{width:18px; height:18px; flex:none; color:var(--accent);}
+  .brand-sm h1{font-size:14px; font-weight:600; letter-spacing:.1px; white-space:nowrap;}
   .demo-tag-sm{
-    font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-muted);
-    border:1px solid var(--border-strong); border-radius:999px; padding:2px 8px; flex:none;
+    font-size:9px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-muted);
+    border:1px solid var(--border-strong); border-radius:999px; padding:1px 6px; flex:none;
   }
-  .topbar-slim-right{display:flex; align-items:center; gap:10px; flex:none;}
+  .topbar-slim-right{display:flex; align-items:center; gap:8px; flex:none;}
   .pill-group{display:flex; gap:6px; background:var(--surface-alt); border-radius:999px; padding:4px; flex:none;}
-  .pill-group.sm .pill-btn{padding:5px 10px; font-size:11px;}
+  .pill-group.sm .pill-btn{padding:4px 9px; font-size:10.5px;}
   .pill-btn{
     border:none; background:transparent; color:var(--ink-secondary); font-size:12.5px; font-weight:500;
     padding:6px 12px; border-radius:999px; transition:background .15s,color .15s; white-space:nowrap;
   }
   .pill-btn.active{background:var(--accent); color:var(--accent-ink);}
-  .lang-group .pill-btn{padding:6px 10px; font-family:var(--font-mono); font-size:11.5px; font-weight:600;}
+  .lang-group .pill-btn{padding:5px 9px; font-family:var(--font-mono); font-size:10.5px; font-weight:600;}
   .cta-btn{
-    display:inline-flex; align-items:center; gap:7px; background:var(--accent); color:var(--accent-ink);
-    font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px; text-decoration:none; white-space:nowrap;
+    display:inline-flex; align-items:center; gap:6px; background:var(--accent); color:var(--accent-ink);
+    font-size:12px; font-weight:600; padding:7px 13px; border-radius:999px; text-decoration:none; white-space:nowrap;
   }
   .cta-btn:hover{filter:brightness(1.06);}
-  .cta-btn svg{width:15px; height:15px; flex:none;}
+  .cta-btn svg{width:13px; height:13px; flex:none;}
 
   /* trust row */
   .trust-row{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:14px 0 4px;}
@@ -391,7 +391,8 @@ const ICONS = {
   listings:'<rect x="5" y="6" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 11h11M8.5 15h11M8.5 19h6" stroke="currentColor" stroke-width="1.5"/>',
   pipeline:'<path d="M5 8h18M5 14h18M5 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="9" cy="8" r="2" fill="currentColor"/><circle cx="17" cy="14" r="2" fill="currentColor"/><circle cx="12" cy="20" r="2" fill="currentColor"/>',
   clock:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M14 9v5l4 2.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
-  chart:'<path d="M6 21V13M14 21V6M22 21v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
+  chart:'<path d="M6 21V13M14 21V6M22 21v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  headset:'<path d="M6 16v-3a8 8 0 1 1 16 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><rect x="4" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="19" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M22 23c0 1.5-1.5 2-4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
 };
 
 const YACHT_SVG = `<svg viewBox="0 0 300 130" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -507,6 +508,30 @@ const DEALS = [
   {stage:'Under contract', count:2, chips:['M. Sørensen — Windfall','S. Whitfield — Dolce Vita II']}
 ];
 
+/* ============================= REP PERFORMANCE (illustrative call analytics) ============================= */
+const REPS = [
+  {id:'r1', name:'Sovon Banerjee', calls:38, avgScore:82, closeRate:34, talkRatio:46},
+  {id:'r2', name:'Elena Marsh', calls:44, avgScore:76, closeRate:27, talkRatio:58},
+  {id:'r3', name:'Jordan Pike', calls:29, avgScore:69, closeRate:21, talkRatio:63}
+];
+
+const REJECTION_KEY = {price:'reasonPriceTooHigh', timing:'reasonTiming', competitor:'reasonCompetitor', financing:'reasonFinancing', spouse:'reasonSpousePartner'};
+const REJECTION_COLOR = {price:'var(--status-critical)', timing:'var(--status-warning)', competitor:'var(--stage-contract)', financing:'var(--status-info)', spouse:'var(--status-neutral)'};
+const REJECTION_REASONS = [
+  {id:'price', count:23},
+  {id:'timing', count:17},
+  {id:'competitor', count:9},
+  {id:'financing', count:6},
+  {id:'spouse', count:5}
+];
+
+const OBJECTIONS = [
+  {id:'price_high', count:31, repIds:['r1','r2']},
+  {id:'more_boats', count:22, repIds:['r2','r3']},
+  {id:'financing_ready', count:14, repIds:['r1','r3']},
+  {id:'spouse_decision', count:9, repIds:['r3']}
+];
+
 /* ============================= ANALYTICS DATA (illustrative, 6-month trend) ============================= */
 const TREND_MONTHS_END = new Date(2026, 8, 1); // September 2026
 const TREND = {
@@ -581,6 +606,17 @@ const UI = {
     secOverview:'Overview', secChannels:'Channels', secListings:'Listings', secPipeline:'Pipeline', secResponse:'Response', secAnalytics:'Analytics',
     donutStatusTitle:'Inquiries by outcome', donutStatusSub:'Every inbound inquiry this period, across all channels', donutTotalLabel:'Total',
     donutPipelineTitle:'Deals by stage', donutPipelineSub:'Every active buyer conversation, by stage', donutDealsLabel:'Deals',
+    secRepPerformance:'Rep Performance',
+    repKpiCallsAnalyzed:'Calls analyzed', repKpiAvgScore:'Avg. call score', repKpiCloseRate:'Team close rate', repKpiTopReason:'Top rejection reason',
+    panelRejectionTitle:'Why deals are getting rejected', panelRejectionSub:'Reasons buyers give when a deal falls through, this period', donutRejectionTotalLabel:'Rejected',
+    panelObjectionsTitle:'Most common objections', panelObjectionsSub:'What buyers push back on, and the AI-suggested response',
+    panelRepLeaderboardTitle:'Rep leaderboard', panelRepLeaderboardSub:'Click a rep to see their full call breakdown and AI coaching notes',
+    colRep:'Rep', colCalls:'Calls', colAvgScore:'Avg. score', colCloseRate:'Close rate', colTalkRatio:'Talk ratio',
+    repNotFound:'That rep’s record couldn’t be found — it may have moved.', backToRepPerformance:'Back to Rep Performance',
+    repDetailCoachingTitle:'AI coaching summary', repDetailCoachingSub:'Drafted from this period’s calls — for the rep and their manager to review together',
+    repDetailObjectionsTitle:'Objections this rep hears most', rebuttalLabel:'AI-suggested response', objectionCountLabel:'times this period', teamAvgLabel:'Team avg',
+    reasonPriceTooHigh:'Price too high', reasonTiming:'Not ready / timing', reasonCompetitor:'Went with another broker',
+    reasonFinancing:'Financing fell through', reasonSpousePartner:'Partner not convinced',
     outsideHours:'Answered outside working hours',
     colListing:'Listing', colInquiries:'Inquiries', colAvgResp:'Avg. response', colStage:'Stage', colDom:'Days on market',
     markFixed:'Mark fixed', cleared:'cleared', checking:'checking', stillLive:'still live', daysAgo:'days ago',
@@ -681,6 +717,17 @@ UI.fr = {
   secOverview:'Vue d’ensemble', secChannels:'Canaux', secListings:'Annonces', secPipeline:'Pipeline', secResponse:'Réponse', secAnalytics:'Analytique',
   donutStatusTitle:'Demandes par résultat', donutStatusSub:'Chaque demande entrante sur cette période, tous canaux confondus', donutTotalLabel:'Total',
   donutPipelineTitle:'Transactions par étape', donutPipelineSub:'Chaque conversation acheteur active, par étape', donutDealsLabel:'Transactions',
+  secRepPerformance:'Performance des courtiers',
+  repKpiCallsAnalyzed:'Appels analysés', repKpiAvgScore:'Score moy. d’appel', repKpiCloseRate:'Taux de conclusion équipe', repKpiTopReason:'Principal motif de refus',
+  panelRejectionTitle:'Pourquoi les transactions sont refusées', panelRejectionSub:'Motifs donnés par les acheteurs quand une transaction échoue, sur cette période', donutRejectionTotalLabel:'Refusées',
+  panelObjectionsTitle:'Objections les plus fréquentes', panelObjectionsSub:'Ce que les acheteurs contestent, et la réponse suggérée par l’IA',
+  panelRepLeaderboardTitle:'Classement des courtiers', panelRepLeaderboardSub:'Cliquez sur un courtier pour voir le détail de ses appels et les notes de coaching IA',
+  colRep:'Courtier', colCalls:'Appels', colAvgScore:'Score moy.', colCloseRate:'Taux de conclusion', colTalkRatio:'Temps de parole',
+  repNotFound:'Cette fiche courtier n’a pas pu être trouvée — elle a peut-être été déplacée.', backToRepPerformance:'Retour à Performance des courtiers',
+  repDetailCoachingTitle:'Résumé de coaching IA', repDetailCoachingSub:'Rédigé à partir des appels de cette période — à revoir ensemble par le courtier et son manager',
+  repDetailObjectionsTitle:'Objections que ce courtier entend le plus', rebuttalLabel:'Réponse suggérée par l’IA', objectionCountLabel:'fois sur cette période', teamAvgLabel:'Moyenne équipe',
+  reasonPriceTooHigh:'Prix trop élevé', reasonTiming:'Pas encore prêt / timing', reasonCompetitor:'Parti chez un autre courtier',
+  reasonFinancing:'Financement échoué', reasonSpousePartner:'Conjoint non convaincu',
   outsideHours:'Répondu hors des heures de bureau',
   colListing:'Annonce', colInquiries:'Demandes', colAvgResp:'Réponse moy.', colStage:'Étape', colDom:'Jours sur le marché',
   markFixed:'Marquer comme corrigé', cleared:'nettoyé', checking:'vérification', stillLive:'encore visible', daysAgo:'jours',
@@ -780,6 +827,17 @@ UI.es = {
   secOverview:'Resumen', secChannels:'Canales', secListings:'Anuncios', secPipeline:'Pipeline', secResponse:'Respuesta', secAnalytics:'Analítica',
   donutStatusTitle:'Consultas por resultado', donutStatusSub:'Cada consulta recibida en este período, en todos los canales', donutTotalLabel:'Total',
   donutPipelineTitle:'Operaciones por etapa', donutPipelineSub:'Cada conversación activa con un comprador, por etapa', donutDealsLabel:'Operaciones',
+  secRepPerformance:'Rendimiento de comerciales',
+  repKpiCallsAnalyzed:'Llamadas analizadas', repKpiAvgScore:'Puntuación media', repKpiCloseRate:'Tasa de cierre del equipo', repKpiTopReason:'Principal motivo de rechazo',
+  panelRejectionTitle:'Por qué se rechazan las operaciones', panelRejectionSub:'Motivos que dan los compradores cuando una operación no se cierra, en este período', donutRejectionTotalLabel:'Rechazadas',
+  panelObjectionsTitle:'Objeciones más frecuentes', panelObjectionsSub:'Lo que cuestionan los compradores, y la respuesta sugerida por la IA',
+  panelRepLeaderboardTitle:'Clasificación de comerciales', panelRepLeaderboardSub:'Haga clic en un comercial para ver el detalle de sus llamadas y las notas de coaching de la IA',
+  colRep:'Comercial', colCalls:'Llamadas', colAvgScore:'Puntuación media', colCloseRate:'Tasa de cierre', colTalkRatio:'Tiempo de habla',
+  repNotFound:'No se pudo encontrar esa ficha de comercial — puede haberse movido.', backToRepPerformance:'Volver a Rendimiento de comerciales',
+  repDetailCoachingTitle:'Resumen de coaching de IA', repDetailCoachingSub:'Redactado a partir de las llamadas de este período — para revisar junto al comercial y su responsable',
+  repDetailObjectionsTitle:'Objeciones que más escucha este comercial', rebuttalLabel:'Respuesta sugerida por la IA', objectionCountLabel:'veces en este período', teamAvgLabel:'Media del equipo',
+  reasonPriceTooHigh:'Precio demasiado alto', reasonTiming:'Aún no listo / momento', reasonCompetitor:'Se fue con otro corredor',
+  reasonFinancing:'La financiación no salió', reasonSpousePartner:'La pareja no está convencida',
   outsideHours:'Respondido fuera del horario laboral',
   colListing:'Anuncio', colInquiries:'Consultas', colAvgResp:'Resp. media', colStage:'Etapa', colDom:'Días en el mercado',
   markFixed:'Marcar como corregido', cleared:'resuelto', checking:'verificando', stillLive:'aún visible', daysAgo:'días',
@@ -879,6 +937,17 @@ UI.it = {
   secOverview:'Panoramica', secChannels:'Canali', secListings:'Annunci', secPipeline:'Pipeline', secResponse:'Risposta', secAnalytics:'Analitica',
   donutStatusTitle:'Richieste per esito', donutStatusSub:'Ogni richiesta in ingresso in questo periodo, su tutti i canali', donutTotalLabel:'Totale',
   donutPipelineTitle:'Trattative per fase', donutPipelineSub:'Ogni conversazione attiva con un acquirente, per fase', donutDealsLabel:'Trattative',
+  secRepPerformance:'Performance dei venditori',
+  repKpiCallsAnalyzed:'Chiamate analizzate', repKpiAvgScore:'Punteggio medio chiamata', repKpiCloseRate:'Tasso di chiusura del team', repKpiTopReason:'Motivo principale di rifiuto',
+  panelRejectionTitle:'Perché le trattative vengono rifiutate', panelRejectionSub:'Motivi indicati dagli acquirenti quando una trattativa non si conclude, in questo periodo', donutRejectionTotalLabel:'Rifiutate',
+  panelObjectionsTitle:'Obiezioni più frequenti', panelObjectionsSub:'Cosa contestano gli acquirenti, e la risposta suggerita dall’IA',
+  panelRepLeaderboardTitle:'Classifica venditori', panelRepLeaderboardSub:'Clicca su un venditore per vedere il dettaglio delle sue chiamate e le note di coaching IA',
+  colRep:'Venditore', colCalls:'Chiamate', colAvgScore:'Punteggio medio', colCloseRate:'Tasso di chiusura', colTalkRatio:'Tempo di parola',
+  repNotFound:'Questa scheda venditore non è stata trovata — potrebbe essere stata spostata.', backToRepPerformance:'Torna a Performance dei venditori',
+  repDetailCoachingTitle:'Riepilogo di coaching IA', repDetailCoachingSub:'Redatto dalle chiamate di questo periodo — da rivedere insieme dal venditore e dal suo responsabile',
+  repDetailObjectionsTitle:'Obiezioni che questo venditore sente più spesso', rebuttalLabel:'Risposta suggerita dall’IA', objectionCountLabel:'volte in questo periodo', teamAvgLabel:'Media del team',
+  reasonPriceTooHigh:'Prezzo troppo alto', reasonTiming:'Non ancora pronto / tempistica', reasonCompetitor:'Andato con un altro broker',
+  reasonFinancing:'Finanziamento non riuscito', reasonSpousePartner:'Partner non convinto',
   outsideHours:'Risposto fuori dall’orario di lavoro',
   colListing:'Annuncio', colInquiries:'Richieste', colAvgResp:'Risposta media', colStage:'Fase', colDom:'Giorni sul mercato',
   markFixed:'Segna come risolto', cleared:'risolto', checking:'in verifica', stillLive:'ancora visibile', daysAgo:'giorni fa',
@@ -963,6 +1032,8 @@ function t(key){ const d = UI[state.lang]; return (d && d[key]!=null) ? d[key] :
 function stageLabel(stage){ return t(STAGE_KEY[stage]) || stage; }
 function channelName(id){ return t(CHANNEL_KEY[id]); }
 function statusLabel(s){ return t(STATUS_KEY[s]); }
+function rejectionLabel(id){ return t(REJECTION_KEY[id]) || id; }
+function rejectionColor(id){ return REJECTION_COLOR[id] || 'var(--ink-muted)'; }
 
 /* ============================= TRANSLATABLE CONTENT (prose) ============================= */
 const TX = {
@@ -1059,7 +1130,18 @@ const TX = {
       {from:'bot', text:'Thursday afternoon it is. I’ve got 2 PM open at the marina. I’ll confirm with Sovon and send a calendar invite. Anything else before I let you go?'},
       {from:'visitor', text:'no that’s it, thanks'},
       {from:'bot', text:'You’re welcome. Sovon will be in touch shortly, and I’ll text you a reminder before Thursday.'}
-    ]}
+    ]},
+    objections:{
+      price_high:{quote:'“It’s more than we wanted to spend.”', rebuttal:'Reframe against total ownership cost versus comparable listings, and surface financing options before conceding on price.'},
+      more_boats:{quote:'“We want to look at a few more boats first.”', rebuttal:'Ask exactly what they still need to see, then send a side-by-side comparison sheet to shorten their search instead of letting it drift.'},
+      financing_ready:{quote:'“We’re still waiting to hear back on financing.”', rebuttal:'Offer to connect them with a lender contact directly and set a follow-up date now, rather than leaving the next step open-ended.'},
+      spouse_decision:{quote:'“I need to talk this over with my spouse first.”', rebuttal:'Ask to get both decision-makers on the next call so open questions get answered live instead of relayed secondhand.'}
+    },
+    repCoaching:{
+      r1:'Closes well once a buyer raises price — leans on comparables early. Talk ratio (46%) is healthy. Coach: probe financing readiness earlier in the call instead of waiting for the buyer to bring it up.',
+      r2:'Highest call volume on the team, but close rate lags. A 58% talk ratio suggests over-explaining rather than listening. Coach: ask more open-ended questions before pitching a specific boat.',
+      r3:'Lowest average score, largely tied to spouse/partner objections going unaddressed. Coach: ask early in the call who else is involved in the decision, and invite them onto the next one.'
+    }
   }
 };
 TX.fr = {
@@ -1155,7 +1237,18 @@ TX.fr = {
     {from:'bot', text:'Jeudi après-midi, c’est noté. J’ai 14h de libre au port. Je confirme avec Sovon et je vous envoie une invitation. Autre chose avant de vous laisser ?'},
     {from:'visitor', text:'non c’est tout, merci'},
     {from:'bot', text:'Avec plaisir. Sovon vous contacte très vite, et je vous envoie un rappel par SMS avant jeudi.'}
-  ]}
+  ]},
+  objections:{
+    price_high:{quote:'« C’est plus que ce que nous voulions dépenser. »', rebuttal:'Recadrer sur le coût total de possession par rapport à des annonces comparables, et présenter les options de financement avant de céder sur le prix.'},
+    more_boats:{quote:'« Nous voulons voir quelques bateaux de plus avant. »', rebuttal:'Demander précisément ce qu’il leur reste à voir, puis envoyer une fiche comparative pour raccourcir leur recherche plutôt que de la laisser s’étirer.'},
+    financing_ready:{quote:'« Nous attendons encore une réponse sur le financement. »', rebuttal:'Proposer de les mettre directement en contact avec un prêteur et fixer une date de relance maintenant, plutôt que de laisser l’étape suivante ouverte.'},
+    spouse_decision:{quote:'« Je dois en parler avec mon/ma conjoint(e) d’abord. »', rebuttal:'Demander à avoir les deux décideurs sur le prochain appel pour que les questions en suspens soient répondues en direct plutôt que relayées.'}
+  },
+  repCoaching:{
+    r1:'Conclut bien une fois que l’acheteur évoque le prix — s’appuie tôt sur les comparables. Le temps de parole (46 %) est sain. Coaching : sonder la disponibilité du financement plus tôt dans l’appel plutôt que d’attendre que l’acheteur l’évoque.',
+    r2:'Le plus gros volume d’appels de l’équipe, mais le taux de conclusion reste en retrait. Un temps de parole de 58 % suggère trop d’explications plutôt que d’écoute. Coaching : poser plus de questions ouvertes avant de proposer un bateau précis.',
+    r3:'Score moyen le plus bas, en grande partie lié à des objections du conjoint restées sans réponse. Coaching : demander tôt dans l’appel qui d’autre est impliqué dans la décision, et l’inviter au prochain appel.'
+  }
 };
 TX.es = {
   listings:{
@@ -1250,7 +1343,18 @@ TX.es = {
     {from:'bot', text:'Jueves por la tarde, anotado. Tengo las 14:00 libres en el puerto. Confirmo con Sovon y le mando una invitación de calendario. ¿Algo más antes de despedirme?'},
     {from:'visitor', text:'no, eso es todo, gracias'},
     {from:'bot', text:'Un placer. Sovon se pondrá en contacto pronto, y le mandaré un recordatorio por mensaje antes del jueves.'}
-  ]}
+  ]},
+  objections:{
+    price_high:{quote:'«Es más de lo que queríamos gastar.»', rebuttal:'Reformular en función del coste total de propiedad frente a anuncios comparables, y presentar opciones de financiación antes de ceder en el precio.'},
+    more_boats:{quote:'«Queremos ver algunos barcos más antes.»', rebuttal:'Preguntar exactamente qué les falta ver, y luego enviar una ficha comparativa para acortar su búsqueda en vez de dejarla abierta.'},
+    financing_ready:{quote:'«Todavía esperamos noticias sobre la financiación.»', rebuttal:'Ofrecer poner en contacto directo con un prestamista y fijar ya una fecha de seguimiento, en lugar de dejar el siguiente paso abierto.'},
+    spouse_decision:{quote:'«Necesito hablarlo primero con mi pareja.»', rebuttal:'Pedir que ambos responsables de la decisión estén en la próxima llamada para responder en directo en vez de transmitirlo después.'}
+  },
+  repCoaching:{
+    r1:'Cierra bien en cuanto el comprador menciona el precio — se apoya pronto en comparables. El tiempo de habla (46%) es saludable. Coaching: indagar la disponibilidad de financiación antes en la llamada en vez de esperar a que lo mencione el comprador.',
+    r2:'El mayor volumen de llamadas del equipo, pero la tasa de cierre queda por debajo. Un tiempo de habla del 58% sugiere explicar de más en vez de escuchar. Coaching: hacer más preguntas abiertas antes de proponer un barco concreto.',
+    r3:'La puntuación media más baja, ligada en buena parte a objeciones de la pareja sin resolver. Coaching: preguntar pronto en la llamada quién más participa en la decisión, e invitarlo a la siguiente llamada.'
+  }
 };
 TX.it = {
   listings:{
@@ -1345,18 +1449,31 @@ TX.it = {
     {from:'bot', text:'Giovedì pomeriggio, segnato. Ho le 14 libere in banchina. Confermo con Sovon e ti mando un invito sul calendario. Altro prima di salutarci?'},
     {from:'visitor', text:'no è tutto, grazie'},
     {from:'bot', text:'Di niente. Sovon ti contatterà a breve, e ti mando un promemoria via messaggio prima di giovedì.'}
-  ]}
+  ]},
+  objections:{
+    price_high:{quote:'«È più di quanto volevamo spendere.»', rebuttal:'Riformulare confrontando il costo totale di possesso con annunci comparabili, e presentare le opzioni di finanziamento prima di cedere sul prezzo.'},
+    more_boats:{quote:'«Vogliamo vedere qualche altra barca prima.»', rebuttal:'Chiedere esattamente cosa manca loro da vedere, poi inviare una scheda comparativa per accorciare la ricerca invece di lasciarla aperta.'},
+    financing_ready:{quote:'«Stiamo ancora aspettando risposta sul finanziamento.»', rebuttal:'Offrire di metterli in contatto direttamente con un istituto di credito e fissare subito una data di follow-up, invece di lasciare aperto il passo successivo.'},
+    spouse_decision:{quote:'«Devo prima parlarne con il mio partner.»', rebuttal:'Chiedere di avere entrambi i decisori sulla prossima chiamata, così le domande in sospeso vengono risolte in diretta invece che riportate.'}
+  },
+  repCoaching:{
+    r1:'Chiude bene non appena l’acquirente solleva il prezzo — si appoggia presto ai comparabili. Il tempo di parola (46%) è sano. Coaching: indagare la disponibilità di finanziamento più presto nella chiamata invece di aspettare che lo sollevi l’acquirente.',
+    r2:'Il volume di chiamate più alto del team, ma il tasso di chiusura resta indietro. Un tempo di parola del 58% suggerisce troppa spiegazione e poco ascolto. Coaching: fare più domande aperte prima di proporre una barca specifica.',
+    r3:'Il punteggio medio più basso, legato in gran parte a obiezioni del partner rimaste senza risposta. Coaching: chiedere presto nella chiamata chi altro è coinvolto nella decisione, e invitarlo alla chiamata successiva.'
+  }
 };
 function listingTX(id){ const d = TX[state.lang] && TX[state.lang].listings && TX[state.lang].listings[id]; return d || TX.en.listings[id]; }
 function threadTX(channelId, threadId){ const d = TX[state.lang] && TX[state.lang].threads[channelId] && TX[state.lang].threads[channelId][threadId]; return d || (TX.en.threads[channelId] && TX.en.threads[channelId][threadId]) || {m:[]}; }
 function visitorTX(i){ const arr = TX[state.lang] && TX[state.lang].visitors; return (arr && arr[i]) || TX.en.visitors[i]; }
 function sdrChatTX(){ return (TX[state.lang] && TX[state.lang].sdrChat) || TX.en.sdrChat; }
+function objectionTX(id){ const d = TX[state.lang] && TX[state.lang].objections; return (d && d[id]) || TX.en.objections[id]; }
+function repCoachingTX(repId){ const d = TX[state.lang] && TX[state.lang].repCoaching; return (d && d[repId]) || TX.en.repCoaching[repId]; }
 
 /* ============================= STATE ============================= */
 function loadLang(){ try{ const v = localStorage.getItem('binnacle_lang'); return (v && UI[v]!==undefined) ? v : 'en'; }catch(e){ return 'en'; } }
 function saveLang(l){ try{ localStorage.setItem('binnacle_lang', l); }catch(e){} }
 
-let state = {range:'month', lang:loadLang(), view:'dashboard', section:'overview', channelId:null, threadId:null, listingId:null, visitorIndex:null, sortCol:'inquiries', sortDir:'desc',
+let state = {range:'month', lang:loadLang(), view:'dashboard', section:'overview', channelId:null, threadId:null, listingId:null, visitorIndex:null, repId:null, sortCol:'inquiries', sortDir:'desc',
   cleanupFixed:{}, sentMessages:{}};
 
 const SECTIONS = [
@@ -1365,6 +1482,7 @@ const SECTIONS = [
   {id:'listings', icon:'listings', labelKey:'secListings'},
   {id:'pipeline', icon:'pipeline', labelKey:'secPipeline'},
   {id:'response', icon:'clock', labelKey:'secResponse'},
+  {id:'rep_performance', icon:'headset', labelKey:'secRepPerformance'},
   {id:'analytics', icon:'chart', labelKey:'secAnalytics'}
 ];
 
@@ -1391,6 +1509,7 @@ function renderApp(){
   else if(state.view==='thread'){ app.innerHTML = threadViewHTML(state.channelId, state.threadId); bindThreadView(); }
   else if(state.view==='listing'){ app.innerHTML = listingViewHTML(state.listingId); bindListingView(); }
   else if(state.view==='visitor'){ app.innerHTML = visitorViewHTML(state.visitorIndex); bindThreadView(); }
+  else if(state.view==='rep'){ app.innerHTML = repViewHTML(state.repId); bindListingView(); }
 }
 function navigate(fn){ fn(); window.scrollTo({top:0}); renderApp(); }
 
@@ -1411,7 +1530,7 @@ function sectionNavHTML(){
 
 const SECTION_RENDERERS = {
   overview: overviewSectionHTML, channels: channelsSectionHTML, listings: listingsSectionHTML,
-  pipeline: pipelineSectionHTML, response: responseSectionHTML, analytics: analyticsPageHTML
+  pipeline: pipelineSectionHTML, response: responseSectionHTML, rep_performance: repPerformanceSectionHTML, analytics: analyticsPageHTML
 };
 
 function dashboardHTML(){
@@ -1504,6 +1623,106 @@ function responseSectionHTML(){
     <div class="panel-head"><div><div class="panel-title">${t('panelResponseTitle')}</div><div class="panel-sub">${t('panelResponseSub')}</div></div></div>
     ${responseSpeedHTML()}
     <div class="panel-foot-stat"><span>${t('outsideHours')}</span><span class="mono">38%</span></div>
+  </div>`;
+}
+
+function repPerformanceSectionHTML(){
+  const totalCalls = REPS.reduce((s,r)=>s+scale(r.calls),0);
+  const weightedScore = Math.round(REPS.reduce((s,r)=>s+r.avgScore*r.calls,0) / REPS.reduce((s,r)=>s+r.calls,0));
+  const weightedClose = Math.round(REPS.reduce((s,r)=>s+r.closeRate*r.calls,0) / REPS.reduce((s,r)=>s+r.calls,0));
+  const topReason = [...REJECTION_REASONS].sort((a,b)=>b.count-a.count)[0];
+  const rejectionItems = REJECTION_REASONS.map(r=>({label:rejectionLabel(r.id), value:scale(r.count), color:rejectionColor(r.id)}));
+  const totalRejected = rejectionItems.reduce((s,r)=>s+r.value,0);
+  return `
+  <div class="kpi-grid">
+    <div class="kpi-tile">
+      <div class="kpi-label">${t('repKpiCallsAnalyzed')}</div>
+      <div class="kpi-value">${totalCalls}</div>
+    </div>
+    <div class="kpi-tile ok">
+      <div class="kpi-label">${t('repKpiAvgScore')}</div>
+      <div class="kpi-value">${weightedScore}</div>
+    </div>
+    <div class="kpi-tile ok">
+      <div class="kpi-label">${t('repKpiCloseRate')}</div>
+      <div class="kpi-value">${weightedClose}%</div>
+    </div>
+    <div class="kpi-tile alert">
+      <div class="kpi-label">${t('repKpiTopReason')}</div>
+      <div class="kpi-value" style="font-size:17px; font-weight:600; font-family:var(--font-body);">${rejectionLabel(topReason.id)}</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelRejectionTitle')}</div><div class="panel-sub">${t('panelRejectionSub')}</div></div></div>
+    ${donutChartSVG(rejectionItems, {centerValue:totalRejected, centerLabel:t('donutRejectionTotalLabel')})}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelObjectionsTitle')}</div><div class="panel-sub">${t('panelObjectionsSub')}</div></div></div>
+    ${objectionsListHTML(OBJECTIONS)}
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('panelRepLeaderboardTitle')}</div><div class="panel-sub">${t('panelRepLeaderboardSub')}</div></div></div>
+    ${repLeaderboardHTML()}
+  </div>`;
+}
+
+function objectionsListHTML(items){
+  return items.map(o=>{
+    const ox = objectionTX(o.id);
+    return `<div class="research-field">
+      <div class="fl">${ox.quote}<span class="us-only-tag">${scale(o.count)} ${t('objectionCountLabel')}</span></div>
+      <div class="fv">${t('rebuttalLabel')}: ${ox.rebuttal}</div>
+    </div>`;
+  }).join('');
+}
+
+function repLeaderboardHTML(){
+  const cols = [t('colRep'), t('colCalls'), t('colAvgScore'), t('colCloseRate'), t('colTalkRatio')];
+  return `<div class="table-wrap"><table>
+    <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+    <tbody>${REPS.map(r=>`<tr>
+      <td class="name"><button class="listing-link" data-rep="${r.id}">${r.name}</button></td>
+      <td class="mono">${scale(r.calls)}</td>
+      <td class="mono">${r.avgScore}</td>
+      <td class="mono">${r.closeRate}%</td>
+      <td class="mono">${r.talkRatio}%</td>
+    </tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+function repViewHTML(repId){
+  const r = REPS.find(x=>x.id===repId);
+  if(!r){
+    return `<button class="back-btn" data-back="dashboard">&larr; ${t('backToRepPerformance')}</button>
+    <div class="panel"><div class="empty-note">${t('repNotFound')}</div></div>`;
+  }
+  const teamAvgScore = Math.round(REPS.reduce((s,x)=>s+x.avgScore,0)/REPS.length);
+  const teamAvgClose = Math.round(REPS.reduce((s,x)=>s+x.closeRate,0)/REPS.length);
+  const repObjections = OBJECTIONS.filter(o=>o.repIds.includes(repId));
+  return `
+  <button class="back-btn" data-back="dashboard">&larr; ${t('backToRepPerformance')}</button>
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${r.name}</div></div></div>
+    <div class="perf-row">
+      <div class="perf-item"><div class="l">${t('colCalls')}</div><div class="v">${scale(r.calls)}</div></div>
+      <div class="perf-item"><div class="l">${t('colAvgScore')}</div><div class="v">${r.avgScore}</div></div>
+      <div class="perf-item"><div class="l">${t('colCloseRate')}</div><div class="v">${r.closeRate}%</div></div>
+      <div class="perf-item"><div class="l">${t('colTalkRatio')}</div><div class="v">${r.talkRatio}%</div></div>
+    </div>
+    <div class="panel-foot-stat"><span>${t('teamAvgLabel')}</span><span class="mono">${teamAvgScore} ${t('colAvgScore').toLowerCase()} &middot; ${teamAvgClose}%</span></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('repDetailCoachingTitle')}</div><div class="panel-sub">${t('repDetailCoachingSub')}</div></div></div>
+    <p style="margin:0; font-size:13.5px; line-height:1.6; color:var(--ink-secondary);">${repCoachingTX(repId)}</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><div><div class="panel-title">${t('repDetailObjectionsTitle')}</div></div></div>
+    ${objectionsListHTML(repObjections)}
   </div>`;
 }
 
@@ -2080,6 +2299,10 @@ function bindDashboard(){
   document.querySelectorAll('[data-listing]').forEach(el=>el.addEventListener('click', (e)=>{
     e.stopPropagation();
     navigate(()=>{ state.view='listing'; state.listingId=el.dataset.listing; });
+  }));
+  document.querySelectorAll('[data-rep]').forEach(el=>el.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    navigate(()=>{ state.view='rep'; state.repId=el.dataset.rep; });
   }));
   document.querySelectorAll('[data-fix]').forEach(el=>el.addEventListener('click', (e)=>{
     e.stopPropagation();
