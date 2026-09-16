@@ -148,13 +148,6 @@
   .panel-title{font-size:15.5px; font-weight:600;}
   .panel-sub{font-size:12.5px; color:var(--ink-muted);}
 
-  /* response speed */
-  .bar-row{display:grid; grid-template-columns:120px 1fr 52px; align-items:center; gap:10px; padding:7px 0;}
-  .bar-row + .bar-row{border-top:1px solid var(--border);}
-  .bar-label{font-size:13px; color:var(--ink-secondary);}
-  .bar-track{height:8px; background:var(--surface-alt); border-radius:5px; overflow:hidden;}
-  .bar-fill{height:100%; background:var(--accent); border-radius:5px;}
-  .bar-value{font-family:var(--font-mono); font-size:12.5px; text-align:right; color:var(--ink);}
   .panel-foot-stat{margin-top:12px; padding-top:12px; border-top:1px solid var(--border); font-size:13px; color:var(--ink-secondary); display:flex; justify-content:space-between;}
 
   /* sold yacht cleanup */
@@ -390,7 +383,6 @@ const ICONS = {
   channels:'<circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="20" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="14" cy="20" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 9.5 12.5 17.5M17.5 9.5 15.5 17.5" stroke="currentColor" stroke-width="1.4"/>',
   listings:'<rect x="5" y="6" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 11h11M8.5 15h11M8.5 19h6" stroke="currentColor" stroke-width="1.5"/>',
   pipeline:'<path d="M5 8h18M5 14h18M5 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="9" cy="8" r="2" fill="currentColor"/><circle cx="17" cy="14" r="2" fill="currentColor"/><circle cx="12" cy="20" r="2" fill="currentColor"/>',
-  clock:'<circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M14 9v5l4 2.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
   chart:'<path d="M6 21V13M14 21V6M22 21v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
   headset:'<path d="M6 16v-3a8 8 0 1 1 16 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><rect x="4" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><rect x="19" y="15" width="5" height="8" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M22 23c0 1.5-1.5 2-4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>'
 };
@@ -602,11 +594,11 @@ const UI = {
     panelCleanupTitle:'Sold Yacht Cleanup', panelCleanupSub:'Listings still showing live somewhere after they sold',
     panelListingsTitle:'Listings & pipeline', panelListingsSub:'Inquiry → Qualified → Showing → Offer, this period',
     panelDealTitle:'Deal pipeline', panelDealSub:'Every active buyer conversation, by stage',
-    panelResponseTitle:'Response speed', panelResponseSub:'Average first reply, by listing platform',
-    secOverview:'Overview', secChannels:'Channels', secListings:'Listings', secPipeline:'Pipeline', secResponse:'Response', secAnalytics:'Analytics',
+    secOverview:'Overview', secChannels:'Channels', secListings:'Listings', secPipeline:'Pipeline', secAnalytics:'Analytics',
     donutStatusTitle:'Inquiries by outcome', donutStatusSub:'Every inbound inquiry this period, across all channels', donutTotalLabel:'Total',
     donutPipelineTitle:'Deals by stage', donutPipelineSub:'Every active buyer conversation, by stage', donutDealsLabel:'Deals',
     secRepPerformance:'Rep Performance',
+    repPerformanceIntro:'AI listens to every recorded sales call, scores it, and surfaces what to improve — objections that keep coming up, why deals stall, and coaching notes for each rep.',
     repKpiCallsAnalyzed:'Calls analyzed', repKpiAvgScore:'Avg. call score', repKpiCloseRate:'Team close rate', repKpiTopReason:'Top rejection reason',
     panelRejectionTitle:'Why deals are getting rejected', panelRejectionSub:'Reasons buyers give when a deal falls through, this period', donutRejectionTotalLabel:'Rejected',
     panelObjectionsTitle:'Most common objections', panelObjectionsSub:'What buyers push back on, and the AI-suggested response',
@@ -617,7 +609,6 @@ const UI = {
     repDetailObjectionsTitle:'Objections this rep hears most', rebuttalLabel:'AI-suggested response', objectionCountLabel:'times this period', teamAvgLabel:'Team avg',
     reasonPriceTooHigh:'Price too high', reasonTiming:'Not ready / timing', reasonCompetitor:'Went with another broker',
     reasonFinancing:'Financing fell through', reasonSpousePartner:'Partner not convinced',
-    outsideHours:'Answered outside working hours',
     colListing:'Listing', colInquiries:'Inquiries', colAvgResp:'Avg. response', colStage:'Stage', colDom:'Days on market',
     markFixed:'Mark fixed', cleared:'cleared', checking:'checking', stillLive:'still live', daysAgo:'days ago',
     emptyCleanup:'Nothing flagged — every sold listing is cleared everywhere we can verify.',
@@ -666,7 +657,6 @@ const UI = {
     liveAccurate:'live & accurate', stillShowingSold:'still showing as available',
     perfInquiries:'Inquiries', perfAvgResp:'Avg. response', perfDom:'Days on market', perfStage:'Funnel stage',
     footerNote:'Never shown here: negotiation terms, offer amounts, or buyer contact details — this screen proves the system is working, it never makes the pricing or negotiating call.',
-    platOwnSite:'Own site', platPhoneWA:'Phone / WhatsApp',
     unitMin:'min', unitSec:'sec', unitFirstOutreach:'hr to first outreach',
     tagForm:'(form)', tagDm:'(DM)', tagIdentifiedVisitor:'(identified visitor)',
     statusClosed:'Closed', statusStillInterested:'Still interested', statusChurned:'Churned', statusDraftPending:'Draft pending',
@@ -713,11 +703,11 @@ UI.fr = {
   panelCleanupTitle:'Nettoyage des annonces vendues', panelCleanupSub:'Annonces encore visibles ailleurs après leur vente',
   panelListingsTitle:'Annonces et pipeline', panelListingsSub:'Demande → Qualifié → Visite → Offre, sur cette période',
   panelDealTitle:'Pipeline des transactions', panelDealSub:'Chaque conversation acheteur active, par étape',
-  panelResponseTitle:'Vitesse de réponse', panelResponseSub:'Premier temps de réponse moyen, par plateforme d’annonce',
-  secOverview:'Vue d’ensemble', secChannels:'Canaux', secListings:'Annonces', secPipeline:'Pipeline', secResponse:'Réponse', secAnalytics:'Analytique',
+  secOverview:'Vue d’ensemble', secChannels:'Canaux', secListings:'Annonces', secPipeline:'Pipeline', secAnalytics:'Analytique',
   donutStatusTitle:'Demandes par résultat', donutStatusSub:'Chaque demande entrante sur cette période, tous canaux confondus', donutTotalLabel:'Total',
   donutPipelineTitle:'Transactions par étape', donutPipelineSub:'Chaque conversation acheteur active, par étape', donutDealsLabel:'Transactions',
   secRepPerformance:'Performance des courtiers',
+  repPerformanceIntro:'L’IA écoute chaque appel commercial enregistré, le note, et fait ressortir ce qu’il faut améliorer — les objections qui reviennent, pourquoi les transactions bloquent, et des notes de coaching pour chaque courtier.',
   repKpiCallsAnalyzed:'Appels analysés', repKpiAvgScore:'Score moy. d’appel', repKpiCloseRate:'Taux de conclusion équipe', repKpiTopReason:'Principal motif de refus',
   panelRejectionTitle:'Pourquoi les transactions sont refusées', panelRejectionSub:'Motifs donnés par les acheteurs quand une transaction échoue, sur cette période', donutRejectionTotalLabel:'Refusées',
   panelObjectionsTitle:'Objections les plus fréquentes', panelObjectionsSub:'Ce que les acheteurs contestent, et la réponse suggérée par l’IA',
@@ -728,7 +718,6 @@ UI.fr = {
   repDetailObjectionsTitle:'Objections que ce courtier entend le plus', rebuttalLabel:'Réponse suggérée par l’IA', objectionCountLabel:'fois sur cette période', teamAvgLabel:'Moyenne équipe',
   reasonPriceTooHigh:'Prix trop élevé', reasonTiming:'Pas encore prêt / timing', reasonCompetitor:'Parti chez un autre courtier',
   reasonFinancing:'Financement échoué', reasonSpousePartner:'Conjoint non convaincu',
-  outsideHours:'Répondu hors des heures de bureau',
   colListing:'Annonce', colInquiries:'Demandes', colAvgResp:'Réponse moy.', colStage:'Étape', colDom:'Jours sur le marché',
   markFixed:'Marquer comme corrigé', cleared:'nettoyé', checking:'vérification', stillLive:'encore visible', daysAgo:'jours',
   emptyCleanup:'Rien à signaler — chaque annonce vendue est nettoyée partout où nous pouvons le vérifier.',
@@ -777,7 +766,6 @@ UI.fr = {
   liveAccurate:'en ligne et à jour', stillShowingSold:'encore affiché comme disponible',
   perfInquiries:'Demandes', perfAvgResp:'Réponse moy.', perfDom:'Jours sur le marché', perfStage:'Étape de l’entonnoir',
   footerNote:'Jamais affiché ici : conditions de négociation, montants d’offre ou coordonnées de l’acheteur — cet écran prouve que le système fonctionne, il ne prend jamais de décision de prix ou de négociation.',
-  platOwnSite:'Site propre', platPhoneWA:'Téléphone / WhatsApp',
   unitMin:'min', unitSec:'s', unitFirstOutreach:'h avant le premier contact',
   tagForm:'(formulaire)', tagDm:'(MP)', tagIdentifiedVisitor:'(visiteur identifié)',
   statusClosed:'Conclu', statusStillInterested:'Toujours intéressé', statusChurned:'Perdu', statusDraftPending:'Brouillon en attente',
@@ -823,11 +811,11 @@ UI.es = {
   panelCleanupTitle:'Limpieza de embarcaciones vendidas', panelCleanupSub:'Anuncios que aún aparecen en algún sitio tras la venta',
   panelListingsTitle:'Anuncios y pipeline', panelListingsSub:'Consulta → Cualificado → Visita → Oferta, en este período',
   panelDealTitle:'Pipeline de operaciones', panelDealSub:'Cada conversación activa con un comprador, por etapa',
-  panelResponseTitle:'Velocidad de respuesta', panelResponseSub:'Tiempo medio de primera respuesta, por plataforma de anuncio',
-  secOverview:'Resumen', secChannels:'Canales', secListings:'Anuncios', secPipeline:'Pipeline', secResponse:'Respuesta', secAnalytics:'Analítica',
+  secOverview:'Resumen', secChannels:'Canales', secListings:'Anuncios', secPipeline:'Pipeline', secAnalytics:'Analítica',
   donutStatusTitle:'Consultas por resultado', donutStatusSub:'Cada consulta recibida en este período, en todos los canales', donutTotalLabel:'Total',
   donutPipelineTitle:'Operaciones por etapa', donutPipelineSub:'Cada conversación activa con un comprador, por etapa', donutDealsLabel:'Operaciones',
   secRepPerformance:'Rendimiento de comerciales',
+  repPerformanceIntro:'La IA escucha cada llamada de ventas grabada, la puntúa, y muestra qué mejorar — objeciones que se repiten, por qué se estancan las operaciones, y notas de coaching para cada comercial.',
   repKpiCallsAnalyzed:'Llamadas analizadas', repKpiAvgScore:'Puntuación media', repKpiCloseRate:'Tasa de cierre del equipo', repKpiTopReason:'Principal motivo de rechazo',
   panelRejectionTitle:'Por qué se rechazan las operaciones', panelRejectionSub:'Motivos que dan los compradores cuando una operación no se cierra, en este período', donutRejectionTotalLabel:'Rechazadas',
   panelObjectionsTitle:'Objeciones más frecuentes', panelObjectionsSub:'Lo que cuestionan los compradores, y la respuesta sugerida por la IA',
@@ -838,7 +826,6 @@ UI.es = {
   repDetailObjectionsTitle:'Objeciones que más escucha este comercial', rebuttalLabel:'Respuesta sugerida por la IA', objectionCountLabel:'veces en este período', teamAvgLabel:'Media del equipo',
   reasonPriceTooHigh:'Precio demasiado alto', reasonTiming:'Aún no listo / momento', reasonCompetitor:'Se fue con otro corredor',
   reasonFinancing:'La financiación no salió', reasonSpousePartner:'La pareja no está convencida',
-  outsideHours:'Respondido fuera del horario laboral',
   colListing:'Anuncio', colInquiries:'Consultas', colAvgResp:'Resp. media', colStage:'Etapa', colDom:'Días en el mercado',
   markFixed:'Marcar como corregido', cleared:'resuelto', checking:'verificando', stillLive:'aún visible', daysAgo:'días',
   emptyCleanup:'Nada que señalar — cada anuncio vendido está resuelto en todo lo que podemos verificar.',
@@ -887,7 +874,6 @@ UI.es = {
   liveAccurate:'en línea y correcto', stillShowingSold:'sigue mostrándose como disponible',
   perfInquiries:'Consultas', perfAvgResp:'Resp. media', perfDom:'Días en el mercado', perfStage:'Etapa del embudo',
   footerNote:'Nunca se muestra aquí: condiciones de negociación, importes de oferta ni datos de contacto del comprador — esta pantalla demuestra que el sistema funciona, nunca toma decisiones de precio o negociación.',
-  platOwnSite:'Sitio propio', platPhoneWA:'Teléfono / WhatsApp',
   unitMin:'min', unitSec:'s', unitFirstOutreach:'h hasta el primer contacto',
   tagForm:'(formulario)', tagDm:'(MD)', tagIdentifiedVisitor:'(visitante identificado)',
   statusClosed:'Cerrado', statusStillInterested:'Aún interesado', statusChurned:'Perdido', statusDraftPending:'Borrador pendiente',
@@ -933,11 +919,11 @@ UI.it = {
   panelCleanupTitle:'Pulizia annunci venduti', panelCleanupSub:'Annunci ancora visibili altrove dopo la vendita',
   panelListingsTitle:'Annunci e pipeline', panelListingsSub:'Richiesta → Qualificato → Visita → Offerta, in questo periodo',
   panelDealTitle:'Pipeline delle trattative', panelDealSub:'Ogni conversazione attiva con un acquirente, per fase',
-  panelResponseTitle:'Velocità di risposta', panelResponseSub:'Tempo medio di prima risposta, per piattaforma di annuncio',
-  secOverview:'Panoramica', secChannels:'Canali', secListings:'Annunci', secPipeline:'Pipeline', secResponse:'Risposta', secAnalytics:'Analitica',
+  secOverview:'Panoramica', secChannels:'Canali', secListings:'Annunci', secPipeline:'Pipeline', secAnalytics:'Analitica',
   donutStatusTitle:'Richieste per esito', donutStatusSub:'Ogni richiesta in ingresso in questo periodo, su tutti i canali', donutTotalLabel:'Totale',
   donutPipelineTitle:'Trattative per fase', donutPipelineSub:'Ogni conversazione attiva con un acquirente, per fase', donutDealsLabel:'Trattative',
   secRepPerformance:'Performance dei venditori',
+  repPerformanceIntro:'L’IA ascolta ogni chiamata di vendita registrata, la valuta e mostra cosa migliorare — le obiezioni che si ripetono, perché le trattative si bloccano, e note di coaching per ogni venditore.',
   repKpiCallsAnalyzed:'Chiamate analizzate', repKpiAvgScore:'Punteggio medio chiamata', repKpiCloseRate:'Tasso di chiusura del team', repKpiTopReason:'Motivo principale di rifiuto',
   panelRejectionTitle:'Perché le trattative vengono rifiutate', panelRejectionSub:'Motivi indicati dagli acquirenti quando una trattativa non si conclude, in questo periodo', donutRejectionTotalLabel:'Rifiutate',
   panelObjectionsTitle:'Obiezioni più frequenti', panelObjectionsSub:'Cosa contestano gli acquirenti, e la risposta suggerita dall’IA',
@@ -948,7 +934,6 @@ UI.it = {
   repDetailObjectionsTitle:'Obiezioni che questo venditore sente più spesso', rebuttalLabel:'Risposta suggerita dall’IA', objectionCountLabel:'volte in questo periodo', teamAvgLabel:'Media del team',
   reasonPriceTooHigh:'Prezzo troppo alto', reasonTiming:'Non ancora pronto / tempistica', reasonCompetitor:'Andato con un altro broker',
   reasonFinancing:'Finanziamento non riuscito', reasonSpousePartner:'Partner non convinto',
-  outsideHours:'Risposto fuori dall’orario di lavoro',
   colListing:'Annuncio', colInquiries:'Richieste', colAvgResp:'Risposta media', colStage:'Fase', colDom:'Giorni sul mercato',
   markFixed:'Segna come risolto', cleared:'risolto', checking:'in verifica', stillLive:'ancora visibile', daysAgo:'giorni fa',
   emptyCleanup:'Nulla da segnalare — ogni annuncio venduto è risolto ovunque possiamo verificarlo.',
@@ -997,7 +982,6 @@ UI.it = {
   liveAccurate:'online e corretto', stillShowingSold:'ancora mostrato come disponibile',
   perfInquiries:'Richieste', perfAvgResp:'Risposta media', perfDom:'Giorni sul mercato', perfStage:'Fase del funnel',
   footerNote:'Non mostrato qui: condizioni di negoziazione, importi dell’offerta o dati di contatto dell’acquirente — questa schermata dimostra che il sistema funziona, non prende mai decisioni di prezzo o negoziazione.',
-  platOwnSite:'Sito proprio', platPhoneWA:'Telefono / WhatsApp',
   unitMin:'min', unitSec:'s', unitFirstOutreach:'h al primo contatto',
   tagForm:'(modulo)', tagDm:'(DM)', tagIdentifiedVisitor:'(visitatore identificato)',
   statusClosed:'Chiuso', statusStillInterested:'Ancora interessato', statusChurned:'Perso', statusDraftPending:'Bozza in attesa',
@@ -1481,7 +1465,6 @@ const SECTIONS = [
   {id:'channels', icon:'channels', labelKey:'secChannels'},
   {id:'listings', icon:'listings', labelKey:'secListings'},
   {id:'pipeline', icon:'pipeline', labelKey:'secPipeline'},
-  {id:'response', icon:'clock', labelKey:'secResponse'},
   {id:'rep_performance', icon:'headset', labelKey:'secRepPerformance'},
   {id:'analytics', icon:'chart', labelKey:'secAnalytics'}
 ];
@@ -1530,7 +1513,7 @@ function sectionNavHTML(){
 
 const SECTION_RENDERERS = {
   overview: overviewSectionHTML, channels: channelsSectionHTML, listings: listingsSectionHTML,
-  pipeline: pipelineSectionHTML, response: responseSectionHTML, rep_performance: repPerformanceSectionHTML, analytics: analyticsPageHTML
+  pipeline: pipelineSectionHTML, rep_performance: repPerformanceSectionHTML, analytics: analyticsPageHTML
 };
 
 function dashboardHTML(){
@@ -1617,15 +1600,6 @@ function pipelineSectionHTML(){
   </div>`;
 }
 
-function responseSectionHTML(){
-  return `
-  <div class="panel">
-    <div class="panel-head"><div><div class="panel-title">${t('panelResponseTitle')}</div><div class="panel-sub">${t('panelResponseSub')}</div></div></div>
-    ${responseSpeedHTML()}
-    <div class="panel-foot-stat"><span>${t('outsideHours')}</span><span class="mono">38%</span></div>
-  </div>`;
-}
-
 function repPerformanceSectionHTML(){
   const totalCalls = REPS.reduce((s,r)=>s+scale(r.calls),0);
   const weightedScore = Math.round(REPS.reduce((s,r)=>s+r.avgScore*r.calls,0) / REPS.reduce((s,r)=>s+r.calls,0));
@@ -1634,6 +1608,8 @@ function repPerformanceSectionHTML(){
   const rejectionItems = REJECTION_REASONS.map(r=>({label:rejectionLabel(r.id), value:scale(r.count), color:rejectionColor(r.id)}));
   const totalRejected = rejectionItems.reduce((s,r)=>s+r.value,0);
   return `
+  <p style="margin:0 0 16px; font-size:13px; color:var(--ink-secondary); max-width:640px;">${t('repPerformanceIntro')}</p>
+
   <div class="kpi-grid">
     <div class="kpi-tile">
       <div class="kpi-label">${t('repKpiCallsAnalyzed')}</div>
@@ -1724,20 +1700,6 @@ function repViewHTML(repId){
     <div class="panel-head"><div><div class="panel-title">${t('repDetailObjectionsTitle')}</div></div></div>
     ${objectionsListHTML(repObjections)}
   </div>`;
-}
-
-function responseSpeedHTML(){
-  const rows = [
-    {label:'YachtWorld', mins:4, max:45}, {label:'Rightboat', mins:2, max:45},
-    {label:'Boat Trader', mins:41, max:45}, {label:t('platOwnSite'), mins:6, max:45},
-    {label:t('platPhoneWA'), mins:3, max:45}
-  ];
-  return rows.map(r=>`
-    <div class="bar-row">
-      <div class="bar-label">${r.label}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100, r.mins/r.max*100)}%"></div></div>
-      <div class="bar-value">${r.mins} ${t('unitMin')}</div>
-    </div>`).join('');
 }
 
 function cleanupHTML(){
