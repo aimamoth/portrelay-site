@@ -11,6 +11,7 @@ en: {
   "nav.who": "Who We Serve",
   "nav.pricing": "Pricing",
   "nav.readiness": "Readiness Check",
+  "nav.channels": "Channels",
   "nav.faq": "FAQ",
   "nav.cta": "Book a Free Audit",
 
@@ -362,6 +363,7 @@ fr: {
   "nav.who": "Pour Qui",
   "nav.pricing": "Tarifs",
   "nav.readiness": "Auto-Diagnostic",
+  "nav.channels": "Canaux",
   "nav.faq": "FAQ",
   "nav.cta": "Réserver un Audit Gratuit",
 
@@ -686,6 +688,7 @@ es: {
   "nav.who": "Para Quién",
   "nav.pricing": "Precios",
   "nav.readiness": "Autodiagnóstico",
+  "nav.channels": "Canales",
   "nav.faq": "FAQ",
   "nav.cta": "Reservar una Auditoría Gratuita",
 
@@ -1010,6 +1013,7 @@ it: {
   "nav.who": "Per Chi",
   "nav.pricing": "Prezzi",
   "nav.readiness": "Autodiagnosi",
+  "nav.channels": "Canali",
   "nav.faq": "FAQ",
   "nav.cta": "Prenota un Audit Gratuito",
 
