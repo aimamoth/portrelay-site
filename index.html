@@ -320,18 +320,31 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);
 .send button:hover{transform:translateY(-2px);box-shadow:0 16px 34px -12px rgba(255,90,20,.7)}
 .priv{font-size:13px;color:var(--soft)}
 #status{margin-top:14px;color:var(--accent);font-weight:600;min-height:1.4em}
-footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
-.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
-.fb{display:flex;align-items:center;gap:12px;font:500 22px var(--display);letter-spacing:-.01em}
+.foot{position:relative;margin-top:96px;border-radius:30px;overflow:hidden;color:#fff;padding:clamp(34px,5vw,72px) clamp(24px,5vw,72px) 26px;background:radial-gradient(70% 90% at 0 0,rgba(21,70,214,.38) 0,transparent 60%),radial-gradient(50% 70% at 100% 100%,rgba(255,90,20,.14) 0,transparent 60%),#03091C}
+.foot::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent) 30%,rgba(255,255,255,.5) 55%,transparent)}
+.ftop{position:relative;display:grid;grid-template-columns:.8fr 1.6fr;gap:clamp(36px,6vw,96px);align-items:start}
+.fb{display:flex;align-items:center;gap:12px;font:500 26px/1 var(--display);letter-spacing:-.01em}
 .fb svg{width:18px;height:18px;color:var(--accent)}
-.fgrid p{font-size:14.5px;color:var(--soft);margin-top:14px;max-width:340px}
-.fgrid h4{font:600 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:16px}
-.fgrid li{list-style:none;margin-bottom:10px}
-.fgrid li a{font-size:15px;transition:color .2s}
-.fgrid li a:hover{color:var(--accent)}
-.word{font:300 clamp(70px,14vw,230px)/.9 var(--display);letter-spacing:-.05em;color:var(--sheet-ink);opacity:.05;text-align:center;margin-top:52px;overflow:hidden;white-space:nowrap}
-.legal{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--soft);padding:18px 0 6px;border-top:1px solid var(--hair);margin-top:12px}
-.legal a:hover{color:var(--accent)}
+.fb small{font:500 11px var(--mono);letter-spacing:.14em;opacity:.65;padding:3px 6px;border:1px solid currentColor;border-radius:4px}
+.fbrand p{margin-top:20px;font-size:16px;line-height:1.55;color:rgba(255,255,255,.68);max-width:380px}
+.fcta{display:inline-flex;align-items:center;gap:14px;margin-top:28px;height:52px;padding:0 8px 0 24px;border-radius:999px;background:var(--accent);color:var(--ink);font:600 15px var(--sans);transition:transform .3s var(--ease),box-shadow .3s}
+.fcta span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;transition:transform .3s var(--ease)}
+.fcta svg{width:16px;height:16px}
+.fcta:hover{transform:translateY(-2px);box-shadow:0 18px 40px -14px rgba(255,90,20,.75)}
+.fcta:hover span{transform:rotate(45deg)}
+.offices{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.offices span{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62);padding:7px 12px;border:1px solid rgba(255,255,255,.16);border-radius:999px;backdrop-filter:blur(6px)}
+.fcols{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.fcols h4{font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.fcols li{list-style:none;margin-bottom:13px}
+.fcols li a{position:relative;display:inline-block;font:500 15.5px/1.35 var(--sans);color:rgba(255,255,255,.86);transition:color .25s}
+.fcols li a::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.fcols li a:hover{color:#fff}.fcols li a:hover::after{transform:scaleX(1)}
+.word{position:relative;margin-top:clamp(40px,6vw,84px);font:300 clamp(64px,15.4vw,236px)/.82 var(--display);letter-spacing:-.055em;text-align:center;white-space:nowrap;overflow:hidden;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.2);-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 96%);mask-image:linear-gradient(180deg,#000 30%,transparent 96%);user-select:none}
+.legal{position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px 24px;flex-wrap:wrap;margin-top:6px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);font-size:13px;color:rgba(255,255,255,.55)}
+.legal a{color:rgba(255,255,255,.85);transition:color .2s}.legal a:hover{color:var(--accent)}
+.legal strong{font-weight:600}
+.totop{display:inline-flex;align-items:center;gap:8px}.totop svg{width:14px;height:14px;transition:transform .3s var(--ease)}.totop:hover svg{transform:translateY(-3px)}
 
 /* ---------- motion: scroll-driven where supported ---------- */
 @keyframes ldrise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
@@ -410,6 +423,8 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
   .fill{font-size:12px;padding:0 12px}
   .fill span{display:none}
   .fg,.fgrid{grid-template-columns:1fr}
+  .ftop{grid-template-columns:1fr}.fcols{grid-template-columns:1fr;gap:28px}.foot{border-radius:22px;margin-top:64px}
+  .legal{justify-content:flex-start}
   .blk{padding:56px 0}
   details p{padding-right:0}
   #voyage .pc,#voyage .log{display:none}
@@ -641,7 +656,18 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
 
 <!-- 06 FAQ, BOOK, FOOTER -->
 <section class="sheet b" id="book" data-i="6">
-  <div class="blk first" id="faq">
+  <div class="blk first" id="reserve">
+    <div class="well" id="well" data-r>
+      <canvas id="wellCv" aria-hidden="true"></canvas>
+      <div class="wc">
+        <div class="badge"><i></i>Free 30-minute audit</div>
+        <h2>Every enquiry, <em>drawn to one desk</em>.</h2>
+        <p>Each dot is an enquiry waiting in a portal, a DM, a call or an inbox. Move your cursor and watch them gather in one place. In a free audit we map where yours slip today.</p>
+        <div class="acts"><a class="bk" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit</a><a class="rd" href="readiness-check.html">Take the readiness check</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="blk last" id="faq">
     <div class="eyebrow" data-r>Straight answers</div>
     <h2 data-r style="--d:.08s">No <em>sales</em> spin</h2>
     <div style="margin-top:34px;border-top:1px solid var(--hair)" data-r>
@@ -654,17 +680,23 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
     </div>
   </div>
 
-  <div class="blk last" id="reserve">
-    <div class="well" id="well" data-r>
-      <canvas id="wellCv" aria-hidden="true"></canvas>
-      <div class="wc">
-        <div class="badge"><i></i>Free 30-minute audit</div>
-        <h2>Every enquiry, <em>drawn to one desk</em>.</h2>
-        <p>Each dot is an enquiry waiting in a portal, a DM, a call or an inbox. Move your cursor and watch them gather in one place. In a free audit we map where yours slip today.</p>
-        <div class="acts"><a class="bk" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit</a><a class="rd" href="readiness-check.html">Take the readiness check</a></div>
+  <footer class="foot">
+    <div class="ftop">
+      <div class="fbrand">
+        <div class="fb"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1l2.2 8.8L23 12l-8.8 2.2L12 23l-2.2-8.8L1 12l8.8-2.2z"/></svg>YachtRelay<small>AI</small></div>
+        <p>AI sales and charter desks for charter operators, brokerages and management houses.</p>
+        <a class="fcta" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+        <div class="offices" aria-label="Offices"><span>Canada</span><span>Switzerland</span><span>India</span></div>
       </div>
+      <nav class="fcols" aria-label="Footer">
+        <div><h4>Navigate</h4><ul><li><a href="#voyage">The voyage</a></li><li><a href="readiness-check.html">Readiness check</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+        <div><h4>Products</h4><ul><li><a href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist">AI Communication Agent</a></li><li><a href="https://dashboard.yachtrelayai.com/">Broker &amp; Charter Dashboard</a></li><li><a href="#voyage" data-port="10">Bespoke Website and AI Workers</a></li></ul></div>
+        <div><h4>Contact</h4><ul><li><a href="mailto:sovon@aimamoth.com">sovon@aimamoth.com</a></li><li><a href="tel:+19175406222">+1 917 540 6222</a></li><li><a href="https://www.linkedin.com/in/sovonshaik/">LinkedIn</a></li></ul></div>
+      </nav>
     </div>
-  </div>
+    <div class="word" aria-hidden="true">YachtRelay</div>
+    <div class="legal"><span>&copy; 2026 YachtRelay AI. All rights reserved.</span><span>Developed by <a href="https://aimamoth.com"><strong>Aimamoth</strong></a></span><a class="totop" href="#s1">Back to top<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a></div>
+  </footer>
 </section>
 
 </main>
