@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>YachtRelay AI — AI Sales &amp; Charter Desks For Yacht Businesses</title>
-<meta name="description" content="Charter enquiries, portal leads and DMs answered the moment they land, qualified and briefed for you. AI sales and charter desks for charter operators, brokerages and management houses.">
+<meta name="description" content="An AI-enabled sales and charter desk that answers enquiries, qualifies prospects, and briefs your team before they wake up. Built for yacht brokers, charter operators and management houses.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://yachtrelayai.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="YachtRelay AI — AI Sales &amp; Charter Desks For Yacht Businesses">
-<meta property="og:description" content="Charter enquiries, portal leads and DMs answered the moment they land, qualified and briefed for you. YachtWorld and Rightboat integrated.">
+<meta property="og:description" content="An AI-enabled sales and charter desk that answers enquiries, qualifies prospects, and briefs your team before they wake up.">
 <meta property="og:image" content="https://yachtrelayai.com/assets/voyage/yacht-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
@@ -276,6 +276,20 @@ h2{font-size:clamp(42px,5vw,74px);line-height:1;letter-spacing:-.028em}
 #voyage.flat .runway{display:none}
 #voyage.flat .manifest{display:block}
 
+/* ---------- the well: enquiries drawn to one desk ---------- */
+.well{position:relative;min-height:clamp(540px,66vh,680px);border-radius:28px;overflow:hidden;background:radial-gradient(90% 90% at 50% 50%,#071632 0,#03091C 70%);color:#fff;cursor:crosshair;touch-action:pan-y}
+.well canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.well .wc{position:relative;max-width:620px;padding:clamp(30px,5vw,68px);pointer-events:none}
+.well .badge{border-color:rgba(255,255,255,.22);color:#CFE0FF;margin-bottom:24px}
+.well h2{color:#fff;font-size:clamp(38px,4.6vw,66px);text-shadow:0 2px 24px rgba(3,9,28,.9)}
+.well p{margin-top:20px;font-size:17px;color:rgba(255,255,255,.72);max-width:500px;text-shadow:0 1px 18px rgba(3,9,28,.95)}
+.well .acts{margin-top:30px;display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.well .acts a{pointer-events:auto}
+.well .bk{display:inline-flex;align-items:center;height:56px;padding:0 30px;border-radius:999px;background:var(--accent);color:var(--ink);font:600 15px var(--sans);transition:transform .25s var(--ease),box-shadow .25s}
+.well .bk:hover{transform:translateY(-2px);box-shadow:0 16px 34px -12px rgba(255,90,20,.7)}
+.well .rd{font:600 14.5px var(--sans);color:#fff;border-bottom:2px solid var(--accent);padding-bottom:4px}
+.well .rd:hover{color:var(--accent)}
+
 /* ---------- FAQ, reserve, footer ---------- */
 details{border-bottom:1px solid var(--hair)}
 summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;align-items:center;padding:22px 0;font:400 23px/1.2 var(--display);letter-spacing:-.015em;transition:color .25s}
@@ -389,6 +403,9 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
   .sheet.a{padding:64px 20px 56px;border-radius:24px 24px 0 0}
   .sheet.b{padding:56px 20px 32px}
   .cmp,.reserve{grid-template-columns:1fr;gap:28px}
+  .well{min-height:560px;border-radius:22px}
+  .well .wc{padding:28px 22px}
+  .well p{font-size:15.5px}
   .months span:nth-child(even){opacity:0}
   .fill{font-size:12px;padding:0 12px}
   .fill span{display:none}
@@ -520,7 +537,7 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
   <div class="abs hero-copy hero-out">
     <div class="eyebrow ld1">AI sales &amp; charter desks for yacht businesses</div>
     <h1 class="ld2">Answered before <em>you wake.</em></h1>
-    <p class="lede ld3">Charter enquiries, portal leads and DMs answered the moment they land, qualified, and briefed for you. Not a chatbot: a desk that works like your best broker would if they never slept.</p>
+    <p class="lede ld3">An AI-enabled sales and charter desk that answers enquiries, qualifies prospects, and briefs your team before they wake up.</p>
     <div class="btns ld4">
       <a class="pill solid" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit</a>
       <a class="pill ghost glass" href="#voyage">Follow the voyage <span class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span></a>
@@ -638,42 +655,16 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
   </div>
 
   <div class="blk last" id="reserve">
-    <div class="reserve">
-      <div data-r>
+    <div class="well" id="well" data-r>
+      <canvas id="wellCv" aria-hidden="true"></canvas>
+      <div class="wc">
         <div class="badge"><i></i>Free 30-minute audit</div>
-        <blockquote>Stop losing charters to a <em>slow</em> reply.</blockquote>
-        <p class="pitch">We walk through your real enquiry flow and show you exactly where it slips.</p>
-        <div class="alt"><a href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit</a><a href="readiness-check.html">Take the readiness check</a></div>
+        <h2>Every enquiry, <em>drawn to one desk</em>.</h2>
+        <p>Each dot is an enquiry waiting in a portal, a DM, a call or an inbox. Move your cursor and watch them gather in one place. In a free audit we map where yours slip today.</p>
+        <div class="acts"><a class="bk" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit</a><a class="rd" href="readiness-check.html">Take the readiness check</a></div>
       </div>
-      <form id="auditForm" novalidate data-r style="--d:.12s">
-        <h3>Get your personalised audit</h3>
-        <div class="fg">
-          <div><label for="fn">First name</label><input id="fn" name="first" autocomplete="given-name" required></div>
-          <div><label for="ln">Last name</label><input id="ln" name="last" autocomplete="family-name"></div>
-          <div><label for="em">Email</label><input id="em" name="email" type="email" autocomplete="email" required></div>
-          <div><label for="ph">Phone</label><input id="ph" name="phone" type="tel" autocomplete="tel"></div>
-          <div class="full"><label for="bt">Your business</label><select id="bt" name="business"><option>Charter company</option><option>Central agent</option><option>Sales brokerage</option><option>Management house</option><option>Other</option></select></div>
-          <div class="full"><label for="ms">Where do enquiries slip today?</label><textarea id="ms" name="message"></textarea></div>
-        </div>
-        <div class="send"><button type="submit">Get my audit</button><span class="priv">Reply within one working day.</span></div>
-        <div id="status" role="status" aria-live="polite"></div>
-      </form>
     </div>
   </div>
-
-  <footer>
-    <div class="fgrid">
-      <div>
-        <div class="fb"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1l2.2 8.8L23 12l-8.8 2.2L12 23l-2.2-8.8L1 12l8.8-2.2z"/></svg>YachtRelay</div>
-        <p>AI sales and charter desks for charter operators, brokerages and management houses. Offices in Canada, Switzerland &amp; India.</p>
-      </div>
-      <div><h4>Navigate</h4><ul><li><a href="#voyage">The voyage</a></li><li><a href="readiness-check.html">Readiness check</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-      <div><h4>Products</h4><ul><li><a href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist" target="_blank" rel="noopener">AI Communication Agent</a></li><li><a href="https://dashboard.yachtrelayai.com/">Broker &amp; Charter Dashboard</a></li><li><a href="#voyage" data-port="10">Bespoke Website and AI Workers</a></li></ul></div>
-      <div><h4>Contact</h4><ul><li><a href="mailto:sovon@aimamoth.com">sovon@aimamoth.com</a></li><li><a href="tel:+19175406222">+1 917 540 6222</a></li><li><a href="https://www.linkedin.com/in/sovonshaik/" rel="noopener">LinkedIn</a></li></ul></div>
-    </div>
-    <div class="word" aria-hidden="true">YachtRelay</div>
-    <div class="legal"><span>&copy; 2026 YachtRelay AI. All rights reserved.</span><span>Developed by <a href="https://aimamoth.com" rel="noopener"><strong>Aimamoth</strong></a></span></div>
-  </footer>
 </section>
 
 </main>
@@ -1214,18 +1205,57 @@ if(!reduced) requestAnimationFrame(frame);
   addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; ring(e.clientX, e.clientY, true); ring(e.clientX, e.clientY, false); splash(e.clientX, e.clientY, 2, true); kick(); });
 })();
 
-/* audit form: opens the visitor's email app, same as the live site */
-document.getElementById('auditForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const f = new FormData(e.target), st = document.getElementById('status');
-  if (!f.get('first') || !f.get('email')) { st.textContent = 'Please add your first name and email.'; return; }
-  const body = `${f.get('message') || ''}\n\n---\nBusiness: ${f.get('business')}\nPhone: ${f.get('phone') || 'Not provided'}\nEmail: ${f.get('email')}`;
-  location.href = `mailto:sovon@aimamoth.com?subject=${encodeURIComponent('YachtRelay audit request from ' + f.get('first') + ' ' + (f.get('last') || ''))}&body=${encodeURIComponent(body)}`;
-  st.textContent = 'Thank you. Your email app will open with your details ready to send.';
-  e.target.reset();
-});
 </script>
 <script>
+/* the well: a dot grid that bends toward the pointer, like a rubber sheet under a weight */
+(() => {
+const host = document.getElementById('well'), cv = document.getElementById('wellCv'); if (!host || !cv) return;
+const ctx = cv.getContext('2d'), STEP = 26, DPR = Math.min(devicePixelRatio || 1, 2);
+const coarse = matchMedia('(pointer: coarse)').matches, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAGS = [['YachtWorld',.12,.2],['WhatsApp',.84,.16],['Instagram',.08,.78],['Email',.9,.74],['Phone',.5,.1],['Rightboat',.7,.9],['Boat Trader',.3,.9],['SMS',.94,.46]];
+let W = 0, H = 0, cols = 0, rows = 0, BX, BY, X, Y, G, tagIx = [];
+let tx = 0, ty = 0, px = 0, py = 0, real = false, vis = true, t = 0, last = 0;
+function fit() {
+  W = host.clientWidth; H = host.clientHeight; cv.width = W * DPR; cv.height = H * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  cols = Math.ceil(W / STEP) + 1; rows = Math.ceil(H / STEP) + 1; const n = cols * rows;
+  BX = new Float32Array(n); BY = new Float32Array(n); X = new Float32Array(n); Y = new Float32Array(n); G = new Float32Array(n);
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) { BX[r * cols + c] = c * STEP; BY[r * cols + c] = r * STEP; }
+  tagIx = TAGS.map(([, fx, fy]) => Math.min(rows - 1, Math.round(fy * H / STEP)) * cols + Math.min(cols - 1, Math.round(fx * W / STEP)));
+  if (!px) { px = tx = W * .5; py = ty = H * .5; }
+}
+new ResizeObserver(fit).observe(host); fit();
+new IntersectionObserver(es => vis = es[0].isIntersecting).observe(host);
+if (!coarse) {
+  host.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') real = true; });
+  host.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; real = true; const b = host.getBoundingClientRect(); tx = e.clientX - b.left; ty = e.clientY - b.top; });
+  host.addEventListener('pointerleave', () => { real = false; });
+}
+function draw(now) {
+  if (!still) requestAnimationFrame(draw);
+  if (!vis && !still) return;
+  t += Math.min(.05, (now - last) / 1000 || .016); last = now;
+  if (!real) { tx = W * (.5 + .34 * Math.sin(t * .7) * Math.cos(t * .23)); ty = H * (.5 + .30 * Math.sin(t * .52 + 1.1)); }
+  px += (tx - px) * .10; py += (ty - py) * .10;
+  const m = Math.min(W, H), SIG = .42 * m, PULL = .30 * m, k = 1 / (2 * SIG * SIG);
+  for (let i = 0, n = cols * rows; i < n; i++) {
+    const dx = px - BX[i], dy = py - BY[i], d = Math.hypot(dx, dy) || 1e-4, g = Math.exp(-d * d * k), mv = Math.min(g * PULL, d * .97);
+    G[i] = g; X[i] = BX[i] + dx / d * mv; Y[i] = BY[i] + dy / d * mv;
+  }
+  ctx.clearRect(0, 0, W, H); ctx.lineWidth = 1;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const i = r * cols + c;
+    if (c < cols - 1) { const a = (G[i] + G[i + 1]) / 2; if (a >= .004) { ctx.strokeStyle = 'rgba(255,90,20,' + (.04 + a * .62).toFixed(3) + ')'; ctx.beginPath(); ctx.moveTo(X[i], Y[i]); ctx.lineTo(X[i + 1], Y[i + 1]); ctx.stroke(); } }
+    if (r < rows - 1) { const j = i + cols, a = (G[i] + G[j]) / 2; if (a >= .004) { ctx.strokeStyle = 'rgba(255,90,20,' + (.04 + a * .62).toFixed(3) + ')'; ctx.beginPath(); ctx.moveTo(X[i], Y[i]); ctx.lineTo(X[j], Y[j]); ctx.stroke(); } }
+  }
+  for (let i = 0, n = cols * rows; i < n; i++) { ctx.fillStyle = 'rgba(255,255,255,' + (.16 + G[i] * .62).toFixed(3) + ')'; ctx.beginPath(); ctx.arc(X[i], Y[i], .9 + G[i] * 1.9, 0, 6.2832); ctx.fill(); }
+  ctx.font = '500 10.5px "IBM Plex Mono",monospace'; ctx.textBaseline = 'middle';
+  TAGS.forEach(([name], q) => { const i = tagIx[q]; ctx.fillStyle = 'rgba(255,180,138,' + (.22 + G[i] * .75).toFixed(3) + ')'; ctx.beginPath(); ctx.arc(X[i], Y[i], 2.6 + G[i] * 2, 0, 6.2832); ctx.fill(); ctx.fillText(name.toUpperCase(), X[i] + 9, Y[i] - 9); });
+  ctx.strokeStyle = 'rgba(255,90,20,.9)'; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(px, py, 7 + Math.sin(t * 3) * 1.5, 0, 6.2832); ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillText('YOUR DESK', px + 14, py + 1);
+}
+requestAnimationFrame(draw);
+})();
+
 (() => {
   /* every link that leaves the page, or goes to another page, opens in a new tab; in-page anchors stay put */
   const newTab = a => { const h = a.getAttribute('href'); if (!h || h[0] === '#' || /^(mailto|tel|javascript):/i.test(h)) return; a.target = '_blank'; a.rel = 'noopener'; };
