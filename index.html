@@ -236,6 +236,12 @@ h2{font-size:clamp(42px,5vw,74px);line-height:1;letter-spacing:-.028em}
 #voyage .pc .glow span::before{content:"";position:absolute;left:11px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px 2px rgba(255,90,20,.9)}
 #voyage .pc .glow span:nth-child(2){animation-delay:.5s}#voyage .pc .glow span:nth-child(3){animation-delay:1s}#voyage .pc .glow span:nth-child(4){animation-delay:1.5s}
 #voyage .manifest .glow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}#voyage .manifest .glow span{font:700 11.5px var(--sans);padding:6px 12px;border-radius:999px;color:#7A2200;background:#FFE9DC;border:1px solid rgba(255,90,20,.6)}
+#voyage .dock .glow span{position:relative;font:700 11px var(--sans);padding:6px 12px 6px 24px;border-radius:999px;color:#7A2200;background:linear-gradient(180deg,#FFE9DC,#FFD2B8);border:1px solid rgba(255,90,20,.7);animation:vglow 2.6s ease-in-out infinite}
+#voyage .dock .glow span::before{content:"";position:absolute;left:10px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px 2px rgba(255,90,20,.9)}
+#voyage .dock .glow{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+#voyage .dock .glow:empty{display:none}
+#voyage .dock .go[hidden]{display:none}
+#voyage .dock .go{display:inline-block;margin-top:12px;font:700 14px var(--sans);color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:2px}
 #voyage .pc .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
 #voyage .pc .tags span{font:600 11px var(--sans);padding:6px 11px;border-radius:999px;border:1px solid var(--hair);background:#fff;color:var(--soft)}
 #voyage .pc .go{display:inline-block;margin-top:16px;font:700 14px var(--sans);color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:3px}
@@ -340,10 +346,29 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
 .no-sda .in{opacity:1!important;transform:none!important}
 
 /* ---------- phones ---------- */
+.burger{display:none}
+.mnav{display:none}
 @media (max-width:900px){
   html{scroll-snap-type:none}
+  .burger{display:grid;place-items:center;width:44px;height:44px;margin-left:8px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:inherit;cursor:pointer;flex-shrink:0}
+  .burger svg{width:22px;height:22px}
+  header{gap:0}.mark{margin-right:auto}
+  header .cta{white-space:nowrap;padding:0 14px;font-size:12.5px}
+  .mark{font-size:18px;gap:8px}.mark small{display:none}
+  .mnav{display:block;position:fixed;left:10px;right:10px;top:76px;z-index:29;padding:8px;border-radius:22px;background:#fff;color:var(--sheet-ink);border:1px solid var(--hair);box-shadow:0 30px 70px -20px rgba(7,27,74,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:.25s var(--ease)}
+  body.menu-open .mnav{opacity:1;visibility:visible;transform:none}
+  .mnav a{display:block;padding:14px 16px;border-radius:14px}
+  .mnav a:active{background:var(--paper)}
+  .mnav b{display:block;font:600 16px var(--sans)}
+  .mnav span{display:block;font-size:13.5px;color:var(--soft);margin-top:2px}
+  .roll{height:400px;border-radius:22px}
+  .rc{width:150px;padding:14px 16px;border-radius:26px}
+  #voyage .dock{max-height:52vh;overflow:auto}
+  #voyage .dock p{font-size:13.5px}
+  #voyage .listbtn{padding:12px 18px}
   header{padding:0 18px;height:68px}
   .nav,.dial{display:none}
+  header .cta{margin-left:0}
   .mark{font-size:19px}
   .cta{height:40px;padding:0 16px;font-size:13px}
   .screen{height:auto;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:110px 20px 56px}
@@ -418,13 +443,20 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
       <div class="menu" role="menu">
         <a role="menuitem" href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist" target="_blank" rel="noopener"><b>AI Communication Agent</b><span>Chat, voice and WhatsApp on one concierge.</span></a>
         <a role="menuitem" href="https://dashboard.yachtrelayai.com/"><b>Broker &amp; Charter Dashboard</b><span>Replies, pipeline, rep performance, AI insight.</span></a>
-        <a role="menuitem" href="#voyage" data-port="9"><b>Bespoke Website and AI Workers</b><span>Live inventory and charter pages, with AI staff to work them.</span></a>
+        <a role="menuitem" href="#voyage" data-port="10"><b>Bespoke Website and AI Workers</b><span>Live inventory and charter pages, with AI staff to work them.</span></a>
       </div>
     </div>
     <a href="#voyage">The voyage</a>
   </nav>
   <a class="cta" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit</a>
+  <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
 </header>
+<nav class="mnav" id="mnav" aria-label="Menu">
+  <a href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist"><b>AI Communication Agent</b><span>Chat, voice, SMS and WhatsApp on one concierge.</span></a>
+  <a href="https://dashboard.yachtrelayai.com/"><b>Broker &amp; Charter Dashboard</b><span>Replies, pipeline, rep performance, AI insight.</span></a>
+  <a href="#voyage" data-port="10"><b>Bespoke Website and AI Workers</b><span>Live inventory and charter pages, with AI staff to work them.</span></a>
+  <a href="#voyage"><b>The voyage</b><span>Twelve cities, everything we build.</span></a>
+</nav>
 
 <!-- the helm: tricorn in the middle, needle swings to the number of the section you are in -->
 <nav class="dial" id="dial" aria-label="Sections">
@@ -584,7 +616,7 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
         <div class="ticks" id="vTicks"><div class="fillbar" id="vFill"></div><div class="hat" id="vHat"><svg viewBox="0 0 100 56" aria-hidden="true"><use href="#tricorn"/></svg></div></div>
         <div class="now"><span id="vNowK">Monaco · 1 of 12</span><span>Scroll, or tap a number</span></div>
       </div>
-      <div class="dock" id="vDock" aria-live="polite"><div class="bar"><i id="vDockBar"></i></div><svg class="dh" id="vDockHat" viewBox="0 0 100 56" aria-hidden="true"><use href="#tricorn"/></svg><div class="k" id="vDockK"></div><h3 id="vDockT"></h3><p id="vDockP"></p></div>
+      <div class="dock" id="vDock" aria-live="polite"><div class="bar"><i id="vDockBar"></i></div><svg class="dh" id="vDockHat" viewBox="0 0 100 56" aria-hidden="true"><use href="#tricorn"/></svg><div class="k" id="vDockK"></div><h3 id="vDockT"></h3><p id="vDockP"></p><div class="glow" id="vDockC"></div><a class="go" id="vDockL" hidden></a></div>
     </div>
   </div>
   <div class="manifest" id="vManifest" aria-label="All ports"><h2>The voyage, <em>in list form</em></h2><ol id="vList"></ol></div>
@@ -636,7 +668,7 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
         <p>AI sales and charter desks for charter operators, brokerages and management houses. Offices in Canada, Switzerland &amp; India.</p>
       </div>
       <div><h4>Navigate</h4><ul><li><a href="#voyage">The voyage</a></li><li><a href="readiness-check.html">Readiness check</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-      <div><h4>Products</h4><ul><li><a href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist" target="_blank" rel="noopener">AI Communication Agent</a></li><li><a href="https://dashboard.yachtrelayai.com/">Broker &amp; Charter Dashboard</a></li><li><a href="#voyage" data-port="9">Bespoke Website and AI Workers</a></li></ul></div>
+      <div><h4>Products</h4><ul><li><a href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist" target="_blank" rel="noopener">AI Communication Agent</a></li><li><a href="https://dashboard.yachtrelayai.com/">Broker &amp; Charter Dashboard</a></li><li><a href="#voyage" data-port="10">Bespoke Website and AI Workers</a></li></ul></div>
       <div><h4>Contact</h4><ul><li><a href="mailto:sovon@aimamoth.com">sovon@aimamoth.com</a></li><li><a href="tel:+19175406222">+1 917 540 6222</a></li><li><a href="https://www.linkedin.com/in/sovonshaik/" rel="noopener">LinkedIn</a></li></ul></div>
     </div>
     <div class="word" aria-hidden="true">YachtRelay</div>
@@ -1126,6 +1158,8 @@ function frame(){
     $('vNowK').textContent=`${PORTS[near].name} · ${near+1} of ${N}`;
     $('vDockK').textContent=`${PORTS[near].name} · ${PORTS[near].k}`;$('vDockT').textContent=PORTS[near].title;
     $('vDockP').textContent=PORTS[near].text||(PORTS[near].list||[]).join(' · ');
+    $('vDockC').innerHTML=(PORTS[near].chips||[]).map(x=>`<span>${x}</span>`).join('');
+    const lk=PORTS[near].go||PORTS[near].cta, dl=$('vDockL'); dl.hidden=!lk; if(lk){dl.textContent=lk.t+' \u2192'; dl.href=lk.h; dl.target='_blank'; dl.rel='noopener';}
   }
   const tk=tkEls[near], tr=ticks.getBoundingClientRect(), kr=tk.getBoundingClientRect();
   $('vHat').style.left=(kr.left+kr.width/2-tr.left)+'px'; $('vFill').style.width=(kr.left+kr.width/2-tr.left)+'px';
@@ -1190,6 +1224,20 @@ document.getElementById('auditForm').addEventListener('submit', e => {
   st.textContent = 'Thank you. Your email app will open with your details ready to send.';
   e.target.reset();
 });
+</script>
+<script>
+(() => {
+  /* every link that leaves the page, or goes to another page, opens in a new tab; in-page anchors stay put */
+  const newTab = a => { const h = a.getAttribute('href'); if (!h || h[0] === '#' || /^(mailto|tel|javascript):/i.test(h)) return; a.target = '_blank'; a.rel = 'noopener'; };
+  document.querySelectorAll('a[href]').forEach(newTab);
+  /* mobile menu */
+  const b = document.getElementById('burger'), body = document.body;
+  const set = open => { body.classList.toggle('menu-open', open); b.setAttribute('aria-expanded', open); b.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); };
+  b.addEventListener('click', () => set(!body.classList.contains('menu-open')));
+  document.querySelectorAll('#mnav a').forEach(a => a.addEventListener('click', () => set(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape') set(false); });
+  document.addEventListener('click', e => { if (body.classList.contains('menu-open') && !e.target.closest('#mnav,#burger')) set(false); });
+})();
 </script>
   <!-- Tawk.to Chat Widget (with 10-second delay) -->
   <script type="text/javascript">
