@@ -213,16 +213,16 @@ h2{font-size:clamp(42px,5vw,74px);line-height:1;letter-spacing:-.028em}
 .rc:nth-child(even) small{color:#CFE0FF}.rc:nth-child(even) span{color:#DCE8FF}
 
 /* ---------- THE VOYAGE (sea chart) ---------- */
-.voyage{position:relative;z-index:10;margin:0 24px;background:var(--paper)}
+.voyage{position:relative;z-index:10;margin:0 24px;background:#041B52}
 #voyage .runway{position:relative}
-#voyage .stage{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(120% 90% at 50% 40%,#fff 0,var(--paper) 55%,#E8F1FD 100%)}
-#voyage .vgrid{position:absolute;inset:0;pointer-events:none;opacity:.55;background-image:linear-gradient(rgba(21,70,214,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(21,70,214,.07) 1px,transparent 1px);background-size:96px 96px}
-#voyage .clouds{position:absolute;inset:-10%;pointer-events:none;opacity:.8}
+#voyage .stage{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(120% 90% at 50% 30%,#1357D8 0,#0A3290 42%,#041B52 100%)}
+#voyage .vgrid{position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='60'%3E%3Cpath d='M0 20q15-12 30 0t30 0 30 0 30 0 30 0 30 0' fill='none' stroke='white' stroke-opacity='.16' stroke-width='1.3'/%3E%3Cpath d='M-15 50q15-12 30 0t30 0 30 0 30 0 30 0 30 0 30 0' fill='none' stroke='white' stroke-opacity='.09' stroke-width='1'/%3E%3C/svg%3E");background-size:180px 60px;animation:vsea 38s linear infinite}
+#voyage .clouds{position:absolute;inset:-10%;pointer-events:none;opacity:.10}
 #voyage .clouds i{position:absolute;display:block;width:420px;height:120px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(255,255,255,0));filter:blur(6px)}
-#voyage .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 50%,transparent 55%,rgba(7,27,74,.10) 100%)}
+#voyage .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 50%,transparent 50%,rgba(0,6,30,.55) 100%)}
 #voyage .world{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
 #voyage .world svg{display:block;overflow:visible}
-#voyage .pc{position:absolute;width:440px;padding:26px 28px 24px;border-radius:26px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--hair);color:var(--sheet-ink);box-shadow:0 30px 70px -28px rgba(7,27,74,.35);opacity:var(--v,0);transform:translateY(calc((1 - var(--v,0)) * 30px)) scale(calc(.96 + .04 * var(--v,0)));pointer-events:none}
+#voyage .pc{position:absolute;width:440px;padding:26px 28px 24px;border-radius:26px;background:rgba(255,251,240,.95);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--hair);color:var(--sheet-ink);box-shadow:0 30px 70px -28px rgba(7,27,74,.35);opacity:var(--v,0);transform:translateY(calc((1 - var(--v,0)) * 30px)) scale(calc(.96 + .04 * var(--v,0)));pointer-events:none}
 #voyage .pc.on{pointer-events:auto}
 #voyage .pc .k{display:flex;align-items:center;gap:10px;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;padding-right:56px}
 #voyage .pc .k::before{content:"";width:22px;height:1px;background:var(--blue);flex-shrink:0}
@@ -231,6 +231,11 @@ h2{font-size:clamp(42px,5vw,74px);line-height:1;letter-spacing:-.028em}
 #voyage .pc ul{list-style:none;margin-top:14px;display:grid;gap:8px}
 #voyage .pc li{display:flex;gap:10px;font-size:14.5px;font-weight:600}
 #voyage .pc li::before{content:"";flex-shrink:0;width:7px;height:7px;margin-top:8px;border-radius:50%;background:var(--accent)}
+#voyage .pc .glow{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+#voyage .pc .glow span{position:relative;font:700 11.5px var(--sans);letter-spacing:.02em;padding:7px 13px 7px 26px;border-radius:999px;color:#7A2200;background:linear-gradient(180deg,#FFE9DC,#FFD2B8);border:1px solid rgba(255,90,20,.7);animation:vglow 2.6s ease-in-out infinite}
+#voyage .pc .glow span::before{content:"";position:absolute;left:11px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px 2px rgba(255,90,20,.9)}
+#voyage .pc .glow span:nth-child(2){animation-delay:.5s}#voyage .pc .glow span:nth-child(3){animation-delay:1s}#voyage .pc .glow span:nth-child(4){animation-delay:1.5s}
+#voyage .manifest .glow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}#voyage .manifest .glow span{font:700 11.5px var(--sans);padding:6px 12px;border-radius:999px;color:#7A2200;background:#FFE9DC;border:1px solid rgba(255,90,20,.6)}
 #voyage .pc .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
 #voyage .pc .tags span{font:600 11px var(--sans);padding:6px 11px;border-radius:999px;border:1px solid var(--hair);background:#fff;color:var(--soft)}
 #voyage .pc .go{display:inline-block;margin-top:16px;font:700 14px var(--sans);color:var(--accent);border-bottom:2px solid var(--accent);padding-bottom:3px}
@@ -572,12 +577,12 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
     <div class="stage" id="vStage">
       <div class="vgrid"></div>
       <div class="clouds" id="vClouds" aria-hidden="true"><i style="left:6%;top:12%"></i><i style="left:58%;top:6%;width:520px"></i><i style="left:30%;top:46%"></i><i style="left:74%;top:60%;width:380px"></i><i style="left:12%;top:78%;width:500px"></i></div>
-      <div class="world" id="vWorld"><svg id="vMap" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A sea chart. A yacht with a tricorn-hatted captain sails from port to port, each port a part of what YachtRelay builds."></svg></div>
+      <div class="world" id="vWorld"><svg id="vMap" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A parchment sea chart floating on the ocean. A yacht with a tricorn-hatted captain sails from Monaco to Miami, Dubai, Sydney and more, each city a part of what YachtRelay builds."></svg></div>
       <div class="vignette"></div>
       <button class="listbtn" id="vListBtn" type="button">List view</button>
       <div class="log" id="vLog" aria-label="Voyage log">
         <div class="ticks" id="vTicks"><div class="fillbar" id="vFill"></div><div class="hat" id="vHat"><svg viewBox="0 0 100 56" aria-hidden="true"><use href="#tricorn"/></svg></div></div>
-        <div class="now"><span id="vNowK">Port 1 of 11</span><span>Scroll, or tap a number</span></div>
+        <div class="now"><span id="vNowK">Monaco · 1 of 12</span><span>Scroll, or tap a number</span></div>
       </div>
       <div class="dock" id="vDock" aria-live="polite"><div class="bar"><i id="vDockBar"></i></div><svg class="dh" id="vDockHat" viewBox="0 0 100 56" aria-hidden="true"><use href="#tricorn"/></svg><div class="k" id="vDockK"></div><h3 id="vDockT"></h3><p id="vDockP"></p></div>
     </div>
@@ -654,7 +659,7 @@ const VIDEO_MODE = new URLSearchParams(location.search).get('mode') || 'loop';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const v = document.getElementById('bgVideo');
 const proofEl = document.getElementById('proof'), voyageEl = document.getElementById('voyage'), bookEl = document.getElementById('book');
-const lightEls = [proofEl, voyageEl, bookEl];
+const lightEls = [proofEl, bookEl];
 const isLight = y => lightEls.some(e => { const r = e.getBoundingClientRect(); return r.top < y && r.bottom > y; });
 v.poster = MEDIA.poster;
 v.src = VIDEO_MODE === 'scrub' ? MEDIA.scrub : MEDIA.video;
@@ -867,30 +872,39 @@ frame();
    =================================================================== */
 (() => {
 const PORTS = [
-  { name:'Port Midnight', k:'Departure', intro:true, title:'Chart your course.', icon:'moon',
-    text:'2:14 AM. A charter enquiry lands and nobody is awake. Eleven ports ahead: everything YachtRelay builds, in the order you meet it. Scroll to set sail.' },
-  { name:'Concierge Cove', k:'AI Concierge', title:'One concierge, three ways in.', icon:'chat', go:{t:'Try the AI agent', h:'https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist'},
-    text:'Chat on your site, voice on your phone line, replies on WhatsApp and Instagram. Trained on your fleet and listings only.' },
-  { name:'Quick Quay', k:'Third-party enquiries', title:'Answered before the next broker opens theirs.', icon:'bolt',
-    text:'Enquiries from YachtWorld, Rightboat, Boat Trader and boats.com get an instant, accurate reply, day or night.' },
-  { name:'Brief Bay', k:'Qualify & brief', title:'Qualified, then briefed.', icon:'doc',
-    text:'The desk asks what a broker would ask, then hands you a detailed sales-status brief.',
-    list:['Budget, timeline, financing, trade-in','Where the deal stands, what was said','The next move, written for you'] },
-  { name:'Helm Harbour', k:'CRM & pipelines', title:'One thread per contact.', icon:'wheel',
+  { name:'Monaco', reg:'Europe', k:'Departure', intro:true, title:'Chart your course.', icon:'moon',
+    text:'2:14 AM. A charter enquiry lands and nobody is awake. Twelve cities ahead, from Monaco to Sydney: everything YachtRelay builds, in the order you meet it. Scroll to set sail.' },
+  { name:'Miami', reg:'USA', k:'AI Concierge', title:'One concierge, every way in.', icon:'chat', go:{t:'Try the AI agent', h:'https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist'},
+    text:'Chat on your site, a voice on your phone line, replies by text, on WhatsApp and on Instagram. Trained on your fleet and listings only.',
+    chips:['AI Voice Agent','AI SMS Agent','AI WhatsApp Agent','Website SDR'] },
+  { name:'Antibes', reg:'France', k:'Third-party enquiries', title:'Answered before the next broker opens theirs.', icon:'bolt',
+    text:'Enquiries from YachtWorld, Rightboat, Boat Trader and boats.com get an instant, accurate reply by email or text, day or night.',
+    chips:['AI SMS Agent','AI Email Agent'] },
+  { name:'Newport', reg:'USA', k:'Qualify & brief', title:'Qualified, then briefed.', icon:'doc',
+    text:'The desk asks what a broker would ask, by phone or by text, then hands you a detailed sales-status brief.',
+    list:['Budget, timeline, financing, trade-in','Where the deal stands, what was said','The next move, written for you'],
+    chips:['AI Voice Agent','AI SMS Agent'] },
+  { name:'Dubai', reg:'UAE', k:'CRM & pipelines', title:'One thread per contact.', icon:'wheel',
     text:'Buyer, seller, charter and berth pipelines across every channel, with the next follow-up owned by someone.',
-    list:['Deal pipeline by stage','Active buyers by risk band','A save play drafted for anyone cooling off'] },
-  { name:'Charter Cay', k:'For charter operators', title:'Fewer lost weeks.', icon:'palm',
-    list:['Live availability and the rate, in one reply','Quotes that go quiet are followed up','Weather cancellations rebooked, not refunded','Bookings managed on WhatsApp','Reviews and referrals requested'] },
-  { name:"Broker's Bluff", k:'For brokerages', title:'Keep the deal.', icon:'flag',
-    list:['Every sales call scored with AI','A researched brief on each prospect before you ring','Objections that keep coming up, and coaching per broker','Listing performance and comp research'] },
-  { name:'Lookout Light', k:'Analytics & dashboard', title:'See the whole coast.', icon:'bars',
+    list:['Deal pipeline by stage','Active buyers by risk band','A save play drafted for anyone cooling off'],
+    chips:['Lead Reactivation','AI SMS Agent'] },
+  { name:'Palma', reg:'Spain', k:'For charter operators', title:'Fewer lost weeks.', icon:'palm',
+    list:['Live availability and the rate, in one reply','Quotes that go quiet are followed up','Weather cancellations rebooked, not refunded','Bookings managed on WhatsApp','Reviews and referrals requested'],
+    chips:['AI WhatsApp Agent','AI Voice Agent','AI SMS Agent'] },
+  { name:'Sydney', reg:'Australia', k:'For brokerages', title:'Keep the deal.', icon:'flag',
+    list:['Every sales call scored with AI','A researched brief on each prospect before you ring','Objections that keep coming up, and coaching per broker','Listing performance and comp research'],
+    chips:['Rep Performance AI','Prospect Research'] },
+  { name:'Fort Lauderdale', reg:'USA', k:'Website visitor ID', title:'Know who looked at your boats.', icon:'eye',
+    text:'Finds the people and businesses behind visits to your listings and charter pages, with a research brief on each, so a broker can follow up while interest is warm.',
+    tags:['US visitors only'], chips:['Visitor ID','Prospect Research'] },
+  { name:'Gold Coast', reg:'Australia', k:'Analytics & dashboard', title:'See the whole coast.', icon:'bars',
     text:'One screen for the owner, one per rep. Response time by source, qualified leads by channel, and why deals get rejected.',
     tags:['Commission protected','Enquiries caught','Call & chat analytics'], go:{t:'See the dashboard', h:'https://dashboard.yachtrelayai.com/'} },
-  { name:'Market Wharf', k:'Posting & writing', title:'Everywhere, automatically.', icon:'stall',
+  { name:'Porto Cervo', reg:'Italy', k:'Posting & writing', title:'Everywhere, automatically.', icon:'stall',
     text:'New listings and charter specials posted to Facebook, Instagram, X, LinkedIn and Marketplace. Descriptions, bios and itineraries drafted in your voice.' },
-  { name:'Atelier Isle', k:'Bespoke website', title:'The shop window, rebuilt.', icon:'window',
-    text:'Live inventory and charter pages with availability, built to rank on Google and be cited by AI search. Live in 30 days.' },
-  { name:'Home Port', k:'Plugs into what you run', title:'Your portals, your CRM, your inbox.', icon:'anchor', final:true,
+  { name:'San Diego', reg:'USA', k:'Bespoke website & AI workers', title:'The shop window, rebuilt.', icon:'window',
+    text:'Live inventory and charter pages with availability, built to rank on Google and be cited by AI search, with AI workers behind them. Live in 30 days.' },
+  { name:'Cannes', reg:'France', k:'Plugs into what you run', title:'Your portals, your CRM, your inbox.', icon:'anchor', final:true,
     text:'It plugs into the portals above, plus HubSpot, HighLevel, Gmail, Outlook and Calendar. Start with a free 30-minute audit of your enquiry flow.',
     cta:{t:'Book a free audit', h:'https://aimamoth-zohomail.zohobookings.in/#/meetSovon'} }
 ];
@@ -911,6 +925,7 @@ const ICON={
  bars:'<path d="M5 27V15M12 27V6M19 27v-9M26 27V11"/><path d="M3 29h26"/>',
  stall:'<path d="M5 12 8 5h16l3 7"/><path d="M5 12c0 3 4 3 4 0 0 3 4 3 4 0 0 3 4 3 4 0 0 3 4 3 4 0 0 3 4 3 4 0"/><path d="M7 15v13h18V15M13 28v-8h6v8"/>',
  window:'<rect x="4" y="6" width="24" height="19" rx="2"/><path d="M4 11h24M12 28h8M16 25v3"/>',
+ eye:'<path d="M3 16C7 9 11 7 16 7s9 2 13 9c-4 7-8 9-13 9S7 23 3 16z"/><circle cx="16" cy="16" r="4"/>',
  anchor:'<circle cx="16" cy="7" r="3"/><path d="M16 10v18M8 16h16M5 20c1 5 5 8 11 8s10-3 11-8"/>'
 };
 
@@ -919,14 +934,38 @@ const SIDE=i=>(i%2===0?1:-1), PX=i=>SIDE(i)>0?1180:780, PY=i=>TOP+i*STEP;
 const map=$('vMap'); map.setAttribute('viewBox',`0 0 ${W} ${H}`); map.setAttribute('width',W); map.setAttribute('height',H);
 const world=$('vWorld'); world.style.width=W+'px'; world.style.height=H+'px';
 
+const INK='#4A3320', INKA=a=>`rgba(74,51,32,${a})`, ACC='#C8400F', LAND='#F8EFD6';
 const defs=el('defs',{},map);
 const pat=el('pattern',{id:'vwaves',width:90,height:40,patternUnits:'userSpaceOnUse'},defs);
-el('path',{d:'M0 14q11-9 22 0t22 0 22 0 24 0',fill:'none',stroke:'rgba(21,70,214,.16)','stroke-width':1.2},pat);
-el('path',{d:'M-10 34q11-9 22 0t22 0 22 0 24 0',fill:'none',stroke:'rgba(21,70,214,.10)','stroke-width':1},pat);
+el('path',{d:'M0 14q11-9 22 0t22 0 22 0 24 0',fill:'none',stroke:INKA(.2),'stroke-width':1.2},pat);
+el('path',{d:'M-10 34q11-9 22 0t22 0 22 0 24 0',fill:'none',stroke:INKA(.12),'stroke-width':1},pat);
 const hat=el('pattern',{id:'vhatch',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(35)'},defs);
-el('line',{x1:0,y1:0,x2:0,y2:7,stroke:'rgba(21,70,214,.20)','stroke-width':1},hat);
+el('line',{x1:0,y1:0,x2:0,y2:7,stroke:INKA(.28),'stroke-width':1},hat);
 const glow=el('radialGradient',{id:'vbeam'},defs); el('stop',{offset:'0','stop-color':'#FF5A14','stop-opacity':.55},glow); el('stop',{offset:'1','stop-color':'#FF5A14','stop-opacity':0},glow);
-el('rect',{width:W,height:H,fill:'url(#vwaves)'},map);
+const paper=el('linearGradient',{id:'vpaper',x1:0,y1:0,x2:1,y2:1},defs); el('stop',{offset:'0','stop-color':'#F4E7C6'},paper); el('stop',{offset:'.55','stop-color':'#EAD8AB'},paper); el('stop',{offset:'1','stop-color':'#E0C991'},paper);
+const stain=el('radialGradient',{id:'vstain'},defs); el('stop',{offset:'0','stop-color':'#8A5A24','stop-opacity':.2},stain); el('stop',{offset:'1','stop-color':'#8A5A24','stop-opacity':0},stain);
+
+/* the parchment sheet: a torn edge, floating on the sea */
+const SHEET=(()=>{const R=rng(7),pad=46,s=58,P=[];
+  const jit=()=>(R()-.5)*18+(R()<.12?(R()-.5)*34:0);
+  for(let x=pad;x<W-pad;x+=s)P.push([x,pad+jit()]);
+  for(let y=pad;y<H-pad;y+=s)P.push([W-pad+jit(),y]);
+  for(let x=W-pad;x>pad;x-=s)P.push([x,H-pad+jit()]);
+  for(let y=H-pad;y>pad;y-=s)P.push([pad+jit(),y]);
+  return 'M'+P.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L')+'Z';})();
+const clip=el('clipPath',{id:'vsheet'},defs); el('path',{d:SHEET},clip);
+el('path',{d:SHEET,fill:'rgba(0,8,30,.14)',transform:'translate(30 54)'},map);
+el('path',{d:SHEET,fill:'rgba(0,8,30,.26)',transform:'translate(14 26)'},map);
+el('path',{d:SHEET,fill:'url(#vpaper)'},map);
+const sheet=el('g',{'clip-path':'url(#vsheet)'},map);
+{ const R=rng(11); for(let i=0;i<46;i++){const rx=140+R()*300;el('ellipse',{cx:R()*W,cy:R()*H,rx,ry:rx*(.6+R()*.5),fill:'url(#vstain)'},sheet);}
+  [.25,.5,.75].forEach(f=>{el('path',{d:`M0 ${H*f} H${W}`,stroke:INKA(.10),'stroke-width':4},sheet);el('path',{d:`M0 ${H*f+4} H${W}`,stroke:'rgba(255,255,255,.35)','stroke-width':2},sheet);});
+  el('path',{d:`M${W/2} 0 V${H}`,stroke:INKA(.10),'stroke-width':4},sheet);el('path',{d:`M${W/2+4} 0 V${H}`,stroke:'rgba(255,255,255,.35)','stroke-width':2},sheet);
+  el('rect',{width:W,height:H,fill:'url(#vwaves)'},sheet);
+  el('path',{d:SHEET,fill:'none',stroke:INKA(.30),'stroke-width':90},sheet);
+  el('path',{d:SHEET,fill:'none',stroke:INKA(.22),'stroke-width':30},sheet); }
+el('path',{d:SHEET,fill:'none',stroke:INKA(.75),'stroke-width':2.2,'stroke-linejoin':'round'},map);
+[18,36].forEach(o=>el('path',{d:`M${46+o+30} ${46+o+30}H${W-46-o-30}V${H-46-o-30}H${46+o+30}Z`,fill:'none',stroke:INKA(o===18?.45:.22),'stroke-width':o===18?2:1},map));
 
 const pts=PORTS.map((_,i)=>[PX(i),PY(i)]);
 function route(){
@@ -935,8 +974,8 @@ function route(){
     d+=` C${p1[0]+(p2[0]-p0[0])*t/3*1.6} ${p1[1]+(p2[1]-p0[1])*t/3*1.6} ${p2[0]-(p3[0]-p1[0])*t/3*1.6} ${p2[1]-(p3[1]-p1[1])*t/3*1.6} ${p2[0]} ${p2[1]}`;}
   return d;}
 const D=route();
-const base=el('path',{d:D,fill:'none',stroke:'rgba(255,90,20,.40)','stroke-width':3,'stroke-dasharray':'2 12','stroke-linecap':'round'},map);
-const prog=el('path',{d:D,fill:'none',stroke:'#FF5A14','stroke-width':4,'stroke-linecap':'round'},map);
+const base=el('path',{d:D,fill:'none',stroke:'rgba(200,64,15,.55)','stroke-width':3,'stroke-dasharray':'2 12','stroke-linecap':'round'},map);
+const prog=el('path',{d:D,fill:'none',stroke:ACC,'stroke-width':4,'stroke-linecap':'round'},map);
 const L=base.getTotalLength(); prog.style.strokeDasharray=L; prog.style.strokeDashoffset=L;
 const sample=[...Array(900)].map((_,i)=>{const p=base.getPointAtLength(L*i/899);return[p.x,p.y];});
 const nearPath=(x,y,r)=>sample.some(([a,b])=>(a-x)*(a-x)+(b-y)*(b-y)<r*r);
@@ -946,59 +985,63 @@ function blob(cx,cy,r,seed,k=16){const R=rng(seed),a=[];for(let i=0;i<k;i++){con
   let d=`M${(a[0][0]+a[k-1][0])/2} ${(a[0][1]+a[k-1][1])/2}`;for(let i=0;i<k;i++){const p=a[i],q=a[(i+1)%k];d+=` Q${p[0]} ${p[1]} ${(p[0]+q[0])/2} ${(p[1]+q[1])/2}`;}return d+'Z';}
 const land=el('g',{},map), deco=el('g',{},map);
 
-{ const g=el('g',{opacity:.5},deco), cx=pts[0][0]-760, cy=pts[0][1]+40;
-  for(let i=0;i<16;i++){const a=i*Math.PI/8;el('line',{x1:cx,y1:cy,x2:cx+Math.cos(a)*1700,y2:cy+Math.sin(a)*1700,stroke:'rgba(21,70,214,.07)','stroke-width':1},g);}
-  const r=el('g',{transform:`translate(${cx} ${cy})`,opacity:.9},deco);
-  [150,120,60].forEach(rad=>el('circle',{r:rad,fill:'none',stroke:'rgba(21,70,214,.35)','stroke-width':rad===120?.8:1.2},r));
+{ const g=el('g',{opacity:.5},deco), cx=pts[0][0]-560, cy=pts[0][1]+40;
+  for(let i=0;i<16;i++){const a=i*Math.PI/8;el('line',{x1:cx,y1:cy,x2:cx+Math.cos(a)*1500,y2:cy+Math.sin(a)*1500,stroke:INKA(.10),'stroke-width':1},g);}
+  const r=el('g',{transform:`translate(${cx} ${cy})`,opacity:.92},deco);
+  [150,120,60].forEach(rad=>el('circle',{r:rad,fill:'none',stroke:INKA(.5),'stroke-width':rad===120?.8:1.3},r));
   for(let i=0;i<8;i++){const a=i*Math.PI/4-Math.PI/2,l=i%2?78:150,w=i%2?14:22;
     const tip=[Math.cos(a)*l,Math.sin(a)*l],l1=[Math.cos(a+Math.PI/2)*w*.5,Math.sin(a+Math.PI/2)*w*.5],l2=[-l1[0],-l1[1]];
-    el('path',{d:`M${tip} L${l1} L0 0 Z`,fill:i%2?'rgba(21,70,214,.18)':'#1546D6'},r);el('path',{d:`M${tip} L${l2} L0 0 Z`,fill:i%2?'rgba(21,70,214,.08)':'rgba(21,70,214,.55)'},r);}
-  const t=el('text',{y:-166,'text-anchor':'middle','font-family':'Instrument Serif,serif','font-size':34,fill:'#FF5A14','font-style':'italic'},r);t.textContent='N';
+    el('path',{d:`M${tip} L${l1} L0 0 Z`,fill:i%2?INKA(.22):INK},r);el('path',{d:`M${tip} L${l2} L0 0 Z`,fill:i%2?INKA(.10):INKA(.6)},r);}
+  const t=el('text',{y:-170,'text-anchor':'middle','font-family':'Instrument Serif,serif','font-size':36,fill:ACC,'font-style':'italic'},r);t.textContent='N';
 }
 
 PORTS.forEach((p,i)=>{
   const s=SIDE(i), px=pts[i][0], py=pts[i][1], cx=px+s*142, cy=py, r=i===N-1?148:118, g=el('g',{},land);
-  el('path',{d:blob(cx,cy,r*1.55,100+i,18),fill:'rgba(21,70,214,.05)',stroke:'rgba(21,70,214,.14)','stroke-width':1,'stroke-dasharray':'3 6'},g);
-  el('path',{d:blob(cx,cy,r*1.28,200+i,18),fill:'rgba(21,70,214,.05)',stroke:'rgba(21,70,214,.2)','stroke-width':1},g);
-  el('path',{d:blob(cx+3,cy+5,r,300+i),fill:'rgba(7,27,74,.10)'},g);
-  el('path',{d:blob(cx,cy,r,300+i),fill:'#fff',stroke:'#1546D6','stroke-width':2.2},g);
-  el('path',{d:blob(cx,cy,r*.82,300+i),fill:'url(#vhatch)',stroke:'rgba(21,70,214,.45)','stroke-width':1},g);
-  el('path',{d:blob(cx,cy,r*.6,300+i),fill:'#fff',stroke:'rgba(21,70,214,.35)','stroke-width':1,'stroke-dasharray':'2 4'},g);
-  const R=rng(900+i);for(let k=0;k<5;k++){const a=R()*6.28,d=R()*r*.42,hx=cx+Math.cos(a)*d-9,hy=cy+Math.sin(a)*d*.8-6;
-    el('rect',{x:hx,y:hy,width:18,height:12,fill:'#fff',stroke:'#071B4A','stroke-width':1.4},g);el('path',{d:`M${hx-2} ${hy} L${hx+9} ${hy-9} L${hx+20} ${hy}`,fill:'rgba(255,90,20,.18)',stroke:'#FF5A14','stroke-width':1.4},g);}
-  el('path',{d:`M${px} ${py} L${px+s*(r*.55)} ${py}`,stroke:'#071B4A','stroke-width':5,'stroke-linecap':'round'},g);
-  el('path',{d:`M${px} ${py} L${px+s*(r*.55)} ${py}`,stroke:'#fff','stroke-width':2.2,'stroke-linecap':'round'},g);
-  const fx=cx, fy=cy-r*.1; el('line',{x1:fx,y1:fy,x2:fx,y2:fy-70,stroke:'#071B4A','stroke-width':2.4},g);
-  const fl=el('g',{},g);el('path',{d:`M${fx} ${fy-70} L${fx+44} ${fy-60} L${fx} ${fy-48} Z`,fill:'#FF5A14'},fl);
+  el('path',{d:blob(cx,cy,r*1.55,100+i,18),fill:INKA(.04),stroke:INKA(.22),'stroke-width':1,'stroke-dasharray':'3 6'},g);
+  el('path',{d:blob(cx,cy,r*1.28,200+i,18),fill:INKA(.05),stroke:INKA(.3),'stroke-width':1},g);
+  el('path',{d:blob(cx+3,cy+5,r,300+i),fill:INKA(.18)},g);
+  el('path',{d:blob(cx,cy,r,300+i),fill:LAND,stroke:INK,'stroke-width':2.2},g);
+  el('path',{d:blob(cx,cy,r*.82,300+i),fill:'url(#vhatch)',stroke:INKA(.5),'stroke-width':1},g);
+  el('path',{d:blob(cx,cy,r*.6,300+i),fill:LAND,stroke:INKA(.45),'stroke-width':1,'stroke-dasharray':'2 4'},g);
+  const R=rng(900+i);
+  for(let k=0;k<3;k++){const a=R()*6.28,d=r*(.45+R()*.3),mx=cx+Math.cos(a)*d,my=cy+Math.sin(a)*d*.8;
+    el('path',{d:`M${mx-14} ${my+8} L${mx-4} ${my-12} L${mx+2} ${my-3} L${mx+9} ${my-16} L${mx+22} ${my+8}Z`,fill:LAND,stroke:INK,'stroke-width':1.3,'stroke-linejoin':'round'},g);}
+  for(let k=0;k<5;k++){const a=R()*6.28,d=R()*r*.42,hx=cx+Math.cos(a)*d-9,hy=cy+Math.sin(a)*d*.8-6;
+    el('rect',{x:hx,y:hy,width:18,height:12,fill:LAND,stroke:INK,'stroke-width':1.4},g);el('path',{d:`M${hx-2} ${hy} L${hx+9} ${hy-9} L${hx+20} ${hy}`,fill:'rgba(200,64,15,.2)',stroke:ACC,'stroke-width':1.4},g);}
+  el('path',{d:`M${px} ${py} L${px+s*(r*.55)} ${py}`,stroke:INK,'stroke-width':5,'stroke-linecap':'round'},g);
+  el('path',{d:`M${px} ${py} L${px+s*(r*.55)} ${py}`,stroke:LAND,'stroke-width':2.2,'stroke-linecap':'round'},g);
+  const fx=cx, fy=cy-r*.1; el('line',{x1:fx,y1:fy,x2:fx,y2:fy-70,stroke:INK,'stroke-width':2.4},g);
+  const fl=el('g',{},g);el('path',{d:`M${fx} ${fy-70} L${fx+44} ${fy-60} L${fx} ${fy-48} Z`,fill:ACC},fl);
   const nn=el('text',{x:fx+13,y:fy-56,'font-family':'IBM Plex Mono,monospace','font-size':11,fill:'#fff','font-weight':500},fl);nn.textContent=String(i+1).padStart(2,'0');
   fl.style.transformOrigin=`${fx}px ${fy-70}px`; fl.style.animation=`vflap ${2.4+i*.1}s ease-in-out infinite`;
   const mg=el('g',{transform:`translate(${cx} ${cy+r*.52})`},g);
-  el('circle',{r:23,fill:'#fff',stroke:'#FF5A14','stroke-width':1.8},mg);
-  const ig=el('g',{transform:'translate(-14 -14) scale(.88)',fill:'none',stroke:'#FF5A14','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'},mg);ig.innerHTML=ICON[p.icon];
-  const t=el('text',{x:cx,y:cy-r-26,'text-anchor':'middle','font-family':'Instrument Serif,serif','font-style':'italic','font-size':46,fill:'#FF5A14'},g);t.textContent=p.name;
+  el('circle',{r:23,fill:LAND,stroke:ACC,'stroke-width':1.8},mg);
+  const ig=el('g',{transform:'translate(-14 -14) scale(.88)',fill:'none',stroke:ACC,'stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'},mg);ig.innerHTML=ICON[p.icon];
+  const t=el('text',{x:cx,y:cy-r-44,'text-anchor':'middle','font-family':'Instrument Serif,serif','font-size':p.name.length>10?46:56,'letter-spacing':p.name.length>10?5:9,fill:INK},g);t.textContent=p.name.toUpperCase();
+  const t2=el('text',{x:cx,y:cy-r-18,'text-anchor':'middle','font-family':'IBM Plex Mono,monospace','font-size':12,'letter-spacing':'.32em',fill:ACC},g);t2.textContent=p.reg.toUpperCase();
   if(p.icon==='bars'){
     const lh=el('g',{transform:`translate(${cx+s*40} ${cy-r*.2})`},g);
-    el('path',{d:'M-12 0 L-7 -86 H7 L12 0Z',fill:'#fff',stroke:'#071B4A','stroke-width':2},lh);el('path',{d:'M-10 -26 H10M-9 -52 H9',stroke:'#FF5A14','stroke-width':6},lh);
-    el('rect',{x:-9,y:-104,width:18,height:18,fill:'#fff',stroke:'#071B4A','stroke-width':2},lh);el('path',{d:'M-12 -104 L0 -118 L12 -104Z',fill:'#071B4A'},lh);
+    el('path',{d:'M-12 0 L-7 -86 H7 L12 0Z',fill:LAND,stroke:INK,'stroke-width':2},lh);el('path',{d:'M-10 -26 H10M-9 -52 H9',stroke:ACC,'stroke-width':6},lh);
+    el('rect',{x:-9,y:-104,width:18,height:18,fill:LAND,stroke:INK,'stroke-width':2},lh);el('path',{d:'M-12 -104 L0 -118 L12 -104Z',fill:INK},lh);
     const bm=el('path',{d:'M0 -95 L-330 -150 L-330 -40Z',fill:'url(#vbeam)',opacity:0},lh);bm.style.animation='vbeam 4.2s ease-in-out infinite';
   }
 });
 HAZARDS.forEach((h,i)=>{
   const x=[1440,1700,1540][i], y=[720,800,930][i], g=el('g',{transform:`translate(${x} ${y})`},deco);
-  el('path',{d:'M-34 8 L-22 -14 L-12 4 L0 -20 L12 2 L24 -12 L34 8Z',fill:'#fff',stroke:'#FF5A14','stroke-width':2,'stroke-linejoin':'round'},g);
-  [[-44,18],[40,16],[0,26]].forEach(([a,b])=>{el('path',{d:`M${a-5} ${b-5} l10 10 M${a+5} ${b-5} l-10 10`,stroke:'#FF5A14','stroke-width':1.6,'stroke-linecap':'round'},g);});
-  const t=el('text',{y:54,'text-anchor':'middle','font-family':'Instrument Serif,serif','font-style':'italic','font-size':28,fill:'#FF5A14'},g);t.textContent=h;
-  const t2=el('text',{y:-34,'text-anchor':'middle','font-family':'IBM Plex Mono,monospace','font-size':10,'letter-spacing':'.2em',fill:'#1546D6'},g);t2.textContent='HAZARD';
+  el('path',{d:'M-34 8 L-22 -14 L-12 4 L0 -20 L12 2 L24 -12 L34 8Z',fill:LAND,stroke:ACC,'stroke-width':2,'stroke-linejoin':'round'},g);
+  [[-44,18],[40,16],[0,26]].forEach(([a,b])=>{el('path',{d:`M${a-5} ${b-5} l10 10 M${a+5} ${b-5} l-10 10`,stroke:ACC,'stroke-width':1.6,'stroke-linecap':'round'},g);});
+  const t=el('text',{y:54,'text-anchor':'middle','font-family':'Instrument Serif,serif','font-style':'italic','font-size':28,fill:ACC},g);t.textContent=h;
+  const t2=el('text',{y:-34,'text-anchor':'middle','font-family':'IBM Plex Mono,monospace','font-size':10,'letter-spacing':'.2em',fill:INK},g);t2.textContent='HAZARD';
 });
 { const R=rng(42);let n=0;
-  while(n<150){const x=R()*W,y=R()*H;
+  while(n<150){const x=90+R()*(W-180),y=90+R()*(H-180);
     if(nearPath(x,y,150))continue;
     if(PORTS.some((_,i)=>Math.abs(x-(PX(i)+SIDE(i)*142))<340&&Math.abs(y-PY(i))<260))continue;
     n++;const k=R();
-    if(k<.16){const g=el('g',{},deco);el('path',{d:blob(x,y,10+R()*20,500+n,9),fill:'#fff',stroke:'rgba(21,70,214,.55)','stroke-width':1.4},g);}
-    else if(k<.66){const t=el('text',{x,y,'font-family':'IBM Plex Mono,monospace','font-size':11,fill:'rgba(21,70,214,.5)'},deco);t.textContent=String(3+Math.floor(R()*38));}
-    else if(k<.8){el('path',{d:`M${x} ${y} q6-8 12 0 q6-8 12 0`,fill:'none',stroke:'rgba(7,27,74,.4)','stroke-width':1.4,'stroke-linecap':'round'},deco);}
-    else{const t=el('text',{x,y,'font-family':'Instrument Serif,serif','font-style':'italic','font-size':17,fill:'rgba(21,70,214,.45)'},deco);t.textContent=['Open water','Fair winds','Deep water','Safe anchorage','Shoal','Calm'][Math.floor(R()*6)];}
+    if(k<.16){const g=el('g',{},deco);el('path',{d:blob(x,y,10+R()*20,500+n,9),fill:LAND,stroke:INKA(.6),'stroke-width':1.4},g);}
+    else if(k<.66){const t=el('text',{x,y,'font-family':'IBM Plex Mono,monospace','font-size':11,fill:INKA(.5)},deco);t.textContent=String(3+Math.floor(R()*38));}
+    else if(k<.8){el('path',{d:`M${x} ${y} q6-8 12 0 q6-8 12 0`,fill:'none',stroke:INKA(.5),'stroke-width':1.4,'stroke-linecap':'round'},deco);}
+    else{const t=el('text',{x,y,'font-family':'Instrument Serif,serif','font-style':'italic','font-size':17,fill:INKA(.55)},deco);t.textContent=['Open water','Fair winds','Deep water','Safe anchorage','Shoal','Calm'][Math.floor(R()*6)];}
   }
 }
 
@@ -1029,15 +1072,15 @@ PORTS.forEach((p,i)=>{
   c.className='pc'+(p.intro?' intro':'')+(p.final?' final':'');
   c.style.left=(s>0?1470:70)+'px'; c.style.top=(PY(i)-190)+'px';
   c.innerHTML=`<div class="medal"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICON[p.icon]}</svg></div>
-    <div class="k">Port ${String(i+1).padStart(2,'0')} · ${p.k}</div><h3>${p.title}</h3>
+    <div class="k">${p.name} · ${p.k}</div><h3>${p.title}</h3>
     ${p.text?`<p>${p.text}</p>`:''}${p.list?`<ul>${p.list.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
-    ${p.tags?`<div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div>`:''}
+    ${p.tags?`<div class="tags">${p.tags.map(x=>`<span>${x}</span>`).join('')}</div>`:''}${p.chips?`<div class="glow">${p.chips.map(x=>`<span>${x}</span>`).join('')}</div>`:''}
     ${p.go?`<a class="go" href="${p.go.h}">${p.go.t} &rarr;</a>`:''}${p.cta?`<a class="cta2" href="${p.cta.h}">${p.cta.t}</a>`:''}`;
   world.appendChild(c); cards.push(c);
 });
-$('vList').innerHTML=PORTS.map((p,i)=>`<li><small>Port ${String(i+1).padStart(2,'0')} · ${p.k}</small><h3>${p.name}</h3><div style="font:600 17px var(--sans);margin:6px 0">${p.title}</div>${p.text?`<p style="color:var(--soft)">${p.text}</p>`:''}${p.list?`<ul style="margin:8px 0 0 18px;color:var(--soft)">${p.list.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}</li>`).join('');
+$('vList').innerHTML=PORTS.map((p,i)=>`<li><small>${p.name}, ${p.reg} · ${p.k}</small><h3>${p.title}</h3>${p.text?`<p style="color:var(--soft)">${p.text}</p>`:''}${p.list?`<ul style="margin:8px 0 0 18px;color:var(--soft)">${p.list.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}${p.chips?`<div class="glow">${p.chips.map(x=>`<span>${x}</span>`).join('')}</div>`:''}</li>`).join('');
 
-const ticks=$('vTicks'), tkEls=PORTS.map((p,i)=>{const b=document.createElement('button');b.className='tk';b.type='button';b.setAttribute('aria-label',`Sail to ${p.name}`);b.innerHTML=`<i></i><b>${String(i+1).padStart(2,'0')}</b>`;ticks.appendChild(b);return b;});
+const ticks=$('vTicks'), tkEls=PORTS.map((p,i)=>{const b=document.createElement('button');b.className='tk';b.type='button';b.setAttribute('aria-label',`Go to ${p.name}`);b.innerHTML=`<i></i><b>${String(i+1).padStart(2,'0')}</b>`;ticks.appendChild(b);return b;});
 
 /* timeline: travel between ports, dwell at each one */
 const T=1, DW=.8, TOTAL=(N-1)*T+N*DW;
@@ -1073,15 +1116,15 @@ function frame(){
   prog.style.strokeDashoffset=L-len;
   let bias=SIDE(near); if(a.k!==undefined) bias=lerp(SIDE(a.k),SIDE(a.k+1),a.f);
   const bx=mobile()?.5:(.5-.14*bias);
-  const tx=clamp(p.x-vw*bx/s,0,Math.max(0,W-vw/s)), ty=clamp(p.y-vh*(mobile()?.34:.52)/s,0,Math.max(0,H-vh/s));
+  const PADC=150, tx=clamp(p.x-vw*bx/s,-PADC,Math.max(0,W-vw/s)+PADC), ty=clamp(p.y-vh*(mobile()?.34:.52)/s,-PADC,Math.max(0,H-vh/s)+PADC);
   cx+=(tx-cx)*.14; cy+=(ty-cy)*.14;
   world.style.transform=`translate3d(${-cx*s}px,${-cy*s}px,0) scale(${s})`;
   clouds.style.transform=`translate3d(${-cx*s*.25}px,${-cy*s*.25}px,0)`;
   cards.forEach((c,i)=>{const d=Math.abs(len-stopLen[i]),vv=ease(clamp((clamp(1-d/(L/(N-1)*.5))-.15)/.7));c.style.setProperty('--v',vv.toFixed(3));c.classList.toggle('on',vv>.6);});
   if(near!==shown){shown=near;
     tkEls.forEach((b,i)=>{b.classList.toggle('on',i===near);b.classList.toggle('past',i<near);});
-    $('vNowK').textContent=`Port ${near+1} of ${N}`;
-    $('vDockK').textContent=`Port ${String(near+1).padStart(2,'0')} · ${PORTS[near].k}`;$('vDockT').textContent=PORTS[near].title;
+    $('vNowK').textContent=`${PORTS[near].name} · ${near+1} of ${N}`;
+    $('vDockK').textContent=`${PORTS[near].name} · ${PORTS[near].k}`;$('vDockT').textContent=PORTS[near].title;
     $('vDockP').textContent=PORTS[near].text||(PORTS[near].list||[]).join(' · ');
   }
   const tk=tkEls[near], tr=ticks.getBoundingClientRect(), kr=tk.getBoundingClientRect();
@@ -1091,9 +1134,13 @@ function frame(){
 }
 const css=document.createElement('style');css.textContent=`
 @keyframes vflap{0%,100%{transform:skewY(0) scaleX(1)}50%{transform:skewY(-6deg) scaleX(.92)}}
+@keyframes vfloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(.12deg)}}
+@keyframes vsea{to{background-position:360px 120px}}
+@keyframes vglow{0%,100%{box-shadow:0 0 10px rgba(255,90,20,.45),inset 0 0 8px rgba(255,90,20,.18)}50%{box-shadow:0 0 22px rgba(255,90,20,.85),inset 0 0 12px rgba(255,90,20,.35)}}
 @keyframes vbob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-1deg)}}
 @keyframes vring{0%{opacity:.8;transform:scale(.4)}100%{opacity:0;transform:scale(2.4)}}
 @keyframes vbeam{0%,100%{opacity:0}50%{opacity:.9}}
+#vMap{animation:vfloat 7s ease-in-out infinite}
 #vMap g ellipse{transform-box:fill-box;transform-origin:center}`;
 document.head.appendChild(css);
 $('vListBtn').addEventListener('click',()=>{const f=voyageEl.classList.toggle('flat');$('vListBtn').textContent=f?'Chart view':'List view';if(f)voyageEl.scrollIntoView();});
