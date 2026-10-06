@@ -198,16 +198,19 @@ h2{font-size:clamp(42px,5vw,74px);line-height:1;letter-spacing:-.028em}
 .lane.win .tot b{color:var(--accent)}
 
 /* agent wheel */
-.roll{position:relative;isolation:isolate;margin-top:36px;height:clamp(460px,58vw,640px);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,#F7FBFF,#CFE0FF 40%,#7FA6FF 75%,#FF9A66);border:1px solid var(--hair);cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.roll{position:relative;isolation:isolate;margin-top:36px;height:clamp(460px,58vw,640px);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,#05070C,#0A1230 60%,#123A9E);border:1px solid #1b2547;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .roll .mesh{position:absolute;inset:0;width:100%;height:100%;z-index:-1;display:block}
 .roll.drag{cursor:grabbing}
-.rc{position:absolute;left:50%;top:50%;width:clamp(150px,19vw,232px);aspect-ratio:1.42;padding:16px 18px;border-radius:20px;background:#fff;border:1px solid var(--hair);box-shadow:0 22px 50px -24px rgba(7,27,74,.4);color:var(--sheet-ink);display:flex;flex-direction:column;justify-content:space-between;will-change:transform,opacity,filter}
-.rc small{font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.rc{position:absolute;left:50%;top:50%;width:clamp(150px,19vw,232px);aspect-ratio:1.42;padding:16px 20px;border-radius:34px;overflow:hidden;background:linear-gradient(165deg,#FFFFFF 0,#E7EEFB 55%,#C9D8F2 100%);border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 2px 3px rgba(255,255,255,.95),inset 0 -12px 20px rgba(110,140,205,.38),0 26px 44px -16px rgba(0,0,0,.9),0 0 0 1px rgba(0,0,0,.55);color:var(--sheet-ink);display:flex;flex-direction:column;justify-content:space-between;will-change:transform,opacity,filter}
+.rc::before{content:"";position:absolute;left:6%;right:6%;top:3%;height:44%;border-radius:30px 30px 60% 60%/30px 30px 40% 40%;background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));pointer-events:none}
+.rc::after{content:"";position:absolute;right:18px;top:15px;width:24px;height:6px;background:radial-gradient(circle,currentColor 2px,transparent 2.6px) 0 0/8px 6px;opacity:.45}
+.rc small{position:relative;font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.rc div{position:relative}
 .rc b{display:block;font:600 clamp(15px,1.5vw,19px)/1.15 var(--display);letter-spacing:-.01em}
 .rc span{display:block;margin-top:6px;font-size:clamp(11.5px,1vw,13px);line-height:1.35;color:var(--soft)}
-.rc:nth-child(4n+1) small{color:var(--accent)}
-.rc:nth-child(4n+2){background:var(--blue);border-color:var(--blue);color:#fff}.rc:nth-child(4n+2) small{color:#cfe0ff}.rc:nth-child(4n+2) span{color:#dbe7ff}
-.rc:nth-child(4n+3){background:var(--accent);border-color:var(--accent);color:var(--ink)}.rc:nth-child(4n+3) small,.rc:nth-child(4n+3) span{color:rgba(4,18,46,.78)}
+.rc:nth-child(even){background:linear-gradient(165deg,#6C9BFF 0,#1546D6 50%,#0A2A8A 100%);border-color:rgba(160,195,255,.55);color:#fff;box-shadow:inset 0 2px 3px rgba(255,255,255,.55),inset 0 -14px 22px rgba(0,10,70,.55),0 0 34px rgba(40,100,255,.5),0 26px 44px -16px rgba(0,0,0,.9),0 0 0 1px rgba(0,0,0,.55)}
+.rc:nth-child(even)::before{background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(255,255,255,0))}
+.rc:nth-child(even) small{color:#CFE0FF}.rc:nth-child(even) span{color:#DCE8FF}
 
 /* ---------- THE VOYAGE (sea chart) ---------- */
 .voyage{position:relative;z-index:10;margin:0 24px;background:var(--paper)}
@@ -420,7 +423,49 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
 
 <!-- the helm: tricorn in the middle, needle swings to the number of the section you are in -->
 <nav class="dial" id="dial" aria-label="Sections">
-  <canvas id="vortex" aria-hidden="true"></canvas>
+  <svg id="vortex" viewBox="0 0 262 260" aria-hidden="true">
+    <ellipse cx="218" cy="190" rx="44" ry="7" fill="#1546D6" opacity=".35"/>
+    <path d="M176 192q10-7 21 0t21 0 21 0 21 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    <g id="cBody">
+      <!-- ponytail and hair back -->
+      <path d="M233 96q22 6 14 34-3 10-10 14 4-14-2-24-4-10-2-24z" fill="#6B3A1E"/>
+      <path d="M198 100q-4-24 20-26t20 26v12h-40z" fill="#7A4524"/>
+      <!-- jacket -->
+      <path d="M190 190v-46q0-14 14-17l14 6 14-6q14 3 14 17v46z" fill="#0F2A66"/>
+      <path d="M218 133l-12 20 12 22 12-22z" fill="#fff"/>
+      <path d="M205 128l13 14 13-14" fill="none" stroke="#fff" stroke-width="3"/>
+      <path d="M210 128l8 8 8-8-4 12h-8z" fill="#FF5A14"/>
+      <circle cx="209" cy="164" r="2.3" fill="#E9B949"/><circle cx="209" cy="176" r="2.3" fill="#E9B949"/>
+      <circle cx="227" cy="164" r="2.3" fill="#E9B949"/><circle cx="227" cy="176" r="2.3" fill="#E9B949"/>
+      <path d="M190 156h5M241 156h5" stroke="#E9B949" stroke-width="3" stroke-linecap="round"/>
+      <!-- resting arm -->
+      <path d="M237 138q12 14 4 34" fill="none" stroke="#0F2A66" stroke-width="11" stroke-linecap="round"/>
+      <circle cx="240" cy="174" r="5" fill="#F2C29B"/>
+      <g id="cHead">
+        <rect x="212" y="118" width="12" height="9" rx="4" fill="#E8B58C"/>
+        <circle cx="218" cy="102" r="19" fill="#F6CBA6"/>
+        <path d="M199 100q2-14 19-14t19 14q-8-9-19-9t-19 9z" fill="#7A4524"/>
+        <path d="M203 101q4-8 12-9-3 5-3 11z" fill="#7A4524"/>
+        <ellipse cx="208" cy="106" rx="4" ry="2.6" fill="#FF9A7A" opacity=".45"/><ellipse cx="228" cy="106" rx="4" ry="2.6" fill="#FF9A7A" opacity=".45"/>
+        <ellipse cx="211" cy="102" rx="3.4" ry="4" fill="#fff"/><ellipse cx="225" cy="102" rx="3.4" ry="4" fill="#fff"/>
+        <g id="cPupils"><circle cx="211" cy="102.5" r="2.1" fill="#2B1A12"/><circle cx="225" cy="102.5" r="2.1" fill="#2B1A12"/></g>
+        <path d="M207 96q4-3 8-1M221 95q4-2 8 1" stroke="#5A3118" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <path id="cMouth" d="M212 111q6 5 12 0" fill="#C2453A" stroke="#C2453A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- captain cap -->
+        <path d="M197 90q-2-16 21-17t21 17z" fill="#fff" stroke="#C6D2EA" stroke-width="1"/>
+        <path d="M197 90h42v5q-21 6-42 0z" fill="#0F2A66"/>
+        <path d="M196 94q22 10 44 0q-1 7-22 7t-22-7z" fill="#0A1B45"/>
+        <circle cx="218" cy="86" r="4" fill="#E9B949"/><path d="M218 83v6M215 87h6" stroke="#0F2A66" stroke-width="1.2" stroke-linecap="round"/>
+      </g>
+    </g>
+    <!-- the pointing arm -->
+    <g id="cArm">
+      <line id="cSleeve" x1="201" y1="136" x2="232" y2="136" stroke="#0F2A66" stroke-width="12" stroke-linecap="round"/>
+      <line id="cCuff" x1="229" y1="136" x2="235" y2="136" stroke="#E9B949" stroke-width="12"/>
+      <line id="cHand" x1="239" y1="136" x2="270" y2="136" stroke="#F6CBA6" stroke-width="8" stroke-linecap="round"/>
+      <line id="cFing" x1="267" y1="136" x2="271" y2="136" stroke="#F6CBA6" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </svg>
   <ol id="dots" style="list-style:none">
     <li style="--p:60deg"><a href="#s1" data-t="1">1<span>Home</span></a></li>
     <li style="--p:36deg"><a href="#s2" data-t="2">2<span>The cost</span></a></li>
@@ -750,11 +795,11 @@ void main(){
  vec2 q=vec2(fbm(p+orb),fbm(p+orb.yx+3.1));
  vec2 r=vec2(fbm(p+2.*q+orb*1.3+1.7),fbm(p+2.*q-orb+9.2));
  float f=fbm(p+1.8*r);float g=clamp(f*1.35-.1,0.,1.);float s=length(q);
- vec3 c0=vec3(.969,.984,1.),c1=vec3(.812,.878,1.),c2=vec3(.498,.651,1.),c3=vec3(1.,.604,.4);
+ vec3 c0=vec3(.012,.018,.035),c1=vec3(.03,.06,.17),c2=vec3(.07,.2,.55),c3=vec3(.3,.5,1.);
  vec3 col=mix(c0,c1,smoothstep(0.,.45,g));
  col=mix(col,c2,smoothstep(.35,.78,g));
  col=mix(col,c3,smoothstep(.62,1.,g)*(.55+.45*s));
- col+=bayer(gl_FragCoord.xy)*.016;
+ col*=.85;col+=bayer(gl_FragCoord.xy)*.016;
  gl_FragColor=vec4(col,1.);}`;
 const sh = (t,src) => { const o = gl.createShader(t); gl.shaderSource(o,src); gl.compileShader(o); return o; };
 const pr = gl.createProgram(); gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS)); gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS)); gl.linkProgram(pr);
@@ -781,57 +826,38 @@ function draw(now) {
 requestAnimationFrame(draw);
 })();
 
-/* the vortex: a turbulent blue whirlpool whose tail ends on the current section number */
+/* the captain: a cartoon lady yacht captain who points at the section you are in */
 (() => {
-const cv = document.getElementById('vortex'); if (!cv) return;
-const ctx = cv.getContext('2d'), W = 262, H = 260, CX = 218, CY = 130, D = Math.min(devicePixelRatio || 1, 2);
-cv.width = W * D; cv.height = H * D; ctx.scale(D, D);
+const svg = document.getElementById('vortex'); if (!svg) return;
+const arm = document.getElementById('cArm'), sleeve = document.getElementById('cSleeve'), cuff = document.getElementById('cCuff'),
+  hand = document.getElementById('cHand'), fing = document.getElementById('cFing'), head = document.getElementById('cHead'),
+  pupils = document.getElementById('cPupils'), body = document.getElementById('cBody'), mouth = document.getElementById('cMouth');
 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-let tgt = 60, cur = 60, vel = 0, t = 0; const spray = [];
-window.vortexAim = deg => { tgt = deg; if (!calm) burst(36); };
-const tip = () => { const a = cur * Math.PI / 180; return [CX - 80 * Math.cos(a), CY - 80 * Math.sin(a)]; };
-function burst(n) { const [x, y] = tip(); for (let i = 0; i < n; i++) spray.push(drop(x, y, 2.4)); }
-function drop(x, y, k) { const a = Math.atan2(y - CY, x - CX) + (Math.random() - .5) * 1.5, v = (.6 + Math.random() * 1.6) * k * .6;
-  return {x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1.1 * Math.random() - .4, l: 0, m: 26 + Math.random() * 28, r: .8 + Math.random() * 2}; }
-function edge(a) { return 52 + 5 * Math.sin(a * 5 + t * 2.1) + 3 * Math.sin(a * 9 - t * 3.3) + 2 * Math.sin(a * 14 + t * 5); }
+const CX = 218, CY = 130, PX = 201, PY = 136;
+let ang = Math.PI, len = 70, vel = 0, tAng = Math.PI, tLen = 70, hop = 0, hv = 0, t = 0, talk = 0;
+window.vortexAim = deg => {
+  const a = deg * Math.PI / 180, nx = CX - 98 * Math.cos(a), ny = CY - 98 * Math.sin(a), dx = nx - PX, dy = ny - PY;
+  tAng = Math.atan2(dy, dx); tLen = Math.max(52, Math.hypot(dx, dy) - 24);
+  if (!calm) { hv = 3.2; talk = 28; }
+};
 function frame() {
   requestAnimationFrame(frame);
   if (document.body.classList.contains('in-voyage')) return;
-  const sp = calm ? .25 : 1; t += .016 * sp;
-  vel += (tgt - cur) * .06; vel *= .78; cur += vel;
-  ctx.clearRect(0, 0, W, H);
-  ctx.beginPath();
-  for (let i = 0; i <= 64; i++) { const a = i / 64 * Math.PI * 2, r = edge(a); ctx[i ? 'lineTo' : 'moveTo'](CX + Math.cos(a) * r, CY + Math.sin(a) * r * .94); }
-  ctx.closePath();
-  let g = ctx.createRadialGradient(CX, CY, 2, CX, CY, 56);
-  g.addColorStop(0, '#031447'); g.addColorStop(.3, '#0B3FC9'); g.addColorStop(.7, '#2F7BFF'); g.addColorStop(1, 'rgba(120,180,255,.55)');
-  ctx.fillStyle = g; ctx.fill();
-  ctx.lineCap = 'round';
-  for (let k = 0; k < 6; k++) {
-    for (let pass = 0; pass < 2; pass++) {
-      ctx.beginPath();
-      for (let i = 0; i <= 40; i++) { const u = i / 40, r = 5 + u * 46, a = k / 6 * Math.PI * 2 + 3.4 * (1 - u) * (1 - u) * 1.5 - t * 2.6 * (1.25 - u) + Math.sin(u * 14 + t * 3 + k) * .08;
-        ctx[i ? 'lineTo' : 'moveTo'](CX + Math.cos(a) * r, CY + Math.sin(a) * r * .94); }
-      ctx.strokeStyle = pass ? 'rgba(255,255,255,.55)' : 'rgba(0,25,120,.55)'; ctx.lineWidth = pass ? 1.2 : 4.5; ctx.stroke();
-    }
-  }
-  ctx.fillStyle = 'rgba(255,255,255,.9)';
-  for (let i = 0; i < 26; i++) { const a = i / 26 * Math.PI * 2 - t * (1.1 + (i % 3) * .3), r = edge(a) - 3 - (i % 4) * 3; ctx.beginPath(); ctx.arc(CX + Math.cos(a) * r, CY + Math.sin(a) * r * .94, .9 + (i % 3) * .5, 0, 7); ctx.fill(); }
-  g = ctx.createRadialGradient(CX, CY, 0, CX, CY, 14); g.addColorStop(0, '#010a2b'); g.addColorStop(1, 'rgba(1,10,43,0)');
-  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(CX, CY, 14, 0, 7); ctx.fill();
-  const th = Math.atan2(-Math.sin(cur * Math.PI / 180), -Math.cos(cur * Math.PI / 180)), L = [], R = [];
-  for (let i = 0; i <= 36; i++) { const u = i / 36, r = 10 + u * 70, a = th + (1 - u) * (1 - u) * 1.8 + Math.sin(u * 12 - t * 6) * .05 * (1 - u * .4), w = (11 * Math.pow(1 - u, .7) + 3.5) * (1 + .15 * Math.sin(u * 16 - t * 7));
-    const x = CX + Math.cos(a) * r, y = CY + Math.sin(a) * r * .94, nx = -Math.sin(a), ny = Math.cos(a);
-    L.push([x + nx * w, y + ny * w]); R.push([x - nx * w, y - ny * w]); }
-  ctx.beginPath(); L.forEach((p, i) => ctx[i ? 'lineTo' : 'moveTo'](p[0], p[1])); R.reverse().forEach(p => ctx.lineTo(p[0], p[1])); ctx.closePath();
-  g = ctx.createLinearGradient(CX, CY, tip()[0], tip()[1]); g.addColorStop(0, '#0B3FC9'); g.addColorStop(.7, '#3D8BFF'); g.addColorStop(1, '#BFDCFF');
-  ctx.fillStyle = g; ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1; ctx.beginPath(); L.forEach((p, i) => ctx[i ? 'lineTo' : 'moveTo'](p[0], p[1])); ctx.stroke();
-  if (!calm) {
-    const [x, y] = tip(); if (Math.random() < .8) spray.push(drop(x, y, 1)); if (Math.random() < .25) { const a = Math.random() * 6.28; spray.push(drop(CX + Math.cos(a) * edge(a), CY + Math.sin(a) * edge(a), .6)); }
-    for (let i = spray.length - 1; i >= 0; i--) { const s = spray[i]; s.vy += .07; s.x += s.vx; s.y += s.vy; if (++s.l > s.m) { spray.splice(i, 1); continue; }
-      ctx.fillStyle = 'rgba(' + (s.r > 1.8 ? '255,255,255' : '170,210,255') + ',' + (1 - s.l / s.m).toFixed(2) + ')'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill(); }
-  }
+  t += .016;
+  let d = tAng - ang; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI;
+  vel += d * .09; vel *= .78; ang += vel; len += (tLen - len) * .14;
+  hv += -hop * .22; hv *= .8; hop += hv;
+  const bob = calm ? 0 : Math.sin(t * 2.2) * 1.4 - Math.max(0, hop);
+  body.setAttribute('transform', 'translate(0 ' + bob.toFixed(2) + ')');
+  arm.setAttribute('transform', 'rotate(' + (ang * 180 / Math.PI).toFixed(2) + ' ' + PX + ' ' + PY + ')');
+  const s = len * .46, c = len * .56, h = len * .76;
+  sleeve.setAttribute('x2', PX + s); cuff.setAttribute('x1', PX + s - 3); cuff.setAttribute('x2', PX + s + 3);
+  hand.setAttribute('x1', PX + c); hand.setAttribute('x2', PX + h);
+  fing.setAttribute('x1', PX + h - 3); fing.setAttribute('x2', PX + len);
+  const lean = Math.max(-1, Math.min(1, Math.cos(ang))) * -4;
+  head.setAttribute('transform', 'rotate(' + lean.toFixed(2) + ' 218 116)');
+  pupils.setAttribute('transform', 'translate(' + (Math.cos(ang) * 1.6).toFixed(2) + ' ' + (Math.sin(ang) * 1.2).toFixed(2) + ')');
+  if (talk > 0) { talk--; mouth.setAttribute('d', talk % 8 < 4 ? 'M211 111q7 7 14 0z' : 'M212 112q6 3 12 0'); } else mouth.setAttribute('d', 'M212 111q6 5 12 0');
 }
 frame();
 })();
