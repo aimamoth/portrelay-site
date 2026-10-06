@@ -195,15 +195,16 @@ h2{font-size:clamp(42px,5vw,74px);line-height:1;letter-spacing:-.028em}
 .lane:not(.win) .tot b{color:#8a9bbd;text-decoration:line-through;text-decoration-thickness:2px}
 .lane.win .tot b{color:var(--accent)}
 
-/* seasons */
-.cal{margin-top:44px}
-.months{display:grid;grid-template-columns:repeat(12,1fr);font:500 11px var(--mono);letter-spacing:.1em;color:var(--soft);text-transform:uppercase;border-bottom:1px solid var(--hair);padding-bottom:10px}
-.bars{display:grid;gap:14px;margin-top:22px}
-.bar2{display:grid;grid-template-columns:repeat(12,1fr);align-items:center;height:56px}
-.fill{height:100%;border-radius:999px;display:flex;align-items:center;padding:0 22px;font:600 14px var(--sans);color:#fff;white-space:nowrap;overflow:hidden;transform-origin:left;transform:scaleX(0);transition:transform 1.5s var(--ease);transition-delay:calc(.2s + var(--k) * .3s)}
-.in .fill{transform:scaleX(1)}
-.fill span{opacity:.8;font-weight:500;margin-left:10px}
-.f1{grid-column:5/11;background:var(--blue)}.f2a{grid-column:1/5;background:var(--accent)}.f2b{grid-column:12/13;background:var(--accent)}.f3{grid-column:9/12;background:var(--sheet-ink)}
+/* agent wheel */
+.roll{position:relative;margin-top:36px;height:clamp(460px,58vw,640px);border-radius:28px;overflow:hidden;background:radial-gradient(90% 80% at 50% 50%,#fff 0,var(--paper) 60%,#E8F1FD 100%);border:1px solid var(--hair);cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.roll.drag{cursor:grabbing}
+.rc{position:absolute;left:50%;top:50%;width:clamp(150px,19vw,232px);aspect-ratio:1.42;padding:16px 18px;border-radius:20px;background:#fff;border:1px solid var(--hair);box-shadow:0 22px 50px -24px rgba(7,27,74,.4);color:var(--sheet-ink);display:flex;flex-direction:column;justify-content:space-between;will-change:transform,opacity,filter}
+.rc small{font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.rc b{display:block;font:600 clamp(15px,1.5vw,19px)/1.15 var(--display);letter-spacing:-.01em}
+.rc span{display:block;margin-top:6px;font-size:clamp(11.5px,1vw,13px);line-height:1.35;color:var(--soft)}
+.rc:nth-child(4n+1) small{color:var(--accent)}
+.rc:nth-child(4n+2){background:var(--blue);border-color:var(--blue);color:#fff}.rc:nth-child(4n+2) small{color:#cfe0ff}.rc:nth-child(4n+2) span{color:#dbe7ff}
+.rc:nth-child(4n+3){background:var(--accent);border-color:var(--accent);color:var(--ink)}.rc:nth-child(4n+3) small,.rc:nth-child(4n+3) span{color:rgba(4,18,46,.78)}
 
 /* ---------- THE VOYAGE (sea chart) ---------- */
 .voyage{position:relative;z-index:10;margin:0 24px;background:var(--paper)}
@@ -404,14 +405,12 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
     <div class="dd">
       <button type="button" aria-haspopup="true">Products</button>
       <div class="menu" role="menu">
-        <a role="menuitem" href="#voyage" data-port="1"><b>AI Communication Agent</b><span>Chat, voice and WhatsApp on one concierge.</span></a>
-        <a role="menuitem" href="https://yachtrelayai.com/dashboard/"><b>Broker &amp; Charter Dashboard</b><span>Replies, pipeline, rep performance, AI insight.</span></a>
+        <a role="menuitem" href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist" target="_blank" rel="noopener"><b>AI Communication Agent</b><span>Chat, voice and WhatsApp on one concierge.</span></a>
+        <a role="menuitem" href="https://dashboard.yachtrelayai.com/"><b>Broker &amp; Charter Dashboard</b><span>Replies, pipeline, rep performance, AI insight.</span></a>
         <a role="menuitem" href="#voyage" data-port="9"><b>Bespoke Website</b><span>Live inventory and charter pages.</span></a>
       </div>
     </div>
     <a href="#voyage">The voyage</a>
-    <a href="https://channel-hub.aimamoth-ai.workers.dev/w/bluewake-yachts" target="_blank" rel="noopener">Channels</a>
-    <a href="#faq">FAQ</a>
   </nav>
   <a class="cta" href="https://aimamoth-zohomail.zohobookings.in/#/meetSovon">Book a free audit</a>
 </header>
@@ -514,17 +513,10 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
   </div>
 
   <div class="blk last">
-    <div class="eyebrow" data-r>Three seasons, one desk</div>
-    <h2 data-r style="--d:.08s">Built around your <em>calendar</em></h2>
-    <div class="cal" data-r>
-      <div class="months"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span></div>
-      <div class="bars">
-        <div class="bar2"><div class="fill f1" style="--k:0">Mediterranean charter<span>May&ndash;Oct</span></div></div>
-        <div class="bar2"><div class="fill f2a" style="--k:1">Caribbean charter<span>Dec&ndash;Apr</span></div><div class="fill f2b" style="--k:1"></div></div>
-        <div class="bar2"><div class="fill f3" style="--k:2">Show &amp; listing season<span>Sep&ndash;Nov</span></div></div>
-      </div>
-    </div>
-    <p class="sub" data-r style="--d:.2s">The same rule in every season: the first real reply wins.</p>
+    <div class="eyebrow" data-r>The whole crew</div>
+    <h2 data-r style="--d:.08s">Twenty-two <em>agents</em>, one login</h2>
+    <p class="sub" data-r style="--d:.16s">Drag the wheel. Throw it.</p>
+    <div class="roll" id="roll" data-r style="--d:.2s" role="group" aria-label="AI agents and tools, a draggable wheel of cards"></div>
   </div>
 </section>
 
@@ -593,7 +585,7 @@ footer{margin-top:80px;border-top:1px solid var(--hair);padding-top:52px}
         <p>AI sales and charter desks for charter operators, brokerages and management houses. Offices in Canada, Switzerland &amp; India.</p>
       </div>
       <div><h4>Navigate</h4><ul><li><a href="#voyage">The voyage</a></li><li><a href="readiness-check.html">Readiness check</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-      <div><h4>Products</h4><ul><li><a href="#voyage" data-port="1">AI Communication Agent</a></li><li><a href="https://yachtrelayai.com/dashboard/">Broker &amp; Charter Dashboard</a></li><li><a href="#voyage" data-port="9">Bespoke Website</a></li></ul></div>
+      <div><h4>Products</h4><ul><li><a href="https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist" target="_blank" rel="noopener">AI Communication Agent</a></li><li><a href="https://dashboard.yachtrelayai.com/">Broker &amp; Charter Dashboard</a></li><li><a href="#voyage" data-port="9">Bespoke Website</a></li></ul></div>
       <div><h4>Contact</h4><ul><li><a href="mailto:sovon@aimamoth.com">sovon@aimamoth.com</a></li><li><a href="tel:+19175406222">+1 917 540 6222</a></li><li><a href="https://www.linkedin.com/in/sovonshaik/" rel="noopener">LinkedIn</a></li></ul></div>
     </div>
     <div class="word" aria-hidden="true">YachtRelay</div>
@@ -677,6 +669,67 @@ swing(1);
 const helm = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) swing(+e.target.dataset.i); }), {rootMargin:'-50% 0px -50% 0px', threshold:0});
 document.querySelectorAll('[data-i]').forEach(sec => helm.observe(sec));
 
+/* agent wheel: cards seated around a tipped ring, depth sorted every frame, thrown with momentum */
+(() => {
+const el = document.getElementById('roll'); if (!el) return;
+const DATA = [
+ ['Voice','AI Voice Agent','Answers the phone line day and night.'],
+ ['Chat','Website SDR','Greets visitors and books the viewing.'],
+ ['Messaging','WhatsApp Agent','Replies and books charters in the chat.'],
+ ['Messaging','SMS Agent','Texts back a missed call in seconds.'],
+ ['Social','Instagram DM Agent','Answers DMs and captures the lead.'],
+ ['Inbox','Email Agent','Replies to portal and inbox enquiries.'],
+ ['Portals','Instant Responder','Third-party enquiries answered at once.'],
+ ['Sales','Lead Qualification','Budget, timing and intent, asked like a broker.'],
+ ['Sales','Sales-Status Brief','Where each deal stands, in plain words.'],
+ ['Sales','Lead Reactivation','Wakes quiet leads with a timely nudge.'],
+ ['CRM','CRM & Pipeline','One thread per contact, every stage kept.'],
+ ['Insight','Analytics','Response time and lead source, one screen.'],
+ ['Insight','Rep Performance','Calls scored with AI, coaching per broker.'],
+ ['Research','Prospect Research','A background brief before you ring.'],
+ ['Follow-up','Quote Chaser','Quotes that go quiet get a second look.'],
+ ['Language','Multilingual Replies','Answers in the guest’s own language.'],
+ ['Charter','Booking Agent','Dates, rate and availability confirmed.'],
+ ['Charter','Problem Desk','Weather and delays met with a rebooking offer.'],
+ ['Charter','Review Requests','Asked right after the trip.'],
+ ['Content','Social Posting','Listings and specials posted everywhere.'],
+ ['Content','Listing Writer','Descriptions and itineraries in your voice.'],
+ ['Routing','Broker Handover','Hot leads sent to the right broker.']
+];
+const N = DATA.length, TAU = Math.PI * 2;
+const cards = DATA.map(d => { const c = document.createElement('div'); c.className = 'rc';
+  c.innerHTML = '<small></small><div><b></b><span></span></div>';
+  c.firstChild.textContent = d[0]; c.querySelector('b').textContent = d[1]; c.querySelector('span').textContent = d[2];
+  el.appendChild(c); return c; });
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const IDLE = reduced ? 0 : 0.0045;
+let rot = 0, vel = IDLE, down = false, lastX = 0, visible = true, W = 0, H = 0;
+const size = () => { W = el.clientWidth; H = el.clientHeight; };
+size(); addEventListener('resize', size);
+new IntersectionObserver(es => visible = es[0].isIntersecting).observe(el);
+el.addEventListener('pointerdown', e => { down = true; lastX = e.clientX; vel = 0; el.setPointerCapture(e.pointerId); el.classList.add('drag'); });
+el.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - lastX; lastX = e.clientX; rot += dx * 0.0045; vel = dx * 0.0045; });
+const up = () => { down = false; el.classList.remove('drag'); };
+el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+function frame() {
+  requestAnimationFrame(frame);
+  if (!visible) return;
+  if (!down) { rot += vel; vel += (IDLE - vel) * 0.02; }
+  const R = 0.62 * Math.min(W, H), list = [];
+  for (let i = 0; i < N; i++) {
+    const a = rot + (i / N) * TAU, s = Math.sin(a), z = Math.cos(a) * R;
+    const x = s * R, y = -Math.cos(a) * R * 0.42, depth = (z / R + 1) / 2;
+    const c = cards[i];
+    c.style.transform = 'translate(-50%,-50%) translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + (s * 14).toFixed(2) + 'deg) scale(' + (0.55 + depth * 0.55).toFixed(3) + ')';
+    c.style.opacity = (0.30 + depth * 0.70).toFixed(3);
+    c.style.filter = 'brightness(' + (0.5 + depth * 0.7).toFixed(3) + ')';
+    list.push({ c, z });
+  }
+  list.sort((p, q) => p.z - q.z).forEach((o, k) => o.c.style.zIndex = k);
+}
+frame();
+})();
+
 /* ===================================================================
    THE VOYAGE: a sea chart that scrolls. Edit PORTS to change the story.
    =================================================================== */
@@ -684,7 +737,7 @@ document.querySelectorAll('[data-i]').forEach(sec => helm.observe(sec));
 const PORTS = [
   { name:'Port Midnight', k:'Departure', intro:true, title:'Chart your course.', icon:'moon',
     text:'2:14 AM. A charter enquiry lands and nobody is awake. Eleven ports ahead: everything YachtRelay builds, in the order you meet it. Scroll to set sail.' },
-  { name:'Concierge Cove', k:'AI Concierge', title:'One concierge, three ways in.', icon:'chat',
+  { name:'Concierge Cove', k:'AI Concierge', title:'One concierge, three ways in.', icon:'chat', go:{t:'Try the AI agent', h:'https://dashboard.yachtrelayai.com/w/bluewake-yachts/ai-receptionist'},
     text:'Chat on your site, voice on your phone line, replies on WhatsApp and Instagram. Trained on your fleet and listings only.' },
   { name:'Quick Quay', k:'Third-party enquiries', title:'Answered before the next broker opens theirs.', icon:'bolt',
     text:'Enquiries from YachtWorld, Rightboat, Boat Trader and boats.com get an instant, accurate reply, day or night.' },
@@ -700,7 +753,7 @@ const PORTS = [
     list:['Every sales call scored with AI','A researched brief on each prospect before you ring','Objections that keep coming up, and coaching per broker','Listing performance and comp research'] },
   { name:'Lookout Light', k:'Analytics & dashboard', title:'See the whole coast.', icon:'bars',
     text:'One screen for the owner, one per rep. Response time by source, qualified leads by channel, and why deals get rejected.',
-    tags:['Commission protected','Enquiries caught','Call & chat analytics'], go:{t:'See the dashboard', h:'https://yachtrelayai.com/dashboard/'} },
+    tags:['Commission protected','Enquiries caught','Call & chat analytics'], go:{t:'See the dashboard', h:'https://dashboard.yachtrelayai.com/'} },
   { name:'Market Wharf', k:'Posting & writing', title:'Everywhere, automatically.', icon:'stall',
     text:'New listings and charter specials posted to Facebook, Instagram, X, LinkedIn and Marketplace. Descriptions, bios and itineraries drafted in your voice.' },
   { name:'Atelier Isle', k:'Bespoke website', title:'The shop window, rebuilt.', icon:'window',
